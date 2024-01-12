@@ -28,7 +28,7 @@ export default async function Page({
   const data = (await res.json()) as { title: string; body: string };
 
   const isOnDemand = Number(params.id) >= 3;
-
+  const { city, timezone } = searchParams;
   return (
     <div className="grid grid-cols-6 gap-x-6 gap-y-3">
       <div className="col-span-full space-y-3 lg:col-span-4">
@@ -41,7 +41,7 @@ export default async function Page({
           {/* server component */}
           <Suspense fallback={<SkeletonAlarmClock />}>
             {/* @ts-expect-error Async Server Component */}
-            <AlarmClock {...searchParams} />
+            <AlarmClock city={city} timezone={timezone} />
           </Suspense>
         </CitiesShallowSelector>
       </div>
