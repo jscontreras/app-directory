@@ -35,7 +35,9 @@ export default async function Page({
           {data.title}
         </h1>
         <p className="line-clamp-3 font-medium text-gray-500">{data.body}</p>
+        {/* client component */}
         <CitiesShallowSelector>
+          {/* server component */}
           <AlarmClock {...searchParams} />
         </CitiesShallowSelector>
       </div>

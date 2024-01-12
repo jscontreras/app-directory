@@ -51,7 +51,6 @@ export function CitiesShallowSelector({
     if (timezone) {
       params.set('timezone', timezone.timezone);
       setCity({ name: city, timezone: timezone.timezone || '' });
-      window.history.pushState(null, '', `?${params.toString()}`);
       router.push(`?${params.toString()}`);
     }
   }
@@ -60,7 +59,7 @@ export function CitiesShallowSelector({
     <>
       <div className="m-2 border-2 border-dashed p-2 ">
         <h2>{`<Client Component/>`}</h2>
-        <Select onValueChange={updateUrlCityParams}>
+        <Select onValueChange={updateUrlCityParams} defaultValue={city.name}>
           <SelectTrigger className="w-[180px]">
             <SelectValue placeholder="Select a city" />
           </SelectTrigger>
