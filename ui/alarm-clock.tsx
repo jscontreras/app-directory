@@ -1,17 +1,23 @@
-import { ReactNode } from 'react';
+import { ReactNode, cache } from 'react';
 import SkeletonAlarmClock from './skeleton-alarm-clock';
 
-async function getCurrentHourInCity(timezone: string) {
+const getCurrentHourInCity = cache(async function (timezone: string) {
   `use server`;
-  const currentTime = new Date().toLocaleString('en-US', {
+
+  const res = await fetch(
+    `https://worldtimeapi.org/api/ip`,
+    // { next: { revalidate: 300, tags: ['timezone'] },
+    { cache: 'force-cache' },
+  );
+  const data = (await res.json()) as { datetime: string };
+
+  const currentTime = new Date(data.datetime).toLocaleString('en-US', {
     timeZone: timezone,
     hour: 'numeric',
     minute: 'numeric',
   });
-  // wait for 2 seconds
-  await new Promise((resolve) => setTimeout(resolve, 2000));
   return currentTime;
-}
+});
 
 export default async function AlarmClock({
   hour,
@@ -61,7 +67,6 @@ export default async function AlarmClock({
     );
   } else {
     // Add delay to make suspense evident.
-    await new Promise((resolve) => setTimeout(resolve, 1000));
     return <SkeletonAlarmClock message="Please Select a City" />;
   }
 }

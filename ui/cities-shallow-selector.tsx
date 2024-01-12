@@ -51,7 +51,8 @@ export function CitiesShallowSelector({
     if (timezone) {
       params.set('timezone', timezone.timezone);
       setCity({ name: city, timezone: timezone.timezone || '' });
-      router.push(`?${params.toString()}`);
+      // https://nextjs.org/docs/app/api-reference/functions/use-router
+      router.replace(`?${params.toString()}`);
     }
   }
 
