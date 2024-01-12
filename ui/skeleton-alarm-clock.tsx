@@ -1,7 +1,7 @@
-export default function SkeletonAlarmClock() {
+export default function SkeletonAlarmClock({ message }: { message?: string }) {
   let serverHour = '--';
   let serverMinutes = '--';
-  let serverCity = 'Loading...';
+  let serverCity = message ? message : 'Loading...';
   return (
     <div className="min-h-5 dark flex items-center justify-center bg-black">
       <div className="rounded-full bg-black p-8 text-white shadow-lg">

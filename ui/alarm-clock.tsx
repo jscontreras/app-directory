@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import SkeletonAlarmClock from './skeleton-alarm-clock';
 
 async function getCurrentHourInCity(timezone: string) {
   `use server`;
@@ -59,6 +60,8 @@ export default async function AlarmClock({
       </div>
     );
   } else {
-    return <></>;
+    // Add delay to make suspense evident.
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    return <SkeletonAlarmClock message="Please Select a City" />;
   }
 }

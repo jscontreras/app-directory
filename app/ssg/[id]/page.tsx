@@ -51,3 +51,6 @@ export default async function Page({
     </div>
   );
 }
+
+// Increase revalidation
+export const revalidate = 3600; // revalidate at most every hour
