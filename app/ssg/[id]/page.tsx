@@ -1,3 +1,5 @@
+import { CitiesShallowSelector } from '#/ui/cities-shallow-selector';
+
 import { RenderingInfo } from '#/ui/rendering-info';
 import { notFound } from 'next/navigation';
 
@@ -25,6 +27,7 @@ export default async function Page({ params }: { params: { id: string } }) {
           {data.title}
         </h1>
         <p className="line-clamp-3 font-medium text-gray-500">{data.body}</p>
+        <CitiesShallowSelector />
       </div>
       <div className="-order-1 col-span-full lg:order-none lg:col-span-2">
         <RenderingInfo type={isOnDemand ? 'ssgod' : 'ssg'} />
