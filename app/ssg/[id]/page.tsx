@@ -1,3 +1,4 @@
+import AlarmClock from '#/ui/alarm-clock';
 import { CitiesShallowSelector } from '#/ui/cities-shallow-selector';
 
 import { RenderingInfo } from '#/ui/rendering-info';
@@ -8,7 +9,13 @@ export async function generateStaticParams() {
   return [{ id: '1' }, { id: '2' }];
 }
 
-export default async function Page({ params }: { params: { id: string } }) {
+export default async function Page({
+  params,
+  searchParams,
+}: {
+  params: { id: string };
+  searchParams: { [key: string]: string | string[] | undefined };
+}) {
   if (Number(params.id) >= 100) {
     notFound();
   }
@@ -19,7 +26,8 @@ export default async function Page({ params }: { params: { id: string } }) {
   const data = (await res.json()) as { title: string; body: string };
 
   const isOnDemand = Number(params.id) >= 3;
-
+  if (searchParams.city) {
+  }
   return (
     <div className="grid grid-cols-6 gap-x-6 gap-y-3">
       <div className="col-span-full space-y-3 lg:col-span-4">
@@ -27,7 +35,9 @@ export default async function Page({ params }: { params: { id: string } }) {
           {data.title}
         </h1>
         <p className="line-clamp-3 font-medium text-gray-500">{data.body}</p>
-        <CitiesShallowSelector />
+        <CitiesShallowSelector>
+          <AlarmClock {...searchParams} />
+        </CitiesShallowSelector>
       </div>
       <div className="-order-1 col-span-full lg:order-none lg:col-span-2">
         <RenderingInfo type={isOnDemand ? 'ssgod' : 'ssg'} />
