@@ -22,8 +22,15 @@ export default async function Page({
     notFound();
   }
 
+  const currentDate = new Date();
+  const hours = currentDate.getHours();
+  const minutes = currentDate.getMinutes();
+  const seconds = currentDate.getSeconds();
+  console.log('##SERVER###', `Current time: ${hours}:${minutes}:${seconds}`);
+
   const res = await fetch(
     `https://jsonplaceholder.typicode.com/posts/${params.id}`,
+    { next: { revalidate: false } },
   );
   const data = (await res.json()) as { title: string; body: string };
 
@@ -51,6 +58,3 @@ export default async function Page({
     </div>
   );
 }
-
-// Increase revalidation
-export const revalidate = 3600; // revalidate at most every hour
