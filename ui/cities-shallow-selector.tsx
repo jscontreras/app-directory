@@ -50,7 +50,7 @@ export function CitiesShallowSelector({
       params.set('timezone', timezone.timezone);
       // https://nextjs.org/docs/app/api-reference/functions/use-router
       window.history.pushState(null, '', `?${params.toString()}`);
-      setCity({ name: city, timezone: timezone.timezone || '' });
+      setCity({ city: city, timezone: timezone.timezone || '' });
     }
   }
 
@@ -58,7 +58,7 @@ export function CitiesShallowSelector({
     <>
       <div className="m-2 border-2 border-dashed p-2 ">
         <h2>{`<Client Component/>`}</h2>
-        <Select onValueChange={updateUrlCityParams} defaultValue={city.name}>
+        <Select onValueChange={updateUrlCityParams} defaultValue={city.city}>
           <SelectTrigger className="w-[180px]">
             <SelectValue placeholder="Select a city" />
           </SelectTrigger>
@@ -76,7 +76,7 @@ export function CitiesShallowSelector({
       </div>
       <div className="m-2 border-2 border-dashed p-2 ">
         <h2>{`<${componentType} Component/>`}</h2>
-        <AlarmClockClient city={city.name} timezone={city.timezone} />
+        <AlarmClockClient city={city.city} timezone={city.timezone} />
       </div>
     </>
   );

@@ -1,10 +1,5 @@
-import AlarmClockClient from '#/ui/alarm-clock-client';
 import { CitiesShallowSelector } from '#/ui/cities-shallow-selector';
-
-import { RenderingInfo } from '#/ui/rendering-info';
-import SkeletonAlarmClock from '#/ui/skeleton-alarm-clock';
 import { notFound } from 'next/navigation';
-import { Suspense } from 'react';
 
 export async function generateStaticParams() {
   // Generate two pages at build time and the rest (3-100) on-demand
