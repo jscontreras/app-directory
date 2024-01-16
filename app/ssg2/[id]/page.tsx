@@ -1,5 +1,5 @@
-import AlarmClock from '#/ui/alarm-clock';
-import { CitiesSelector } from '#/ui/cities-selector';
+import AlarmClockClient from '#/ui/alarm-clock-client';
+import { CitiesShallowSelector } from '#/ui/cities-shallow-selector';
 
 import { RenderingInfo } from '#/ui/rendering-info';
 import SkeletonAlarmClock from '#/ui/skeleton-alarm-clock';
@@ -20,7 +20,7 @@ export default async function Page({ params }: { params: { id: string } }) {
     { cache: 'force-cache' },
   );
   const data = (await res.json()) as { title: string; body: string };
-  console.log('Rendering from server: searchParams');
+  console.log('## If you see this, the page was built on the server!!!');
   return (
     <div className="grid grid-cols-6 gap-x-6 gap-y-3">
       <div className="col-span-full space-y-3 lg:col-span-4">
@@ -29,6 +29,7 @@ export default async function Page({ params }: { params: { id: string } }) {
         </h1>
         <p className="line-clamp-3 font-medium text-gray-500">{data.body}</p>
         {/* client component */}
+        <CitiesShallowSelector componentType="Client" />
       </div>
     </div>
   );

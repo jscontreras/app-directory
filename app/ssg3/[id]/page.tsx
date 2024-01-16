@@ -1,7 +1,6 @@
 import AlarmClock from '#/ui/alarm-clock';
 import { CitiesSelector } from '#/ui/cities-selector';
 
-import { RenderingInfo } from '#/ui/rendering-info';
 import SkeletonAlarmClock from '#/ui/skeleton-alarm-clock';
 import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
@@ -20,7 +19,8 @@ export default async function Page({ params }: { params: { id: string } }) {
     { cache: 'force-cache' },
   );
   const data = (await res.json()) as { title: string; body: string };
-  console.log('Rendering from server: searchParams');
+  console.log('Rendering from server:');
+  const { city, timezone } = { city: '', timezone: '' };
   return (
     <div className="grid grid-cols-6 gap-x-6 gap-y-3">
       <div className="col-span-full space-y-3 lg:col-span-4">
@@ -29,6 +29,13 @@ export default async function Page({ params }: { params: { id: string } }) {
         </h1>
         <p className="line-clamp-3 font-medium text-gray-500">{data.body}</p>
         {/* client component */}
+        {/* <CitiesSelector componentType='Server'> */}
+        {/* server component */}
+        {/* <Suspense fallback={<SkeletonAlarmClock />}> */}
+        {/* @ts-expect-error Async Server Component */}
+        <AlarmClock city={city} timezone={timezone} />
+        {/* </Suspense> */}
+        {/* </CitiesSelector> */}
       </div>
     </div>
   );
