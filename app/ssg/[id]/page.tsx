@@ -1,10 +1,4 @@
-import AlarmClock from '#/ui/alarm-clock';
-import { CitiesSelector } from '#/ui/cities-selector';
-
-import { RenderingInfo } from '#/ui/rendering-info';
-import SkeletonAlarmClock from '#/ui/skeleton-alarm-clock';
 import { notFound } from 'next/navigation';
-import { Suspense } from 'react';
 
 export async function generateStaticParams() {
   // Generate two pages at build time and the rest (3-100) on-demand
@@ -17,7 +11,7 @@ export default async function Page({ params }: { params: { id: string } }) {
   }
   const res = await fetch(
     `https://jsonplaceholder.typicode.com/posts/${params.id}`,
-    { cache: 'force-cache' },
+    { next: { revalidate: false } },
   );
   const data = (await res.json()) as { title: string; body: string };
   console.log('Rendering from server (compute).');
@@ -33,3 +27,5 @@ export default async function Page({ params }: { params: { id: string } }) {
     </div>
   );
 }
+
+export const dynamic = 'force-static';

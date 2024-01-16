@@ -38,7 +38,7 @@ export default function AlarmClockClient({
     if (searchParams.has('city') && searchParams.has('timezone')) {
       // Get data from Server
       const tTimezone = searchParams.get('timezone') || '';
-      const tCity = searchParams.get('timezone') || '';
+      const tCity = searchParams.get('city') || '';
       if (tTimezone && tCity) {
         getCurrentHourInCity(tTimezone).then((value: string) => {
           setTimeObject({
@@ -47,6 +47,9 @@ export default function AlarmClockClient({
             serverHour: value.split(':')[0],
             serverMinutes: value.split(':')[1],
           });
+          // searchParams.set('city', tCity);
+          // searchParams.set('timezone', tTimezone);
+          // window.history.replaceState(null, '', `?${searchParams.toString()}`);
         });
       }
     }

@@ -49,7 +49,7 @@ export function CitiesShallowSelector({
     if (timezone) {
       params.set('timezone', timezone.timezone);
       // https://nextjs.org/docs/app/api-reference/functions/use-router
-      window.history.pushState(null, '', `?${params.toString()}`);
+      window.history.replaceState(null, '', `?${params.toString()}`);
       setCity({ city: city, timezone: timezone.timezone || '' });
     }
   }

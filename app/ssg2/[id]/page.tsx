@@ -12,7 +12,7 @@ export default async function Page({ params }: { params: { id: string } }) {
   }
   const res = await fetch(
     `https://jsonplaceholder.typicode.com/posts/${params.id}`,
-    { cache: 'force-cache' },
+    { next: { revalidate: false } },
   );
   const data = (await res.json()) as { title: string; body: string };
   console.log('## If you see this, the page was built on the server!!!');
