@@ -47,10 +47,8 @@ export function CitiesShallowSelector({
     if (timezone) {
       params.set('timezone', timezone.timezone);
       // https://nextjs.org/docs/app/api-reference/functions/use-router
-      window.history.replaceState(null, '', `?${params.toString()}`);
-      setTimeout(() => {
-        setCity({ name: city, timezone: timezone.timezone || '' });
-      }, 1000);
+      window.history.pushState(null, '', `?${params.toString()}`);
+      setCity({ name: city, timezone: timezone.timezone || '' });
     }
   }
 
@@ -76,7 +74,7 @@ export function CitiesShallowSelector({
       </div>
       <div className="m-2 border-2 border-dashed p-2 ">
         <h2>{`<${componentType} Component/>`}</h2>
-        {/* <AlarmClockClient city={city.name} timezone={city.timezone}/> */}
+        <AlarmClockClient city={city.name} timezone={city.timezone} />
       </div>
     </>
   );

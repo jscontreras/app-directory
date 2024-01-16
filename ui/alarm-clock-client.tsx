@@ -1,9 +1,22 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { ReactNode } from 'react';
 import SkeletonAlarmClock from './skeleton-alarm-clock';
-import { getCurrentHourInCityServerAction } from '#/lib/actions';
+
+const getCurrentHourInCity = async function (timezone: string) {
+  const res = await fetch(`/api/timezones?timezone=${timezone}`, {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  const data = (await res.json()) as { datetime: string };
+  const currentTime = new Date(data.datetime).toLocaleString('en-US', {
+    timeZone: timezone,
+    hour: 'numeric',
+    minute: 'numeric',
+  });
+  return currentTime;
+};
 
 export default function AlarmClockClient({
   city,
@@ -27,7 +40,7 @@ export default function AlarmClockClient({
       const tTimezone = searchParams.get('timezone') || '';
       const tCity = searchParams.get('timezone') || '';
       if (tTimezone && tCity) {
-        getCurrentHourInCityServerAction(tTimezone).then((value: string) => {
+        getCurrentHourInCity(tTimezone).then((value: string) => {
           setTimeObject({
             serverCity: tCity,
             serverTimezone: tTimezone,
