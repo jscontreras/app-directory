@@ -15,6 +15,7 @@ import {
   Select,
 } from './ui/select';
 import AlarmClockClient from './alarm-clock-client';
+import { useSearchParams } from 'next/navigation';
 
 const cities = [
   { name: 'New York', timezone: 'America/New_York' },
@@ -35,9 +36,10 @@ export function CitiesShallowSelector({
 }: {
   componentType: string;
 }) {
+  const params = useSearchParams();
   const [city, setCity] = useState({
-    name: '',
-    timezone: '',
+    city: params.get('city') || '',
+    timezone: params.get('timezone') || '',
   });
 
   function updateUrlCityParams(city: string) {
