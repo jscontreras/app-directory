@@ -15,7 +15,7 @@ export default async function Page({ params }: { params: { id: string } }) {
     { cache: 'force-cache' },
   );
   const data = (await res.json()) as { title: string; body: string };
-  console.log('## If you see this, the page was built on the server!!!');
+  console.log(`Rendering from server ssg3 (compute)[id:${params.id}].`);
   return (
     <div className="grid grid-cols-6 gap-x-6 gap-y-3">
       <div className="col-span-full space-y-3 lg:col-span-4">

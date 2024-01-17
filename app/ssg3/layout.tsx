@@ -1,5 +1,6 @@
 import { Tab } from '#/ui/tab';
 import React from 'react';
+import { RandomPostTab } from '#/ui/random-post-tab';
 
 const title = 'Static Data';
 
@@ -18,7 +19,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <Tab path="/ssg3" item={{ text: 'Home' }} />
         <Tab path="/ssg3" item={{ text: 'Post 1', slug: '1' }} />
         <Tab path="/ssg3" item={{ text: 'Post 2', slug: '2' }} />
-        <Tab path="/ssg3" item={{ text: 'Post > 3 (ISG)', slug: '18' }} />
+        <RandomPostTab path="/ssg3" />
       </div>
       <div>{children}</div>
     </div>
