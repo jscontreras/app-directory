@@ -24,7 +24,7 @@ export default async function Page({ params }: { params: { id: string } }) {
         </h1>
         <p className="line-clamp-3 font-medium text-gray-500">{data.body}</p>
         {/* client component */}
-        <CitiesShallowSelector componentType="Client" />
+        <CitiesShallowSelector componentType="Client (API Route)" />
       </div>
     </div>
   );

@@ -18,7 +18,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <Tab path="/ssg2" item={{ text: 'Home' }} />
         <Tab path="/ssg2" item={{ text: 'Post 1', slug: '1' }} />
         <Tab path="/ssg2" item={{ text: 'Post 2', slug: '2' }} />
-        <Tab path="/ssg2" item={{ text: 'Post 30', slug: '30' }} />
+        <Tab path="/ssg2" item={{ text: 'Post > 30 (ISG)', slug: '30' }} />
       </div>
 
       <div>{children}</div>
