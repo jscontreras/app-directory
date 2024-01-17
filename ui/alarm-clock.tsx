@@ -1,6 +1,10 @@
 import { ReactNode, cache } from 'react';
 import SkeletonAlarmClock from './skeleton-alarm-clock';
 
+async function sleep(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 const getCurrentHourInCity = cache(async function (timezone: string) {
   `use server`;
 
@@ -16,6 +20,7 @@ const getCurrentHourInCity = cache(async function (timezone: string) {
     hour: 'numeric',
     minute: 'numeric',
   });
+  await sleep(2000);
   return currentTime;
 });
 
