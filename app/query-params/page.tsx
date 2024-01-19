@@ -7,15 +7,19 @@ export default function Page() {
       <h1 className="text-xl font-bold">Comparing Link vs Router push</h1>
 
       <ul>
-        <li>By default, data fetching in Next.js is cached static.</li>
-        <li>This example statically caches data fetches for Post 1 and 2.</li>
         <li>
-          A random third post is fetched on-demand the first time it is
-          requested.
+          By default, there is no encoding other than the browser (like spaces).
         </li>
         <li>
-          Try navigating to each post and noting the timestamp of when the page
-          was rendered.
+          Scroll works for both <code>Link</code> and <code>Router.push</code>
+        </li>
+        <li>
+          Manual encoding could be added (when required) via{' '}
+          <code>encodeURIComponent</code>
+        </li>
+        <li>
+          Try navigating using Link or Router to see how the values are
+          populated in the URL.
         </li>
       </ul>
       <UrlEncodingForm />

@@ -21,7 +21,7 @@ export function UrlEncodingForm() {
   };
 
   const handleRouteClick = () => {
-    if (query.includes('&')) {
+    if (query.includes('&') || query.includes('%')) {
       router.push(`/query-params?q=${query}--router`, { scroll: false });
     } else {
       router.push(`/query-params?q=${encodeURIComponent(query)}--router`, {
@@ -55,7 +55,9 @@ export function UrlEncodingForm() {
           href={
             query
               ? `/query-params?q=${
-                  query.includes('&') ? encodeURIComponent(query) : query
+                  query.includes('&') || query.includes('%')
+                    ? encodeURIComponent(query)
+                    : query
                 }--link`
               : `/query-params`
           }
