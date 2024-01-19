@@ -8,21 +8,25 @@ import { Label } from '#/ui/ui/label';
 import { Input } from '#/ui/ui/input';
 import Link from 'next/link';
 import { Button } from '#/ui/ui/button';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 
 export function UrlEncodingForm() {
-  const [query, setQuery] = useState('');
   const params = useSearchParams();
+  const [query, setQuery] = useState(params.get('q') || '');
   const router = useRouter();
   const handleInputChange = (event: any) => {
     setQuery(event.target.value);
   };
 
   const handleRouteClick = () => {
-    if (query) {
+    if (query.includes('&')) {
       router.push(`/query-params?q=${query}--router`, { scroll: false });
+    } else {
+      router.push(`/query-params?q=${encodeURIComponent(query)}--router`, {
+        scroll: false,
+      });
     }
   };
 
@@ -40,7 +44,7 @@ export function UrlEncodingForm() {
       <Input
         id="url"
         className="focus:text-red-600"
-        placeholder="Enter the query var value"
+        placeholder="Enter the value for the 'q' search param."
         type="text"
         value={query}
         onChange={handleInputChange}
@@ -48,7 +52,13 @@ export function UrlEncodingForm() {
       <div className="flex space-x-2">
         <Link
           className="inline-flex items-center justify-center rounded-md border border-gray-200 border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700 dark:border-gray-800"
-          href={query ? `/query-params?q=${query}--link` : `/query-params`}
+          href={
+            query
+              ? `/query-params?q=${
+                  query.includes('&') ? encodeURIComponent(query) : query
+                }--link`
+              : `/query-params`
+          }
           scroll={false}
         >
           Redirect Using Link
