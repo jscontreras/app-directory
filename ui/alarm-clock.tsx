@@ -25,25 +25,20 @@ const getCurrentHourInCity = cache(async function (timezone: string) {
 });
 
 export default async function AlarmClock({
-  hour,
-  minutes,
-  city,
-  timezone,
+  searchParams,
 }: {
-  hour?: string;
-  minutes?: string;
-  city?: string;
-  timezone?: string;
+  searchParams: { [key: string]: string | string[] | undefined };
 }): Promise<ReactNode> {
-  let serverHour = hour;
-  let serverMinutes = minutes;
-  let serverCity = city;
-  if (timezone) {
+  let serverHour = '';
+  let serverMinutes = '';
+  let serverCity = searchParams['city'] || '';
+  let timezone = searchParams['timezone'] || '';
+  if (timezone && typeof timezone === 'string') {
     // calling server function
     const time = await getCurrentHourInCity(timezone);
     serverHour = time.split(':')[0];
     serverMinutes = time.split(':')[1];
-
+    console.log('searchParams', searchParams);
     return (
       <div className="min-h-5 dark flex items-center justify-center bg-black">
         <div className="rounded-full bg-black p-8 text-white shadow-lg">

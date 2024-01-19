@@ -1,5 +1,7 @@
 import { CitiesShallowSelector } from '#/ui/cities-shallow-selector';
+import SkeletonAlarmClock from '#/ui/skeleton-alarm-clock';
 import { notFound } from 'next/navigation';
+import { Suspense } from 'react';
 
 export async function generateStaticParams() {
   // Generate two pages at build time and the rest (3-100) on-demand
@@ -24,7 +26,10 @@ export default async function Page({ params }: { params: { id: string } }) {
         </h1>
         <p className="line-clamp-3 font-medium text-gray-500">{data.body}</p>
         {/* client component */}
-        <CitiesShallowSelector componentType="Client (API Route)" />
+        {/* https://nextjs.org/docs/app/api-reference/functions/use-search-params#static-rendering */}
+        <Suspense fallback={<SkeletonAlarmClock />}>
+          <CitiesShallowSelector componentType="Client (API Route)" />
+        </Suspense>
       </div>
     </div>
   );

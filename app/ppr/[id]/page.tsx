@@ -8,6 +8,11 @@ export async function generateStaticParams() {
   return [{ id: '1' }, { id: '2' }];
 }
 
+/**
+ * This page is dynamic due to the use of searchParams
+ * @param param0
+ * @returns
+ */
 export default async function Page({
   params,
   searchParams,
@@ -33,10 +38,7 @@ export default async function Page({
           {/* server component */}
           <Suspense fallback={<SkeletonAlarmClock />}>
             {/* @ts-expect-error Async Server Component */}
-            <AlarmClock
-              city={searchParams.city ? searchParams.city : ''}
-              timezone={searchParams.timezone ? searchParams.timezone : ''}
-            />
+            <AlarmClock searchParams={searchParams} />
           </Suspense>
         </CitiesSelector>
       </div>
