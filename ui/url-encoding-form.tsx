@@ -20,13 +20,22 @@ export function UrlEncodingForm() {
     setQuery(event.target.value);
   };
 
-  const handleRouteClick = () => {
-    if (query.includes('&') || query.includes('%')) {
-      router.push(`/query-params?q=${query}--router`, { scroll: false });
+  const handleRouteClick = (encode = false) => {
+    if (encode) {
+      const webParams = new URLSearchParams(params.toString());
+      webParams.set('q', query);
+      router.push(`/query-params?${webParams.toString()}--router`);
     } else {
-      router.push(`/query-params?q=${encodeURIComponent(query)}--router`, {
-        scroll: false,
-      });
+      //handling encoding manually
+      if (!query.includes('&')) {
+        router.push(`/query-params?q=${query}--router`, {
+          scroll: false,
+        });
+      } else {
+        router.push(`/query-params?q=${encodeURIComponent(query)}--router`, {
+          scroll: false,
+        });
+      }
     }
   };
 
@@ -63,14 +72,23 @@ export function UrlEncodingForm() {
           }
           scroll={false}
         >
-          Redirect Using Link
+          Link
         </Link>
         <Button
-          className="inline-flex items-center justify-center rounded-md border border-gray-200 border-transparent bg-indigo-100 px-4 py-2 text-sm font-medium text-indigo-700 hover:bg-indigo-200 dark:border-gray-800"
+          className="inline-flex items-center justify-center rounded-md border border-gray-200 border-transparent bg-sky-500  px-4 py-2 text-sm font-medium text-indigo-700 hover:bg-indigo-200 dark:border-gray-800"
           variant="outline"
-          onClick={handleRouteClick}
+          onClick={() => handleRouteClick()}
         >
-          Redirect Using Router.push
+          Router Push
+        </Button>
+        <Button
+          className="inline-flex items-center justify-center rounded-md border border-gray-200 border-transparent bg-sky-100 px-4 py-2 text-sm font-medium text-indigo-700 hover:bg-sky-200 dark:border-gray-800"
+          variant="outline"
+          onClick={() => {
+            handleRouteClick(true);
+          }}
+        >
+          Router Push + URLSearchParams
         </Button>
       </div>
     </div>

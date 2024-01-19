@@ -24,7 +24,7 @@ export default function Page() {
       </ul>
       <UrlEncodingForm />
       <div className="flex gap-2">
-        <ExternalLink href="https://nextjs.org/docs/app/building-your-application/data-fetching/fetching#static-data-fetching">
+        <ExternalLink href="https://nextjs.org/docs/app/api-reference/functions/use-search-params#examples">
           Docs
         </ExternalLink>
         <ExternalLink href="https://github.com/vercel/app-playground/tree/main/app/ssg">
