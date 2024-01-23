@@ -1,6 +1,7 @@
 import AlarmClock from '#/ui/alarm-clock';
 import { CitiesSelector } from '#/ui/cities-selector';
 import RendererWrapper from '#/ui/renderer-wrapper';
+import SkeletonAlarmClock from '#/ui/skeleton-alarm-clock';
 
 export async function generateStaticParams() {
   // Generate two pages at build time and the rest (3-100) on-demand
@@ -33,10 +34,14 @@ export default async function Page({ params }: { params: { id: string } }) {
         <RendererWrapper
           rendererFn={async (clientParams: any) => {
             'use server';
+            // Server component to be rendered after mount.
             // @ts-expect-error Server Component
             return <AlarmClock searchParams={clientParams} />;
           }}
-        ></RendererWrapper>
+        >
+          {/* Component to render on mount */}
+          <SkeletonAlarmClock message="--" />
+        </RendererWrapper>
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 'use client';
 
-import { Suspense, useEffect, useState } from 'react';
+import { ReactNode, Suspense, useEffect, useState } from 'react';
 import SkeletonAlarmClock from './skeleton-alarm-clock';
 
 /**
@@ -11,16 +11,17 @@ import SkeletonAlarmClock from './skeleton-alarm-clock';
  */
 export default function RendererWrapper({
   rendererFn,
+  children,
 }: {
   rendererFn: Function;
+  children: ReactNode | ReactNode[];
 }) {
   // Client will be used here
   const [params, setParams] = useState({
     city: '',
     timezone: '',
-    ready: false,
     // Render for the first rendering!
-    render: <SkeletonAlarmClock message="Select a City" />,
+    render: children,
   });
 
   // THis will only occur in the client
@@ -49,17 +50,16 @@ export default function RendererWrapper({
           setParams({
             city: tCity,
             timezone: tTimezone,
-            ready: true,
             render: render,
           });
         }
       }
-    }, 200);
+    }, 100);
   }, [params, rendererFn]);
 
   return (
     <div className="m-2 border-2 border-dashed p-2 ">
-      <h2>{`<Server Component/>`}</h2>
+      <h2>{`<Hybrid Component/>`}</h2>
       <Suspense fallback={<SkeletonAlarmClock />}>{params.render}</Suspense>
     </div>
   );
