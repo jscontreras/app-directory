@@ -27,10 +27,9 @@ export default async function Page({ params }: { params: { id: string } }) {
           {data.title}
         </h1>
         <p className="line-clamp-3 font-medium text-gray-500">{data.body}</p>
-        {/* client component */}
-        <CitiesSelector componentType="Server">
-          {/* </Suspense> */}
-        </CitiesSelector>
+        {/* client component that injects query params*/}
+        <CitiesSelector componentType="Server" />
+        {/* Special component that injects client params into server components */}
         <RendererWrapper
           rendererFn={async (clientParams: any) => {
             'use server';

@@ -35,7 +35,7 @@ export function CitiesSelector({
   children,
   componentType,
 }: {
-  children: ReactNode | ReactNode[];
+  children?: ReactNode | ReactNode[];
   componentType: string;
 }) {
   const searchParams = useSearchParams();
