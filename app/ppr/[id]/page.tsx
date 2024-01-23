@@ -1,7 +1,6 @@
 import AlarmClock from '#/ui/alarm-clock';
 import { CitiesSelector } from '#/ui/cities-selector';
-import SkeletonAlarmClock from '#/ui/skeleton-alarm-clock';
-import { Suspense } from 'react';
+import RendererWrapper from '#/ui/renderer-wrapper';
 
 export async function generateStaticParams() {
   // Generate two pages at build time and the rest (3-100) on-demand
@@ -13,13 +12,7 @@ export async function generateStaticParams() {
  * @param param0
  * @returns
  */
-export default async function Page({
-  params,
-  searchParams,
-}: {
-  params: { id: string };
-  searchParams: { [key: string]: string | string[] | undefined };
-}) {
+export default async function Page({ params }: { params: { id: string } }) {
   const res = await fetch(
     `https://jsonplaceholder.typicode.com/posts/${params.id}`,
     { cache: 'force-cache' },
@@ -35,12 +28,15 @@ export default async function Page({
         <p className="line-clamp-3 font-medium text-gray-500">{data.body}</p>
         {/* client component */}
         <CitiesSelector componentType="Server">
-          {/* server component */}
-          <Suspense fallback={<SkeletonAlarmClock />}>
-            {/* @ts-expect-error Async Server Component */}
-            <AlarmClock searchParams={searchParams} />
-          </Suspense>
+          {/* </Suspense> */}
         </CitiesSelector>
+        <RendererWrapper
+          rendererFn={async (clientParams: any) => {
+            'use server';
+            // @ts-ignore
+            return <AlarmClock searchParams={clientParams} />;
+          }}
+        ></RendererWrapper>
       </div>
     </div>
   );

@@ -38,7 +38,7 @@ export default async function AlarmClock({
     const time = await getCurrentHourInCity(timezone);
     serverHour = time.split(':')[0];
     serverMinutes = time.split(':')[1];
-    console.log('searchParams', searchParams);
+    console.log('searchParams inside AlarmClock', searchParams);
     return (
       <div className="min-h-5 dark flex items-center justify-center bg-black">
         <div className="rounded-full bg-black p-8 text-white shadow-lg">

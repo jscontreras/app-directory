@@ -78,10 +78,10 @@ export function CitiesSelector({
           </SelectContent>
         </Select>
       </div>
-      <div className="m-2 border-2 border-dashed p-2 ">
+      {/* <div className="m-2 border-2 border-dashed p-2 ">
         <h2>{`<${componentType} Component/>`}</h2>
         {children}
-      </div>
+      </div> */}
     </>
   );
 }

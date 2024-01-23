@@ -21,18 +21,19 @@ export function UrlEncodingForm() {
   };
 
   const handleRouteClick = (encode = false) => {
+    // As in the official documentation
     if (encode) {
       const webParams = new URLSearchParams(params.toString());
       webParams.set('q', query);
       router.push(`/query-params?${webParams.toString()}--router`);
     } else {
       //handling encoding manually
-      if (!query.includes('&')) {
-        router.push(`/query-params?q=${query}--router`, {
+      if (query.includes('&')) {
+        router.push(`/query-params?q=${encodeURIComponent(query)}--router`, {
           scroll: false,
         });
       } else {
-        router.push(`/query-params?q=${encodeURIComponent(query)}--router`, {
+        router.push(`/query-params?q=${query}--router`, {
           scroll: false,
         });
       }
