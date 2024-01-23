@@ -54,7 +54,7 @@ export function CitiesSelector({
       params.set('timezone', timezone.timezone);
       setCity({ name: city, timezone: timezone.timezone || '' });
       // https://nextjs.org/docs/app/api-reference/functions/use-router
-      router.replace(`?${params.toString()}`);
+      router.replace(`?${params.toString()}`, { scroll: false });
     }
   }
 
