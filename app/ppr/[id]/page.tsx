@@ -33,7 +33,7 @@ export default async function Page({ params }: { params: { id: string } }) {
         <RendererWrapper
           rendererFn={async (clientParams: any) => {
             'use server';
-            // @ts-ignore
+            // @ts-expect-error Server Component
             return <AlarmClock searchParams={clientParams} />;
           }}
         ></RendererWrapper>
