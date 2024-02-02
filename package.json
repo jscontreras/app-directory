@@ -71,5 +71,19 @@
         "arm64"
       ]
     }
+  },
+  "optionalDependencies": {
+    "@img/sharp-darwin-arm64": "0.33.2",
+    "@img/sharp-darwin-x64": "0.33.2",
+    "@img/sharp-libvips-darwin-arm64": "1.0.1",
+    "@img/sharp-libvips-darwin-x64": "1.0.1",
+    "@img/sharp-libvips-linux-arm": "1.0.1",
+    "@img/sharp-libvips-linux-arm64": "1.0.1",
+    "@img/sharp-libvips-linux-x64": "1.0.1",
+    "@img/sharp-libvips-win32-x64": "1.0.1",
+    "@img/sharp-linux-arm": "0.33.2",
+    "@img/sharp-linux-arm64": "0.33.2",
+    "@img/sharp-linux-x64": "0.33.2",
+    "@img/sharp-win32-x64": "0.33.2"
   }
 }
