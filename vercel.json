@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/test_3",
-      "destination": "https://my-site.com/catalog"
+      "destination": "https://nextjs-algolia-dual.vercel.app/catalog"
     },
     {
       "source": "/test_4/:path*",
@@ -10,7 +10,7 @@
     },
     {
       "source": "/test_5/:path",
-      "destination": "https://my-site.com/catalog/:path"
+      "destination": "https://nextjs-algolia-dual.vercel.app/catalog/:path"
     }
   ]
 }
