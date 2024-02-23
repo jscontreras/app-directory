@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/test_3",
+      "destination": "https://nextjs-algolia-dual.vercel.app/algolia/c/women/bags"
+    }
+  ]
+}
