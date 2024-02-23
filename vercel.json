@@ -2,11 +2,15 @@
   "rewrites": [
     {
       "source": "/test_3",
-      "destination": "https://nextjs-algolia-dual.vercel.app/algolia/c/women/bags"
+      "destination": "https://my-site.com/catalog"
     },
     {
       "source": "/test_4/:path*",
       "destination": "/ssg/:path"
+    },
+    {
+      "source": "/test_5/:path",
+      "destination": "https://my-site.com/catalog/:path"
     }
   ]
 }
