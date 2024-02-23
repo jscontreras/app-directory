@@ -37,3 +37,6 @@ yarn-error.log*
 *.tsbuildinfo
 
 certificates
+
+#VSCode configs
+.vscode

@@ -1,4 +1,5 @@
 import { RenderingInfo } from '#/ui/rendering-info';
+import { revalidatePath } from 'next/cache';
 
 export const dynamicParams = true;
 
@@ -7,6 +8,11 @@ export async function generateStaticParams() {
 }
 
 export default async function Page({ params }: { params: { id: string } }) {
+  if (parseInt(params.id) > 60) {
+    revalidatePath(`/isr/${params.id}`);
+    return <h1>Should not be cached Ever!!!</h1>;
+  }
+
   const res = await fetch(
     `https://jsonplaceholder.typicode.com/posts/${params.id}`,
     { next: { revalidate: 60, tags: ['collection'] } },
