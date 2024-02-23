@@ -13,16 +13,6 @@ module.exports = {
           destination: '/ssg/:path',
         },
       ],
-      fallback: [
-        {
-          source: '/_next/:file*',
-          destination: `https://www.domain.com/_next/:file*`,
-        },
-        {
-          source: '/:path*',
-          destination: `https://www.domain.com/:path*/`,
-        },
-      ],
     };
   },
 };
