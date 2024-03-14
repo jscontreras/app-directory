@@ -70,6 +70,11 @@ export const demos: { name: string; items: Item[] }[] = [
         slug: 'isr',
         description: 'Get the best of both worlds between static & dynamic',
       },
+      {
+        name: 'Revalidate Path and with Cache Stale',
+        slug: 'revalidate',
+        description: 'Revalidate path + Vercel cache stale',
+      },
     ],
   },
   {

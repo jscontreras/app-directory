@@ -1,5 +1,7 @@
 'use server';
 
+import { revalidatePath } from 'next/cache';
+
 export async function getCurrentHourInCityServerAction(timezone: string) {
   console.log('timezone', timezone);
   const res = await fetch(
@@ -15,4 +17,8 @@ export async function getCurrentHourInCityServerAction(timezone: string) {
     minute: 'numeric',
   });
   return currentTime;
+}
+
+export async function revalidatePathCahe(path: string) {
+  revalidatePath(path);
 }

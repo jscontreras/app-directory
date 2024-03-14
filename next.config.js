@@ -1,4 +1,21 @@
 module.exports = {
+  headers: async () => {
+    return [
+      {
+        source: '/revalidate',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 's-maxage=31536000, stale-while-revalidate=40',
+          },
+          {
+            key: 'x-custom-header',
+            value: 'my custom header value',
+          },
+        ],
+      },
+    ];
+  },
   rewrites: async () => {
     return {
       beforeFiles: [
