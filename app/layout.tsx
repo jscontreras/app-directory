@@ -2,7 +2,9 @@ import '#/styles/globals.css';
 import { AddressBar } from '#/ui/address-bar';
 import Byline from '#/ui/byline';
 import { GlobalNav } from '#/ui/global-nav';
+import { VercelToolbarUI } from '#/ui/vercel-toolbar-ui';
 import { Metadata } from 'next';
+import { Suspense } from 'react';
 
 export const metadata: Metadata = {
   title: {
@@ -46,6 +48,9 @@ export default function RootLayout({
             <Byline className="fixed sm:hidden" />
           </div>
         </div>
+        <Suspense>
+          <VercelToolbarUI />
+        </Suspense>
       </body>
     </html>
   );
