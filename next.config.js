@@ -14,6 +14,19 @@ module.exports = {
           },
         ],
       },
+      {
+        source: '/rewrite-test',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 's-maxage=31536000, public, stale-while-revalidate=120',
+          },
+          {
+            key: 'x-custom-header',
+            value: 'my custom header value',
+          },
+        ],
+      },
     ];
   },
   rewrites: async () => {
@@ -22,6 +35,10 @@ module.exports = {
         {
           source: '/test_0/:path*',
           destination: '/ssg/:path',
+        },
+        {
+          source: 'rewrite-test',
+          destination: 'https://www.mycustomdomain.info/',
         },
       ],
       afterFiles: [
