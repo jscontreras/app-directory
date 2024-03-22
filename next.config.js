@@ -38,7 +38,8 @@ module.exports = {
         },
         {
           source: '/rewrite-test',
-          destination: 'https://www.cornerstoneondemand.com/company',
+          destination:
+            'https://app-directory-git-main-success-tc-vtest314.vercel.app/context/electronics',
         },
       ],
       afterFiles: [
