@@ -37,7 +37,7 @@ module.exports = {
           destination: '/ssg/:path',
         },
         {
-          source: 'rewrite-test',
+          source: '/rewrite-test',
           destination: 'https://www.mycustomdomain.info/',
         },
       ],
