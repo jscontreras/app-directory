@@ -38,7 +38,7 @@ module.exports = {
         },
         {
           source: '/rewrite-test',
-          destination: 'https://www.mycustomdomain.info/',
+          destination: 'https://www.cornerstoneondemand.com/company',
         },
       ],
       afterFiles: [
