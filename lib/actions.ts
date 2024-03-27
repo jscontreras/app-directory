@@ -21,4 +21,5 @@ export async function getCurrentHourInCityServerAction(timezone: string) {
 
 export async function revalidatePathCahe(path: string) {
   revalidatePath(path);
+  console.log(`Invalidating ${path}`);
 }
