@@ -14,19 +14,26 @@ export async function generateStaticParams() {
  * @returns
  */
 export default async function Page({ params }: { params: { id: string } }) {
-  const res = await fetch(
-    `https://jsonplaceholder.typicode.com/posts/${params.id}`,
-    { cache: 'force-cache' },
-  );
-  const data = (await res.json()) as { title: string; body: string };
-  console.log(`Rendering from server ppr (compute)[id:${params.id}].`);
   return (
     <div className="grid grid-cols-6 gap-x-6 gap-y-3">
       <div className="col-span-full space-y-3 lg:col-span-4">
         <h1 className="truncate text-2xl font-medium capitalize text-gray-200">
-          {data.title}
+          {'Static Page with Dynamic Content'}
         </h1>
-        <p className="line-clamp-3 font-medium text-gray-500">{data.body}</p>
+        <p className="line-clamp-3 font-medium text-gray-500">
+          <ul>
+            <li>
+              The page loads statically except for the time component which
+              loads on Suspense.
+            </li>
+            <li>Dynamic data is loaded via a Server Component.</li>
+            <li>
+              The client component reads the query params in the URL and sends
+              them to the React Server Component.
+            </li>
+            <li>The Server Component has a fetch cached callback.</li>
+          </ul>
+        </p>
         {/* client component that injects query params*/}
         <CitiesSelector componentType="Server" />
         {/* Special component that injects client params into server components */}

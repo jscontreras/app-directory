@@ -17,8 +17,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <div className="space-y-9">
       <div className="flex flex-wrap items-center gap-2">
         <Tab path="/ppr" item={{ text: 'Home' }} />
-        <Tab path="/ppr" item={{ text: 'Post 1', slug: '1' }} />
-        <Tab path="/ppr" item={{ text: 'Post 2', slug: '2' }} />
+        <Tab path="/ppr" item={{ text: 'Timezones', slug: '1' }} />
       </div>
       <div>{children}</div>
     </div>

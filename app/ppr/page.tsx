@@ -3,19 +3,16 @@ import { ExternalLink } from '#/ui/external-link';
 export default function Page() {
   return (
     <div className="prose prose-sm prose-invert max-w-none">
-      <h1 className="text-xl font-bold">Static Data</h1>
+      <h1 className="text-xl font-bold">Static Page with Dynamic Content</h1>
 
       <ul>
-        <li>By default, data fetching in Next.js is cached static.</li>
-        <li>This example statically caches data fetches for Post 1 and 2.</li>
+        <li>The Timezones page initially loads statically (cached).</li>
+        <li>Dynamic data is loaded via a Server Component.</li>
         <li>
-          A random third post is fetched on-demand the first time it is
-          requested.
+          The client component reads the query params in the URL and sends them
+          to the React Server Component.
         </li>
-        <li>
-          Try navigating to each post and noting the timestamp of when the page
-          was rendered.
-        </li>
+        <li>The Server Component has a fetch cached callback.</li>
       </ul>
 
       <div className="flex gap-2">
