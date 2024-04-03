@@ -75,6 +75,12 @@ export const demos: { name: string; items: Item[] }[] = [
         slug: 'revalidate',
         description: 'Revalidate path + Vercel cache stale',
       },
+      {
+        name: 'Static page with Dynamic component',
+        slug: 'ppr/1',
+        description:
+          'Loads static page and uses query params to interact dinamically with the content',
+      },
     ],
   },
   {
