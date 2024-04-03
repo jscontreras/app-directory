@@ -20,7 +20,7 @@ const getCurrentHourInCity = cache(async function (timezone: string) {
     hour: 'numeric',
     minute: 'numeric',
   });
-  await sleep(2000);
+  // await sleep(2000);
   return currentTime;
 });
 
@@ -35,7 +35,9 @@ export default async function AlarmClock({
   let timezone = searchParams['timezone'] || '';
   if (timezone && typeof timezone === 'string') {
     // calling server function
+
     const time = await getCurrentHourInCity(timezone);
+
     serverHour = time.split(':')[0];
     serverMinutes = time.split(':')[1];
     console.log('searchParams inside AlarmClock', searchParams);
