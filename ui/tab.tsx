@@ -22,7 +22,7 @@ export const Tab = ({
     (!item.slug && segment === null) ||
     segment === item.segment ||
     // Nested pages e.g. `/layouts/electronics`
-    segment === item.slug;
+    segment === item.slug?.split('?')[0];
 
   return (
     <Link
