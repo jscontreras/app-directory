@@ -46,8 +46,8 @@ export default function Page() {
         <li>
           Use <span className="text-amber-400">ReactDom.preload()</span> to
           create the prefetch link (same as a{' '}
-          <Link href="https://github.com/vercel/next.js/blob/66f8ffaa7a834f6591a12517618dce1fd69784f6/packages/next/src/client/image-component.tsx#L332">
-            NextJS source
+          <Link href="https://github.com/jscontreras/app-directory/blob/main/app/responsive-image/picture/page.tsx">
+            Code
           </Link>{' '}
           ).
         </li>
