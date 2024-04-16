@@ -1,4 +1,5 @@
 import { ExternalLink } from '#/ui/external-link';
+import Link from 'next/link';
 
 export default function Page() {
   return (
@@ -9,6 +10,12 @@ export default function Page() {
         <li>
           This example uses context to share state between Client Components
           that cross the Server/Client Component boundary.
+        </li>
+        <li>
+          Use children to both render client and server components.
+          <Link href="https://nextjs.org/docs/app/building-your-application/rendering/composition-patterns">
+            Composition Patterns.
+          </Link>
         </li>
         <li>
           Try incrementing the counter and navigating between pages. Note how

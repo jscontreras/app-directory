@@ -92,6 +92,11 @@ export const demos: { name: string; items: Item[] }[] = [
         description:
           'Pass context between Client Components that cross Server/Client Component boundary',
       },
+      {
+        name: 'Responsive Image',
+        slug: 'responsive-image',
+        description: 'Handle multiple images for different viewports and sizes',
+      },
     ],
   },
   {

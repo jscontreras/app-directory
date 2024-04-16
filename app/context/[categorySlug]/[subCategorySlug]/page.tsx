@@ -14,7 +14,7 @@ export default async function Page({
     <Boundary labels={['Page [Server Component]']} animateRerendering={false}>
       <div className="space-y-8">
         <h1 className="text-xl font-medium text-gray-400/80">
-          {category.name}
+          Subcategory {category.name}
         </h1>
 
         <Counter />
