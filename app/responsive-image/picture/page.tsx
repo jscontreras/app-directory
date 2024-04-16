@@ -46,7 +46,7 @@ export default function Page() {
         <li>
           Use <span className="text-amber-400">ReactDom.preload()</span> to
           create the prefetch link (same as a{' '}
-          <Link href="https://github.com/jscontreras/app-directory/blob/main/app/responsive-image/picture/page.tsx">
+          <Link href="https://github.com/vercel/next.js/blob/66f8ffaa7a834f6591a12517618dce1fd69784f6/packages/next/src/client/image-component.tsx#L332">
             Code
           </Link>{' '}
           ).
@@ -55,10 +55,10 @@ export default function Page() {
 
       <div className="flex gap-2">
         <ExternalLink href="https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images">
-          Picture Docs
+          Docs
         </ExternalLink>
-        <ExternalLink href="https://react.dev/reference/react-dom/preload">
-          ReactDOM preload()
+        <ExternalLink href="https://github.com/jscontreras/app-directory/blob/main/app/responsive-image/picture/page.tsx">
+          Code
         </ExternalLink>
       </div>
     </div>
