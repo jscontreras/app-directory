@@ -18,7 +18,7 @@ export const RevalidateTagButton = ({
     setActive(false);
     await revalidateTagCahe(tag);
     alert(`Revalidated (${tag})`);
-    location.reload();
+    //location.reload();
   }
   return (
     <button

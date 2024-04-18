@@ -17,7 +17,7 @@ export const RevalidateButton = ({
     setActive(false);
     await revalidatePathCahe(path);
     alert(`Revalidated (${path})`);
-    location.reload();
+    //location.reload();
   }
   return (
     <button

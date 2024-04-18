@@ -64,6 +64,13 @@ export default async function Page() {
           When invalidating via tags, only one fetch tag is referenced but
           everything gets uncached (path and fetches).
         </li>
+        <li>
+          Both path-based and tag-based revalidations are not re-validating the
+          cache, but invalidating the cached values. In other words, it clears
+          the corresponding cached values without storing new ones (fresh
+          values). Cache is going to be populated based on future requests.
+          {` That's why it takes 10 seconds when reloading the page after invalidating cache.`}
+        </li>
       </ul>
       <div className="mb-8 grid grid-cols-6 gap-x-6 gap-y-3">
         <div className="col-span-full space-y-3 lg:col-span-4">
