@@ -54,7 +54,10 @@ export default async function Page() {
 
       <ul>
         <li>This page takes 10 seconds to be rendered (when not cached)</li>
-        <li>Time in New York: {date} (obtained via fetch)</li>
+        <li>
+          Time in New York: <span className="text-amber-400">{date}</span>{' '}
+          (obtained via fetch)
+        </li>
         <li>Lorem ipsum post (obtained via fetch)</li>
         <li>It contains two fetched requests tagged with unique tags.</li>
         <li>
