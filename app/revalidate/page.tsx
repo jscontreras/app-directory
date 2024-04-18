@@ -45,7 +45,7 @@ export default async function Page() {
 
       <ul>
         <li>This page takes 10 seconds to be rendered</li>
-        <li>Time in New York: {date}</li>
+        <li>Time in New York: {date} (obtained via fetch)</li>
       </ul>
 
       <div className="flex gap-2">
