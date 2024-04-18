@@ -71,7 +71,7 @@ export const demos: { name: string; items: Item[] }[] = [
         description: 'Get the best of both worlds between static & dynamic',
       },
       {
-        name: 'Revalidate Path and with Cache Stale',
+        name: 'Revalidate Path | Tag',
         slug: 'revalidate',
         description: 'Revalidate path + Vercel cache stale',
       },
