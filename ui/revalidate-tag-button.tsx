@@ -1,16 +1,16 @@
 'use client';
-import { revalidatePathCahe } from '#/lib/actions';
+import { revalidateTagCahe } from '#/lib/actions';
 
-export const RevalidateButton = ({
-  path,
+export const RevalidateTagButton = ({
+  tag,
   copy,
 }: {
-  path: string;
+  tag: string;
   copy: string;
 }) => {
   async function btnClickHandler() {
-    await revalidatePathCahe(path);
-    alert(`Revalidated (${path})`);
+    await revalidateTagCahe(tag);
+    alert(`Revalidated (${tag})`);
     location.reload();
   }
   return (

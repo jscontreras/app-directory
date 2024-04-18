@@ -26,15 +26,26 @@ function delay(ms: number) {
 }
 
 export default async function Page() {
-  await delay(20000);
-  const date = formatDate(new Date());
+  await delay(9000);
+  const res = await fetch(`https://worldtimeapi.org/api/ip`, {
+    next: { tags: ['test-tag'] },
+  });
+  const data = (await res.json()) as { datetime: string };
+
+  const currentTime = new Date(data.datetime).toLocaleString('en-US', {
+    timeZone: 'America/New_York',
+    hour: 'numeric',
+    minute: 'numeric',
+    second: 'numeric',
+  });
+  const date = currentTime;
   return (
     <div className="prose prose-sm prose-invert max-w-none">
       <h1 className="text-xl font-bold">Revalidating Path</h1>
 
       <ul>
-        <li>This page takes 20 seconds to be rendered</li>
-        <li>{date}</li>
+        <li>This page takes 10 seconds to be rendered</li>
+        <li>Time in New York: {date}</li>
       </ul>
 
       <div className="flex gap-2">

@@ -1,6 +1,6 @@
 'use server';
 
-import { revalidatePath } from 'next/cache';
+import { revalidatePath, revalidateTag } from 'next/cache';
 
 export async function getCurrentHourInCityServerAction(timezone: string) {
   console.log('timezone', timezone);
@@ -20,5 +20,9 @@ export async function getCurrentHourInCityServerAction(timezone: string) {
 }
 
 export async function revalidatePathCahe(path: string) {
-  revalidatePath(path);
+  await revalidatePath(path);
+}
+
+export async function revalidateTagCahe(tag: string) {
+  await revalidateTag(tag);
 }
