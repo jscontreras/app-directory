@@ -67,6 +67,15 @@ export default async function Page() {
           <h1 className="truncate text-2xl font-medium capitalize text-gray-200">
             {dataLorem.title} [{postId}]
           </h1>
+          <h3 className="text-gray-200">
+            Last snapshot:{' '}
+            {new Date().toLocaleString('en-US', {
+              timeZone: 'America/New_York',
+              hour: 'numeric',
+              minute: 'numeric',
+              second: 'numeric',
+            })}
+          </h3>
           <p className="line-clamp-3 font-medium text-gray-500">
             {dataLorem.body}
           </p>
