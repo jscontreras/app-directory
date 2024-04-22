@@ -1,4 +1,3 @@
-import { RandomPostTab } from '#/ui/random-post-tab';
 import { Tab } from '#/ui/tab';
 import React from 'react';
 
@@ -19,11 +18,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <Tab path="/responsive-image" item={{ text: 'Same Image' }} />
         <Tab
           path="/responsive-image"
-          item={{ text: 'Different Images (html)', slug: 'picture' }}
+          item={{ text: 'Different Images (NextImage)', slug: 'picture-next' }}
         />
         <Tab
           path="/responsive-image"
-          item={{ text: 'Different Images (NextImage)', slug: 'picture-next' }}
+          item={{ text: 'Different Images (html)', slug: 'picture' }}
         />
       </div>
       <div>{children}</div>
