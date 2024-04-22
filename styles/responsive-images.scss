@@ -1,0 +1,22 @@
+.responsive-images {
+  @media (max-width: 768px) {
+    img {
+      &.mobile-pic {
+        display: block;
+      }
+      &.desktop-pic {
+        display: none;
+      }
+    }
+  }
+  @media (min-width: 768px) {
+    img {
+      &.mobile-pic {
+        display: none;
+      }
+      &.desktop-pic {
+        display: block;
+      }
+    }
+  }
+}

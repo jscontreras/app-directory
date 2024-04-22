@@ -19,7 +19,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <Tab path="/responsive-image" item={{ text: 'Same Image' }} />
         <Tab
           path="/responsive-image"
-          item={{ text: 'Different Images', slug: 'picture' }}
+          item={{ text: 'Different Images (html)', slug: 'picture' }}
+        />
+        <Tab
+          path="/responsive-image"
+          item={{ text: 'Different Images (NextImage)', slug: 'picture-next' }}
         />
       </div>
       <div>{children}</div>
