@@ -1,11 +1,20 @@
 import { ExternalLink } from '#/ui/external-link';
 import Image from 'next/image';
 import dingo from '#/public/dingos/dingo.jpg';
+import Link from 'next/link';
 
 export default function Page() {
+  const extDocUrl =
+    'https://css-tricks.com/improve-largest-contentful-paint-lcp-on-your-website-with-ease/#aa-2-preload-critical-resources';
   return (
     <div className="prose prose-sm prose-invert max-w-none">
-      <h1 className="text-xl font-bold">Responsive Images (with same asset)</h1>
+      <h1 className="text-xl font-bold">
+        {`Responsive Images (with same asset + `}
+        <a href={extDocUrl} target="_blank" rel="noreferrer">
+          LCP optimization
+        </a>
+        )
+      </h1>
       <h1>Image Component With Layout Responsive</h1>
       <Image
         alt="Dingo"

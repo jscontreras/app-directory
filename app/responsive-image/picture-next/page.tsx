@@ -4,6 +4,7 @@ import Image, { StaticImageData } from 'next/image';
 import dingoMobile from '#/public/dingos/dingo_768.jpg';
 import dingo from '#/public/dingos/dingo_1024.jpg';
 import { ShowResponsiveImages } from '#/ui/show-responsove-image';
+import Link from 'next/link';
 
 /*
  * Wrapper for NextJs images that renders two images if providing a mobile asset src.
@@ -61,14 +62,24 @@ function ResponsiveImageNext({
 }
 
 export default function Page() {
+  const extDocUrl =
+    'https://css-tricks.com/improve-largest-contentful-paint-lcp-on-your-website-with-ease/#aa-2-preload-critical-resources';
   const src = '/dingos/dingo.jpg';
   return (
     <div className="prose prose-sm prose-invert max-w-none">
-      <h1 className="text-xl font-bold">Responsive Images (multiple assets)</h1>
+      <h1 className="text-xl font-bold">
+        {`Responsive Images (multiple assets + `}
+        <a href={extDocUrl} target="_blank" rel="noreferrer">
+          LCP optimization
+        </a>
+        )
+      </h1>
       <h1>Image Component With Layout Responsive</h1>
       <ResponsiveImageNext src={src} mobileSrc={dingoMobile} alt={'Dingo'} />
       <p className="pl-2">
-        {`Even when this demo preloads both images (desktop & mobile), it will load a small blurred image (16x16) for the one that doesn't match screen width
+        {`Even when this demo preloads both images (desktop & `}
+        <span className="text-emerald-400">mobile</span>
+        {`) it will load a small blurred image (16x16) for the one that doesn't match screen width
        specified in the `}
         <span className="text-amber-400">{' sizes '}</span>
         {` attribute.`}

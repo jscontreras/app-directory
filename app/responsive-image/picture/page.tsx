@@ -16,13 +16,20 @@ function PreloadLink({
 }
 
 export default function Page() {
+  const extDocUrl =
+    'https://css-tricks.com/improve-largest-contentful-paint-lcp-on-your-website-with-ease/#aa-2-preload-critical-resources';
   const defaultImage = '/dingos/dingo.jpg';
   const srcSet =
     '/dingos/dingo_430.jpg 430w, /dingos/dingo_768.jpg 768w /dingos/dingo_1024.jpg 1024w';
-  const sizes = '(max-width: 430px) 768px, 1024px, 1200px';
   return (
     <div className="prose prose-sm prose-invert max-w-none">
-      <h1 className="text-xl font-bold">Responsive Images (multiple assets)</h1>
+      <h1 className="text-xl font-bold">
+        {`Responsive Images (multiple assets + `}
+        <a href={extDocUrl} target="_blank" rel="noreferrer">
+          LCP optimization
+        </a>
+        ) )
+      </h1>
       <h1>Image Component With Layout Responsive</h1>
       <picture>
         <source media="(max-width: 430px)" srcSet="/dingos/dingo_430.jpg" />
