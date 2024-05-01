@@ -8,7 +8,7 @@ export async function generateStaticParams() {
 }
 
 export default async function Page({ params }: { params: { id: string } }) {
-  if (!memCheck) {
+  if (memCheck == null) {
     console.log('### STARING_NEW_LAMBDA ###');
     memCheck = '### REUSING_LAMBDA###';
   } else {
