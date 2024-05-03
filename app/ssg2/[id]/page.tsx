@@ -1,3 +1,4 @@
+import { checkWarmInvariantPagesRouter, fnWarmStatus } from '#/lib/extra';
 import { CitiesShallowSelector } from '#/ui/cities-shallow-selector';
 import SkeletonAlarmClock from '#/ui/skeleton-alarm-clock';
 import { notFound } from 'next/navigation';
@@ -9,6 +10,12 @@ export async function generateStaticParams() {
 }
 
 export default async function Page({ params }: { params: { id: string } }) {
+  // Call the invariant
+  if (checkWarmInvariantPagesRouter(params)) {
+    // Return the status Instead of the regular page.
+    return fnWarmStatus();
+  }
+
   if (Number(params.id) >= 100) {
     notFound();
   }
