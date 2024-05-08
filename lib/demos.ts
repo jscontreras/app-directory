@@ -119,4 +119,14 @@ export const demos: { name: string; items: Item[] }[] = [
       },
     ],
   },
+  {
+    name: 'Legacy (pages)',
+    items: [
+      {
+        name: 'Revalidate Path',
+        slug: 'pages/revalidate',
+        description: 'Revalidate path + Vercel cache stale',
+      },
+    ],
+  },
 ];

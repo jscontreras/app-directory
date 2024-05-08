@@ -13,7 +13,7 @@ import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 
 export function UrlEncodingForm() {
-  const params = useSearchParams();
+  const params = useSearchParams() || new URLSearchParams();
   const [query, setQuery] = useState(params.get('q') || '');
   const router = useRouter();
   const handleInputChange = (event: any) => {
