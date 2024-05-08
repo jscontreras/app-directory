@@ -52,9 +52,7 @@ export default function RootLayout({
         <Suspense>
           <VercelToolbarUI />
         </Suspense>
-        {`${process.env.__NEXT_PRIVATE_ORIGIN}`.includes('tc-vercel.dev') && (
-          <SpeedInsights />
-        )}
+        <SpeedInsights />
         <span className="private-origin hidden">{`${process.env.__NEXT_PRIVATE_ORIGIN}`}</span>
       </body>
     </html>
