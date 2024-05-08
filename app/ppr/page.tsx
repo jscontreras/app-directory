@@ -1,6 +1,7 @@
 import { ExternalLink } from '#/ui/external-link';
 
 export default function Page() {
+  console.log('process.env', process.env);
   return (
     <div className="prose prose-sm prose-invert max-w-none">
       <h1 className="text-xl font-bold">Static Page with Dynamic Content</h1>

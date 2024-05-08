@@ -1,4 +1,5 @@
 import '#/styles/globals.css';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import { AddressBar } from '#/ui/address-bar';
 import Byline from '#/ui/byline';
 import { GlobalNav } from '#/ui/global-nav';
@@ -51,6 +52,9 @@ export default function RootLayout({
         <Suspense>
           <VercelToolbarUI />
         </Suspense>
+        {`${process.env.__NEXT_PRIVATE_ORIGIN}`.includes(
+          'https://tc-vercel.dev/',
+        ) && <SpeedInsights />}
       </body>
     </html>
   );

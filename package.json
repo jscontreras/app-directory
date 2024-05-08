@@ -23,6 +23,7 @@
     "@radix-ui/react-label": "2.0.2",
     "@radix-ui/react-select": "2.0.0",
     "@radix-ui/react-slot": "1.0.2",
+    "@vercel/speed-insights": "1.0.10",
     "@vercel/toolbar": "0.1.12",
     "add": "2.0.6",
     "class-variance-authority": "0.7.0",
