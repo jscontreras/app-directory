@@ -53,7 +53,6 @@ export default function RootLayout({
           <VercelToolbarUI />
         </Suspense>
         <SpeedInsights />
-        <span className="private-origin hidden">{`${process.env.__NEXT_PRIVATE_ORIGIN}`}</span>
       </body>
     </html>
   );

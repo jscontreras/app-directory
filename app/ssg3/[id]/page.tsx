@@ -22,7 +22,7 @@ export default async function Page({ params }: { params: { id: string } }) {
     <div className="grid grid-cols-6 gap-x-6 gap-y-3">
       <div className="col-span-full space-y-3 lg:col-span-4">
         <h1 className="truncate text-2xl font-medium capitalize text-gray-200">
-          {`${data.title} [${params.id}]`}
+          {`[${params.id}] ${data.title}`}
         </h1>
         <p className="line-clamp-3 font-medium text-gray-500">{data.body}</p>
         {/* client component */}
@@ -35,7 +35,5 @@ export default async function Page({ params }: { params: { id: string } }) {
   );
 }
 
-// Caching optios
-export const dynamic = 'force-static';
-export const dynamicParams = true;
+export const dynamicParams = false;
 export const revalidate = 300; // 5 mins
