@@ -1,6 +1,6 @@
 import { Tab } from '#/ui/tab';
 import React from 'react';
-import { RandomPostTab } from '#/ui/random-post-tab';
+// import { RandomPostTab } from '#/ui/random-post-tab';
 
 const title = 'Static Data';
 
@@ -33,5 +33,3 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     </div>
   );
 }
-
-export const dynamic = 'force-static';
