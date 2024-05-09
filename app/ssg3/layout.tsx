@@ -19,7 +19,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <Tab path="/ssg3" item={{ text: 'Home' }} />
         <Tab path="/ssg3" item={{ text: 'Post 1', slug: '1' }} />
         <Tab path="/ssg3" item={{ text: 'Post 2', slug: '2' }} />
-        <RandomPostTab path="/ssg3" />
+        {/* <RandomPostTab path="/ssg3" /> */}
       </div>
       <div>{children}</div>
     </div>
