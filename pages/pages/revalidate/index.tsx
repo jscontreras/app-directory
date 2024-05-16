@@ -13,7 +13,7 @@ export default function ISRExample({
   lastSnapshot: string;
 }) {
   return (
-    <RevalidatePageLayout>
+    <RevalidatePageLayout id={null}>
       return (
       <div className="prose prose-sm prose-invert max-w-none">
         <h1 className="text-xl font-bold">Revalidating Path</h1>
@@ -27,10 +27,6 @@ export default function ISRExample({
           <li>Lorem ipsum post (obtained via fetch)</li>
           <li>It contains two fetched requests tagged with unique tags.</li>
           <li>
-            When invalidating via tags, only one fetch tag is referenced but
-            everything gets uncached (path and fetches).
-          </li>
-          <li>
             Both path-based and tag-based revalidations are not re-validating
             the cache, but invalidating the cached values. In other words, it
             clears the corresponding cached values without storing new ones
@@ -42,7 +38,7 @@ export default function ISRExample({
         <div className="mb-8 grid grid-cols-6 gap-x-6 gap-y-3">
           <div className="col-span-full space-y-3 lg:col-span-4">
             <h1 className="truncate text-2xl font-medium capitalize text-gray-200">
-              {dataLorem.title} [{postId}]
+              [{postId}] {dataLorem.title}
             </h1>
             <h3 className="text-gray-200">Last snapshot: {lastSnapshot}</h3>
             <p className="line-clamp-3 font-medium text-gray-500">

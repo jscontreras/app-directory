@@ -3,6 +3,8 @@ import { GlobalNav } from './global-nav';
 import { AddressBar } from './address-bar';
 import Byline from './byline';
 import { useState } from 'react';
+import Link from 'next/link';
+
 const title = 'Static Data';
 
 export const metadata = {
@@ -38,13 +40,38 @@ function PageLayout({ children }: { children: React.ReactNode }) {
 
 export default function RevalidatePageLayout({
   children,
+  id,
 }: {
   children: React.ReactNode;
+  id?: number | string | null;
 }) {
   return (
     <PageLayout>
-      <div className="space-y-9">
+      <div className="">
         <div className="flex flex-wrap items-center gap-2">
+          <div className="flex w-full">
+            <ButtonLink
+              title="Home"
+              id={id}
+              href="/pages/revalidate"
+              prefetch={false}
+              active={id == null}
+            />
+            <ButtonLink
+              title="Static [1]"
+              id={id}
+              href="/pages/revalidate/static-1"
+              prefetch={true}
+              active={id == '1'}
+            />
+            <ButtonLink
+              title="ISR [3]"
+              id={id}
+              href="/pages/revalidate/3"
+              prefetch={true}
+              active={id === '3'}
+            />
+          </div>
           <RevalidateButton
             copy="Invalidate via Path"
             path={'/pages/revalidate'}
@@ -75,13 +102,28 @@ export const RevalidateButton = ({
     //location.reload();
   }
   return (
-    <button
-      className={`${
-        active ? 'bg-vercel-blue' : 'bg-vercel-violet'
-      } rounded-lg px-3 py-1 text-sm font-medium text-white`}
-      onClick={btnClickHandler}
-    >
-      {copy}
-    </button>
+    <div className="mt-8 flex">
+      <button
+        className={`${
+          active ? 'bg-orange-600' : 'bg-vercel-violet'
+        } rounded-lg px-3 py-1 text-sm font-medium text-white`}
+        onClick={btnClickHandler}
+      >
+        {copy}
+      </button>
+    </div>
   );
 };
+
+function ButtonLink({ title, href, active, prefetch }: any) {
+  return (
+    <Link
+      className={`mr-2  ${
+        active ? 'bg-vercel-blue' : 'bg-gray-700'
+      } rounded-lg px-3 py-1 text-sm font-medium text-white`}
+      href={href}
+    >
+      {title}
+    </Link>
+  );
+}

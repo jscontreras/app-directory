@@ -6,7 +6,17 @@ export default async function handler(
 ) {
   if (req.method === 'GET') {
     // Process a POST request
-    await res.revalidate('/pages/revalidate');
+    const invalidatePaths = [
+      '/pages/revalidate/static-1',
+      '/pages/revalidate/3',
+      '/pages/revalidate',
+    ];
+
+    const promises = invalidatePaths.map((path) => {
+      return res.revalidate(path);
+    });
+
+    await Promise.all(promises);
     return res.json({ revalidated: true });
   } else {
     // Handle any other HTTP method
