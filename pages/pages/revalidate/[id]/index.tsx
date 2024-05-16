@@ -25,14 +25,19 @@ export default function ISRExample({
             (obtained via fetch)
           </li>
           <li>Lorem ipsum post (obtained via fetch)</li>
-          <li>It contains two fetched requests tagged with unique tags.</li>
           <li>
-            Both path-based and tag-based revalidations are not re-validating
-            the cache, but invalidating the cached values. In other words, it
-            clears the corresponding cached values without storing new ones
-            (fresh values). Cache is going to be populated based on future
-            requests.
-            {` That's why it takes 10 seconds when reloading the page after invalidating cache.`}
+            Pages path-based revalidations is not re-validating the cache, but
+            invalidating the cached values. In other words, it clears the
+            corresponding cached values without storing new ones (fresh values).
+            Cache is going to be populated based on future requests.
+          </li>
+          <li>
+            The pages router will return the latest cache value (stale cache)
+            until the new one is ready.
+          </li>
+          <li>
+            If an error occurs while generating the new page, the old cached
+            value will be returned instead.
           </li>
         </ul>
         <div className="mb-8 grid grid-cols-6 gap-x-6 gap-y-3">
@@ -49,7 +54,7 @@ export default function ISRExample({
         </div>
 
         <div className="flex gap-2">
-          <ExternalLink href="https://nextjs.org/docs/app/building-your-application/data-fetching/fetching#static-data-fetching">
+          <ExternalLink href="https://nextjs.org/docs/pages/building-your-application/data-fetching/incremental-static-regeneration#using-on-demand-revalidation">
             Docs
           </ExternalLink>
           <ExternalLink href="https://github.com/jscontreras/app-directory/blob/main/pages/pages/revalidate.tsx">
