@@ -72,20 +72,27 @@ export default function RevalidatePageLayout({
               active={id === '3'}
             />
           </div>
-          <RevalidateButton
-            copy="Invalidate ALL paths"
-            path={'/pages/revalidate'}
-          />
-          <RevalidateButton
-            copy="Invalidate Static [1]"
-            path={'/pages/revalidate/static-1'}
-            apiEndpoint="/api/pages/revalidate/static-1"
-          />
-          <RevalidateButton
-            copy="Invalidate ISR [3]"
-            path={'/pages/revalidate/3'}
-            apiEndpoint="/api/pages/revalidate/3"
-          />
+          <div className="prose prose-sm prose-invert mt-8 max-w-none">
+            <h1 className="w-full text-xl font-bold">
+              Cache Revalidation Controllers
+            </h1>
+            <div className="mt-0 flex w-full">
+              <RevalidateButton
+                copy="Invalidate ALL paths"
+                path={'/pages/revalidate'}
+              />
+              <RevalidateButton
+                copy="Invalidate Static [1]"
+                path={'/pages/revalidate/static-1'}
+                apiEndpoint="/api/pages/revalidate/static-1"
+              />
+              <RevalidateButton
+                copy="Invalidate ISR [3]"
+                path={'/pages/revalidate/3'}
+                apiEndpoint="/api/pages/revalidate/3"
+              />
+            </div>
+          </div>
         </div>
         <div>{children}</div>
       </div>
@@ -114,7 +121,7 @@ export const RevalidateButton = ({
     //location.reload();
   }
   return (
-    <div className="mt-8 flex">
+    <div className="mr-3">
       <button
         className={`${
           active ? 'bg-orange-600' : 'bg-vercel-violet'
