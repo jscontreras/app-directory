@@ -73,8 +73,18 @@ export default function RevalidatePageLayout({
             />
           </div>
           <RevalidateButton
-            copy="Invalidate via Path"
+            copy="Invalidate ALL paths"
             path={'/pages/revalidate'}
+          />
+          <RevalidateButton
+            copy="Invalidate Static [1]"
+            path={'/pages/revalidate/static-1'}
+            apiEndpoint="/api/revalidate/static-1"
+          />
+          <RevalidateButton
+            copy="Invalidate ISR [3]"
+            path={'/pages/revalidate/3'}
+            apiEndpoint="/api/revalidate/3"
           />
         </div>
         <div>{children}</div>
@@ -86,9 +96,11 @@ export default function RevalidatePageLayout({
 export const RevalidateButton = ({
   path,
   copy,
+  apiEndpoint = '/api/pages/revalidate',
 }: {
   path: string;
   copy: string;
+  apiEndpoint?: string;
 }) => {
   const [active, setActive] = useState(true);
   async function btnClickHandler() {
@@ -97,7 +109,7 @@ export const RevalidateButton = ({
     }
     setActive(false);
     const options = { method: 'GET' };
-    await fetch('/api/pages/revalidate', options);
+    await fetch(apiEndpoint, options);
     alert(`Revalidated (${path})`);
     //location.reload();
   }
