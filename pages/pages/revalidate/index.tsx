@@ -26,10 +26,8 @@ export default function ISRExample({
           </li>
           <li>Lorem ipsum post (obtained via fetch)</li>
           <li>
-            Pages path-based revalidations is not re-validating the cache, but
-            invalidating the cached values. In other words, it clears the
-            corresponding cached values without storing new ones (fresh values).
-            Cache is going to be populated based on future requests.
+            Pages path-based revalidations clears the corresponding cached
+            values and stores new ones (fresh values).
           </li>
           <li>
             The pages router will return the latest cache value (stale cache)
