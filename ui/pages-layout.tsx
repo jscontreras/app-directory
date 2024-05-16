@@ -78,16 +78,16 @@ export default function RevalidatePageLayout({
             </h1>
             <div className="mt-0 flex w-full">
               <RevalidateButton
-                copy="Invalidate ALL paths"
+                copy="Revalidate ALL paths"
                 path={'/pages/revalidate'}
               />
               <RevalidateButton
-                copy="Invalidate Static [1]"
+                copy="Revalidate Static [1]"
                 path={'/pages/revalidate/static-1'}
                 apiEndpoint="/api/pages/revalidate/static-1"
               />
               <RevalidateButton
-                copy="Invalidate ISR [3]"
+                copy="Revalidate ISR [3]"
                 path={'/pages/revalidate/3'}
                 apiEndpoint="/api/pages/revalidate/3"
               />
