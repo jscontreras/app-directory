@@ -41,9 +41,9 @@ deploy_production:
 verify_preview_deployment:
   stage: verify
   image: curlimages/curl:latest
+  except:
+    - main
   dependencies:
-    - deploy_preview
-  needs:
     - deploy_preview
   script:
     - source deploy_url.txt
@@ -52,9 +52,9 @@ verify_preview_deployment:
 verify_prod_deployment:
   stage: verify
   image: curlimages/curl:latest
+  only:
+    - main
   dependencies:
-    - deploy_production
-  needs:
     - deploy_production
   script:
     - source deploy_url.txt
