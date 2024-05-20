@@ -19,8 +19,6 @@ deploy_preview:
   artifacts:
     paths:
       - deploy_url.txt
-    reports:
-      dotenv: deploy.env
 
 deploy_production:
   stage: deploy
@@ -39,13 +37,13 @@ deploy_production:
   artifacts:
     paths:
       - deploy_url.txt
-    reports:
-      dotenv: deploy.env
 
 verify_preview_deployment:
   stage: verify
   image: curlimages/curl:latest
   dependencies:
+    - deploy_preview
+  needs:
     - deploy_preview
   script:
     - source deploy_url.txt
@@ -55,6 +53,8 @@ verify_prod_deployment:
   stage: verify
   image: curlimages/curl:latest
   dependencies:
+    - deploy_production
+  needs:
     - deploy_production
   script:
     - source deploy_url.txt
