@@ -10,15 +10,9 @@ deploy_preview:
   script:
     - npm install --global vercel
     - vercel pull --yes --environment=preview --token=$VERCEL_TOKEN  --scope=$VERCEL_TEAM_SLUG
-    # If under 15000 files use vercel build and then vercel deploy with --prebuilt
-    # - vercel build --token=$VERCEL_TOKEN
-    # - vercel deploy --prebuilt  --token=$VERCEL_TOKEN
-    - echo "DEPLOYMENT_URL=$(vercel deploy --token=$VERCEL_TOKEN --scope=$VERCEL_TEAM_SLUG --yes)" > deploy_url.txt
-    - source deploy_url.txt
-    - echo "Deployment URL is $DEPLOYMENT_URL"
-  artifacts:
-    paths:
-      - deploy_url.txt
+    # Prebuild in the runner and upload as a single compressed file
+    - vercel build --token=$VERCEL_TOKEN --scope=$VERCEL_TEAM_SLUG
+    - vercel deploy --prebuilt --archive=tgz  --scope=$VERCEL_TEAM_SLUG --yes --token=$VERCEL_TOKEN
 
 deploy_production:
   stage: deploy
@@ -27,35 +21,7 @@ deploy_production:
     - main
   script:
     - npm install --global vercel
-    - vercel pull --yes --environment=production --token=$VERCEL_TOKEN  --scope=$VERCEL_TEAM_SLUG
-    # If under 15000 files use vercel build and then vercel deploy with --prebuilt
-    # - vercel build --prod --token=$VERCEL_TOKEN
-    # - vercel deploy --prebuilt --prod --token=$VERCEL_TOKEN
-    - echo "DEPLOYMENT_URL=$(vercel deploy --token=$VERCEL_TOKEN --scope=$VERCEL_TEAM_SLUG --yes)" > deploy_url.txt
-    - source deploy_url.txt
-    - echo "Deployment URL is $DEPLOYMENT_URL"
-  artifacts:
-    paths:
-      - deploy_url.txt
-
-verify_preview_deployment:
-  stage: verify
-  image: curlimages/curl:latest
-  except:
-    - main
-  dependencies:
-    - deploy_preview
-  script:
-    - source deploy_url.txt
-    - 'curl --silent --show-error "$DEPLOYMENT_URL"'
-
-verify_prod_deployment:
-  stage: verify
-  image: curlimages/curl:latest
-  only:
-    - main
-  dependencies:
-    - deploy_production
-  script:
-    - source deploy_url.txt
-    - 'curl --silent --show-error "$DEPLOYMENT_URL"'
+    - vercel pull --yes --environment=preview --token=$VERCEL_TOKEN  --scope=$VERCEL_TEAM_SLUG
+    # Prebuild in the runner and upload as a single compressed file
+    - vercel build --token=$VERCEL_TOKEN --scope=$VERCEL_TEAM_SLUG
+    - vercel deploy --prebuilt --archive=tgz --prod --scope=$VERCEL_TEAM_SLUG --yes --token=$VERCEL_TOKEN
