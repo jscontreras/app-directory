@@ -21,6 +21,7 @@ deploy_preview:
 
 deploy_production:
   stage: deploy
+  image: node:latest
   only:
     - main
   script:
