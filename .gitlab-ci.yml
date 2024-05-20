@@ -14,6 +14,7 @@ deploy_preview:
     # - vercel build --token=$VERCEL_TOKEN
     # - vercel deploy --prebuilt  --token=$VERCEL_TOKEN
     - echo "DEPLOYMENT_URL=$(vercel deploy --token=$VERCEL_TOKEN --scope=$VERCEL_TEAM_SLUG --yes)" > deploy_url.txt
+    - source deploy_url.txt
     - echo "Deployment URL is $DEPLOYMENT_URL"
   artifacts:
     paths:
@@ -33,7 +34,13 @@ deploy_production:
     # - vercel build --prod --token=$VERCEL_TOKEN
     # - vercel deploy --prebuilt --prod --token=$VERCEL_TOKEN
     - echo "DEPLOYMENT_URL=$(vercel deploy --token=$VERCEL_TOKEN --scope=$VERCEL_TEAM_SLUG --yes)" > deploy_url.txt
+    - source deploy_url.txt
     - echo "Deployment URL is $DEPLOYMENT_URL"
+  artifacts:
+    paths:
+      - deploy_url.txt
+    reports:
+      dotenv: deploy.env
 
 verify_preview_deployment:
   stage: verify
@@ -43,9 +50,6 @@ verify_preview_deployment:
   script:
     - source deploy_url.txt
     - 'curl --silent --show-error "$DEPLOYMENT_URL"'
-  artifacts:
-    paths:
-      - deploy_url.txt
 
 verify_prod_deployment:
   stage: verify
@@ -55,6 +59,3 @@ verify_prod_deployment:
   script:
     - source deploy_url.txt
     - 'curl --silent --show-error "$DEPLOYMENT_URL"'
-  artifacts:
-    paths:
-      - deploy_url.txt
