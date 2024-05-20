@@ -13,7 +13,7 @@ deploy_preview:
     # If under 15000 files use vercel build and then vercel deploy with --prebuilt
     # - vercel build --token=$VERCEL_TOKEN
     # - vercel deploy --prebuilt  --token=$VERCEL_TOKEN
-    - echo "DEPLOYMENT_URL=$(vercel deploy --token=$VERCEL_TOKEN --scope=$VERCEL_TEAM_SLUG --yes) > deploy_url.txt"
+    - echo "DEPLOYMENT_URL=$(vercel deploy --token=$VERCEL_TOKEN --scope=$VERCEL_TEAM_SLUG --yes)" > deploy_url.txt
     - echo "Deployment URL is $DEPLOYMENT_URL"
   artifacts:
     paths:
@@ -32,7 +32,7 @@ deploy_production:
     # If under 15000 files use vercel build and then vercel deploy with --prebuilt
     # - vercel build --prod --token=$VERCEL_TOKEN
     # - vercel deploy --prebuilt --prod --token=$VERCEL_TOKEN
-    - echo "DEPLOYMENT_URL=$(vercel deploy --token=$VERCEL_TOKEN --scope=$VERCEL_TEAM_SLUG --yes) > deploy_url.txt"
+    - echo "DEPLOYMENT_URL=$(vercel deploy --token=$VERCEL_TOKEN --scope=$VERCEL_TEAM_SLUG --yes)" > deploy_url.txt
     - echo "Deployment URL is $DEPLOYMENT_URL"
 
 verify_preview_deployment:
@@ -43,6 +43,9 @@ verify_preview_deployment:
   script:
     - source deploy_url.txt
     - 'curl --silent --show-error "$DEPLOYMENT_URL"'
+  artifacts:
+    paths:
+      - deploy_url.txt
 
 verify_prod_deployment:
   stage: verify
@@ -52,3 +55,6 @@ verify_prod_deployment:
   script:
     - source deploy_url.txt
     - 'curl --silent --show-error "$DEPLOYMENT_URL"'
+  artifacts:
+    paths:
+      - deploy_url.txt
