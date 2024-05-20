@@ -1,17 +1,23 @@
-default:
-  image: node:latest
+stages:
+  - deploy
+  - verify
 
 deploy_preview:
   stage: deploy
+  image: node:latest
   except:
     - main
   script:
     - npm install --global vercel
     - vercel pull --yes --environment=preview --token=$VERCEL_TOKEN
-    - vercel build --token=$VERCEL_TOKEN
-    # If under 15000 files use --prebuilt
+    # If under 15000 files use vercel build and then vercel deploy with --prebuilt
+    # - vercel build --token=$VERCEL_TOKEN
     # - vercel deploy --prebuilt  --token=$VERCEL_TOKEN
-    - vercel deploy --token=$VERCEL_TOKEN --scope=$VERCEL_TEAM_SLUG
+    - DEPLOYMENT_URL=$(vercel deploy --token=$VERCEL_TOKEN --scope=$VERCEL_TEAM_SLUG --confirm  | grep -o "https://[^ ]*")
+    - echo "Deployment URL is $DEPLOYMENT_URL"
+  artifacts:
+    reports:
+      dotenv: deploy.env
 
 deploy_production:
   stage: deploy
@@ -20,5 +26,15 @@ deploy_production:
   script:
     - npm install --global vercel
     - vercel pull --yes --environment=production --token=$VERCEL_TOKEN
-    - vercel build --prod --token=$VERCEL_TOKEN
-    - vercel deploy --prebuilt --prod --token=$VERCEL_TOKEN
+    # If under 15000 files use vercel build and then vercel deploy with --prebuilt
+    # - vercel build --prod --token=$VERCEL_TOKEN
+    # - vercel deploy --prebuilt --prod --token=$VERCEL_TOKEN
+    - DEPLOYMENT_URL=$(vercel deploy --prod --token=$VERCEL_TOKEN --scope=$VERCEL_TEAM_SLUG --confirm  | grep -o "https://[^ ]*")
+
+verify_deployment:
+  stage: verify
+  image: curlimages/curl:latest
+  dependencies:
+    - deploy_to_vercel
+  script:
+    - 'curl --silent --show-error "$DEPLOYMENT_URL"'
