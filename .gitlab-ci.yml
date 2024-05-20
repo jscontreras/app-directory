@@ -31,10 +31,18 @@ deploy_production:
     # - vercel deploy --prebuilt --prod --token=$VERCEL_TOKEN
     - DEPLOYMENT_URL=$(vercel deploy --prod --token=$VERCEL_TOKEN --scope=$VERCEL_TEAM_SLUG --confirm  | grep -o "https://[^ ]*")
 
-verify_deployment:
+verify_preview_deployment:
   stage: verify
   image: curlimages/curl:latest
   dependencies:
-    - deploy_to_vercel
+    - deploy_preview
+  script:
+    - 'curl --silent --show-error "$DEPLOYMENT_URL"'
+
+verify_prod_deployment:
+  stage: verify
+  image: curlimages/curl:latest
+  dependencies:
+    - deploy_production
   script:
     - 'curl --silent --show-error "$DEPLOYMENT_URL"'
