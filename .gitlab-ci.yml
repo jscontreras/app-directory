@@ -1,6 +1,5 @@
 stages:
   - deploy
-  - verify
 
 deploy_preview:
   stage: deploy
