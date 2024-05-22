@@ -16,7 +16,9 @@ export default function ISRExample({
     <RevalidatePageLayout id={null}>
       return (
       <div className="prose prose-sm prose-invert max-w-none">
-        <h1 className="text-xl font-bold">Revalidating Paths</h1>
+        <h1 className="text-xl font-bold">
+          Revalidating Paths with Pages Router
+        </h1>
 
         <ul>
           <li>This page takes 10 seconds to be rendered (when not cached)</li>
