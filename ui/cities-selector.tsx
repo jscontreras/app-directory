@@ -38,7 +38,7 @@ export function CitiesSelector({
   children?: ReactNode | ReactNode[];
   componentType: string;
 }) {
-  const searchParams = useSearchParams();
+  const searchParams = useSearchParams() || '';
   const params = new URLSearchParams(searchParams.toString());
   const [city, setCity] = useState({
     name: params.get('city') || '',

@@ -2,6 +2,7 @@ import '#/styles/globals.css';
 import { AddressBar } from '#/ui/address-bar';
 import Byline from '#/ui/byline';
 import { GlobalNav } from '#/ui/global-nav';
+import { SpeedInsightsAdapter } from '#/ui/speed-isights-adapter';
 import { VercelToolbarUI } from '#/ui/vercel-toolbar-ui';
 import { Metadata } from 'next';
 import { Suspense } from 'react';
@@ -51,6 +52,7 @@ export default function RootLayout({
         <Suspense>
           <VercelToolbarUI />
         </Suspense>
+        <SpeedInsightsAdapter />
       </body>
     </html>
   );

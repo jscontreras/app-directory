@@ -9,10 +9,12 @@ export const Tab = ({
   path,
   parallelRoutesKey,
   item,
+  prefetch = true,
 }: {
   path: string;
   parallelRoutesKey?: string;
   item: Item;
+  prefetch?: boolean;
 }) => {
   const segment = useSelectedLayoutSegment(parallelRoutesKey);
 
@@ -27,6 +29,7 @@ export const Tab = ({
   return (
     <Link
       href={href}
+      prefetch={prefetch}
       className={clsx('rounded-lg px-3 py-1 text-sm font-medium', {
         'bg-gray-700 text-gray-100 hover:bg-gray-500 hover:text-white':
           !isActive,

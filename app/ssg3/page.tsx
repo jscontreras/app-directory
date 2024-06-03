@@ -9,8 +9,8 @@ export default function Page() {
         <li>By default, data fetching in Next.js is cached static.</li>
         <li>This example statically caches data fetches for Post 1 and 2.</li>
         <li>
-          A random third post is fetched on-demand the first time it is
-          requested.
+          A random post will give a 404 as{' '}
+          <span>export const dynamicParams = false;</span>
         </li>
         <li>
           Try navigating to each post and noting the timestamp of when the page

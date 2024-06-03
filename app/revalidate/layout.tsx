@@ -18,10 +18,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <div className="flex flex-wrap items-center gap-2">
         <RevalidateButton copy="Invalidate via Path" path={'/revalidate'} />
         <RevalidateTagButton
-          copy="Invalidate via Post Tag"
-          tag={'test-tag-2'}
+          copy="Invalidate via Lorem Post Tag"
+          tag={'test-tag-post'}
         />
-        <RevalidateTagButton copy="Invalidate via Date Tag" tag={'test-tag'} />
+        <RevalidateTagButton
+          copy="Invalidate via Date Tag"
+          tag={'test-tag-date'}
+        />
       </div>
       <div>{children}</div>
     </div>

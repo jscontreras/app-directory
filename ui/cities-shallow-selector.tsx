@@ -36,7 +36,7 @@ export function CitiesShallowSelector({
 }: {
   componentType: string;
 }) {
-  const params = useSearchParams();
+  const params = useSearchParams() || new URLSearchParams();
   const [city, setCity] = useState({
     city: params.get('city') || '',
     timezone: params.get('timezone') || '',

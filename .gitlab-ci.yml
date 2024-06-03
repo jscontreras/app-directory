@@ -1,0 +1,26 @@
+stages:
+  - deploy
+
+deploy_preview:
+  stage: deploy
+  image: node:latest
+  except:
+    - main
+  script:
+    - npm install --global vercel
+    - vercel pull --yes --environment=preview --token=$VERCEL_TOKEN  --scope=$VERCEL_TEAM_SLUG
+    # Prebuild in the runner and upload as a single compressed file
+    - vercel build --token=$VERCEL_TOKEN --scope=$VERCEL_TEAM_SLUG
+    - vercel deploy --prebuilt --archive=tgz  --scope=$VERCEL_TEAM_SLUG --yes --token=$VERCEL_TOKEN
+
+deploy_production:
+  stage: deploy
+  image: node:latest
+  only:
+    - main
+  script:
+    - npm install --global vercel
+    - vercel pull --yes --environment=preview --token=$VERCEL_TOKEN  --scope=$VERCEL_TEAM_SLUG
+    # Prebuild in the runner and upload as a single compressed file
+    - vercel build --token=$VERCEL_TOKEN --scope=$VERCEL_TEAM_SLUG
+    - vercel deploy --prebuilt --archive=tgz --prod --scope=$VERCEL_TEAM_SLUG --yes --token=$VERCEL_TOKEN

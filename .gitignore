@@ -40,3 +40,4 @@ certificates
 
 #VSCode configs
 .vscode
+.env*.local

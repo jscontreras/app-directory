@@ -16,8 +16,8 @@ export default {
       // https://vercel.com/design/color
       colors: {
         gray: colors.zinc,
-        'gray-1000': 'rgb(17,17,19)',
-        'gray-1100': 'rgb(10,10,11)',
+        'gray-1000': 'rgb(17,17,49)',
+        'gray-1100': 'rgb(10,10,31)',
         vercel: {
           pink: '#FF0080',
           blue: '#0070F3',
