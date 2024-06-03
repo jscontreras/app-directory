@@ -69,8 +69,15 @@ export default async function Page() {
         </li>
         <li>It contains two fetched requests tagged with unique tags.</li>
         <li>
-          When invalidating via tags, only one fetch tag is referenced but
-          everything gets uncached (path and fetches).
+          When invalidating via tags, the path cache is removed and the page is
+          rendered via Server until a new snapshot is CDN cached.
+        </li>
+        <li>
+          As the Lorem Post fetch depends on the NYC Time fetch, if you
+          invalidate the Post Fetch only (via Lorem Post Tag), it fetched the
+          endpoint again with the same Post Id (cached value from the NYC
+          Fetch). You can notice it as the Vercel Serverless Fn timestamp
+          changes.
         </li>
         <li>
           Both path-based and tag-based revalidations are not re-validating the
