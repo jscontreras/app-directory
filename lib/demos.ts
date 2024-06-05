@@ -76,6 +76,11 @@ export const demos: { name: string; items: Item[] }[] = [
         description: 'Revalidate path + Vercel cache stale',
       },
       {
+        name: 'Preview (Draft) Mode',
+        slug: 'isr-preview',
+        description: 'Testing CDN + Tag Cache (draft)',
+      },
+      {
         name: 'Static page with Dynamic component',
         slug: 'ppr',
         description:

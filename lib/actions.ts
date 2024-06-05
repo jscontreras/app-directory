@@ -1,6 +1,7 @@
 'use server';
 
 import { revalidatePath, revalidateTag } from 'next/cache';
+import { draftMode } from 'next/headers';
 
 export async function getCurrentHourInCityServerAction(timezone: string) {
   console.log('timezone', timezone);
@@ -25,4 +26,17 @@ export async function revalidatePathCahe(path: string) {
 
 export async function revalidateTagCahe(tag: string) {
   await revalidateTag(tag);
+}
+
+export async function isPreviewModeEnabled() {
+  const { isEnabled } = draftMode();
+  return isEnabled;
+}
+
+export async function switchDraftMode(active: boolean) {
+  if (active) {
+    draftMode().enable();
+  } else {
+    draftMode().disable();
+  }
 }
