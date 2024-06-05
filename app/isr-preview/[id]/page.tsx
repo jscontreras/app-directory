@@ -72,12 +72,11 @@ export default async function Page({ params }: { params: { id: string } }) {
           {/* client component */}
         </div>
       </div>
-
       <div className="flex gap-2">
-        <ExternalLink href="https://nextjs.org/docs/pages/building-your-application/data-fetching/incremental-static-regeneration#on-demand-revalidation">
+        <ExternalLink href="https://nextjs.org/docs/app/building-your-application/configuring/draft-mode">
           Docs
         </ExternalLink>
-        <ExternalLink href="https://github.com/jscontreras/app-directory/blob/main/app/revalidate/page.tsx">
+        <ExternalLink href="https://github.com/jscontreras/app-directory/tree/main/app/isr-preview">
           Code
         </ExternalLink>
       </div>
