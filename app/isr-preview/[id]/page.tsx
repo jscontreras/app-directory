@@ -49,7 +49,7 @@ export default async function Page({ params }: { params: { id: string } }) {
       <ul>
         <li>
           Time in New York: <span className="text-amber-400">{date}</span>{' '}
-          (obtained via fetch)
+          (obtained via cache-tagged fetch)
         </li>
       </ul>
       <div className="mb-8 grid grid-cols-4 gap-x-6 gap-y-3">
