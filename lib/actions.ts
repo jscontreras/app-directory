@@ -50,7 +50,7 @@ export async function printDiskSize() {
     if (currentDisk) {
       console.log('>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<');
       console.log(`>>>>>>>>>>Filesystem: ${currentDisk.filesystem}`);
-      console.log(`>>>>>>>>>>Total Size: ${currentDisk.blocks}`);
+      console.log(`>>>>>>>>>>Total Size: ${currentDisk.blocks} 512 blocks`);
       console.log(`>>>>>>>>>>Used: ${currentDisk.used}`);
       console.log(`>>>>>>>>>>Available: ${currentDisk.available}`);
       console.log(`>>>>>>>>>>Capacity: ${currentDisk.capacity}`);
