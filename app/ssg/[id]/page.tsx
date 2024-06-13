@@ -1,8 +1,10 @@
+import { printDiskSize } from '#/lib/actions';
 import { notFound } from 'next/navigation';
 
 let memCheck: null | string = null;
 
 export async function generateStaticParams() {
+  printDiskSize();
   // Generate two pages at build time and the rest (3-100) on-demand
   return [{ id: '1' }, { id: '2' }];
 }
