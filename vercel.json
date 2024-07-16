@@ -12,5 +12,19 @@
       "source": "/test_5/:path",
       "destination": "https://nextjs-algolia-dual.vercel.app/algolia/c/:path"
     }
-  ]
+  ],
+  "functions": {
+    "revalidate": {
+      "memory": 512
+    },
+    "/ppr": {
+      "memory": 512
+    },
+    "ssg/*/**.tsx": {
+      "memory": 512
+    },
+    "/ssg2/*/**.tsx": {
+      "memory": 512
+    }
+  }
 }
