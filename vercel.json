@@ -17,13 +17,10 @@
     "revalidate": {
       "memory": 512
     },
-    "/ppr": {
+    "ssg/*/**": {
       "memory": 512
     },
-    "ssg/*/**.tsx": {
-      "memory": 512
-    },
-    "/ssg2/*/**.tsx": {
+    "ssg2/*/**.tsx": {
       "memory": 512
     }
   }
