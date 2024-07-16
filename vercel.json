@@ -13,7 +13,7 @@
     }
   ],
   "functions": {
-    "revalidate/[id]/*": {
+    "revalidate/page.tsx": {
       "memory": 512
     }
   }
