@@ -59,14 +59,14 @@ export default function RevalidatePageLayout({
             />
             <ButtonLink
               title="Static [1]"
-              id={id}
+              id={'1'}
               href="/pages/revalidate/static-1"
               prefetch={true}
               active={id == '1'}
             />
             <ButtonLink
               title="ISR [3]"
-              id={id}
+              id={'3'}
               href="/pages/revalidate/3"
               prefetch={true}
               active={id === '3'}
