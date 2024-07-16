@@ -14,7 +14,7 @@
     }
   ],
   "functions": {
-    "**/*": {
+    "revalidate/**/*": {
       "memory": 512
     },
     "ssg/*/**": {
