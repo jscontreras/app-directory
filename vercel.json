@@ -1,7 +1,6 @@
 {
   "rewrites": [
     {
-      "source": "/test_3",
       "destination": "https://nextjs-algolia-dual.vercel.app/algolia/c"
     },
     {
@@ -14,13 +13,7 @@
     }
   ],
   "functions": {
-    "revalidate/[id]": {
-      "memory": 512
-    },
-    "ssg/*/**": {
-      "memory": 512
-    },
-    "ssg2/*/**.tsx": {
+    "revalidate/[id]/*": {
       "memory": 512
     }
   }
