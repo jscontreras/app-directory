@@ -1,4 +1,5 @@
 import { ExternalLink } from '#/ui/external-link';
+import { Highlight } from '#/ui/highlight';
 
 // Function to format the date and time
 function formatDate(date: Date) {
@@ -60,14 +61,16 @@ export default async function Page() {
       <ul>
         <li>This page takes 10 seconds to be rendered (when not cached)</li>
         <li>
-          Time in New York: <span className="text-amber-400">{date}</span>{' '}
-          (obtained via fetch)
+          The rendering contains two sequential fetched requests tagged with
+          unique tags.
         </li>
         <li>
-          Lorem ipsum post (obtained via fetch using the seconds of Time in New
-          York as postId)
+          Time in New York: <Highlight>{date}</Highlight> (obtained via fetch)
         </li>
-        <li>It contains two fetched requests tagged with unique tags.</li>
+        <li>
+          Lorem ipsum post content is obtained via fetch using the seconds of
+          Time in New York as postId <Highlight>({postId} seconds)</Highlight>
+        </li>
         <li>
           When invalidating via tags, the path cache is removed and the page is
           rendered via Server until a new snapshot is CDN cached.
@@ -76,15 +79,19 @@ export default async function Page() {
           As the Lorem Post fetch depends on the NYC Time fetch, if you
           invalidate the Post Fetch only (via Lorem Post Tag), it fetched the
           endpoint again with the same Post Id (cached value from the NYC
-          Fetch). You can notice it as the Vercel Serverless Fn timestamp
+          Fetch). You will notice it as the Vercel Serverless Fn timestamp
           changes.
         </li>
         <li>
-          Both path-based and tag-based revalidations are not re-validating the
-          cache, but invalidating the cached values. In other words, it clears
-          the corresponding cached values without storing new ones (fresh
-          values). Cache is going to be populated based on future requests.
-          {` That's why it takes 10 seconds when reloading the page after invalidating cache.`}
+          Both path-based and tag-based revalidations are not{' '}
+          <Highlight>re-validating</Highlight> the cache, but{' '}
+          <Highlight>invalidating</Highlight> it instead. In other words, it
+          clears the corresponding cached values without storing new ones (fresh
+          values).
+        </li>
+        <li>
+          Cache is going to be populated based on future requests.
+          {` That's why it takes 10 seconds when reloading the page after invalidating cache to get something renderd (page keeps loading).`}
         </li>
       </ul>
       <div className="mb-8 grid grid-cols-6 gap-x-6 gap-y-3">
@@ -94,15 +101,17 @@ export default async function Page() {
           </h1>
           <h3 className="text-gray-200">
             Last snapshot (Vercel Serverless Fn Time):{' '}
-            {new Date().toLocaleString('en-US', {
-              timeZone: 'America/New_York',
-              hour: 'numeric',
-              minute: 'numeric',
-              second: 'numeric',
-            })}
+            <Highlight>
+              {new Date().toLocaleString('en-US', {
+                timeZone: 'America/New_York',
+                hour: 'numeric',
+                minute: 'numeric',
+                second: 'numeric',
+              })}
+            </Highlight>
           </h3>
           <p className="line-clamp-3 font-medium text-gray-500">
-            {dataLorem.body}
+            <Highlight>{dataLorem.body}</Highlight>
           </p>
           {/* client component */}
         </div>
