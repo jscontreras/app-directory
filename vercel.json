@@ -14,7 +14,7 @@
     }
   ],
   "functions": {
-    "revalidate": {
+    "*/**.tsx": {
       "memory": 512
     },
     "ssg/*/**": {
