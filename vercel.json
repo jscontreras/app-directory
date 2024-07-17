@@ -1,19 +1,12 @@
 {
   "rewrites": [
     {
-      "destination": "https://nextjs-algolia-dual.vercel.app/algolia/c"
-    },
-    {
-      "source": "/test_4/:path*",
-      "destination": "/ssg/:path"
-    },
-    {
-      "source": "/test_5/:path",
-      "destination": "https://nextjs-algolia-dual.vercel.app/algolia/c/:path"
+      "source": "/test_3",
+      "destination": "https://nextjs-algolia-dual.vercel.app/algolia/c/women/bags"
     }
   ],
   "functions": {
-    "revalidate/page.tsx": {
+    "app/**/*": {
       "memory": 512
     }
   }
