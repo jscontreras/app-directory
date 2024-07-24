@@ -1,3 +1,7 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": "next/core-web-vitals",
+  "plugins": ["custom-rules"],
+  "rules": {
+    "custom-rules/ensure-server-entry-exports": "error"
+  }
 }
