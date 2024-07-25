@@ -82,7 +82,7 @@ export const demos: { name: string; items: Item[] }[] = [
       },
       {
         name: 'Static page with Dynamic component',
-        slug: 'ppr',
+        slug: 'suspense',
         description:
           'Loads static page and uses query params to interact dinamically with the content',
       },
