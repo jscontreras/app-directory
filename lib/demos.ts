@@ -81,7 +81,7 @@ export const demos: { name: string; items: Item[] }[] = [
         description: 'Testing CDN + Tag Cache (draft)',
       },
       {
-        name: 'Static page with Dynamic Query vars',
+        name: 'Static page with Query vars',
         slug: 'suspense',
         description:
           'Loads static page and uses query params to interact dinamically with the content',
