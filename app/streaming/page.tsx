@@ -29,7 +29,7 @@ export default async function Page() {
         <ExternalLink href="https://nextjs.org/docs/app/building-your-application/routing/loading-ui-and-streaming">
           Docs
         </ExternalLink>
-        <ExternalLink href="https://github.com/vercel/app-playground/tree/main/app/streaming">
+        <ExternalLink href="https://github.com/jscontreras/app-directory/tree/main/app/streaming">
           Code
         </ExternalLink>
       </div>
