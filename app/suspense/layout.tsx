@@ -16,9 +16,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className="space-y-9">
       <div className="flex flex-wrap items-center gap-2">
-        <Tab path="/ppr" item={{ text: 'Home' }} />
+        <Tab path="/suspense" item={{ text: 'Home' }} />
         <Tab
-          path="/ppr"
+          path="/suspense"
           item={{
             text: 'Timezones',
             slug: 'timezones?city=New+York&timezone=America%2FNew_York',
