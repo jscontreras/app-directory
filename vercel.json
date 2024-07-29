@@ -8,6 +8,9 @@
   "functions": {
     "app/**/*": {
       "memory": 512
+    },
+    "pages/**/*": {
+      "memory": 512
     }
   }
 }
