@@ -6,6 +6,9 @@
     }
   ],
   "functions": {
+    "app/ssg3/**/*": {
+      "memory": 384
+    },
     "app/**/*": {
       "memory": 512
     },
