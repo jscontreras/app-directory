@@ -9,6 +9,9 @@
     "app/**/*": {
       "memory": 512
     },
+    "app/ssg3/*": {
+      "memory": 384
+    },
     "pages/**/*": {
       "memory": 512
     }
