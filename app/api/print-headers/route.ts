@@ -11,7 +11,7 @@ export async function GET(request: NextRequest) {
   delete headers['x-vercel-proxy-signature'];
   return NextResponse.json({
     now: Date.now(),
-    site: '>>>:tc-vercel.dev',
+    origin: 'tc-vercel.dev',
     headers: headers,
   });
 }
