@@ -7,9 +7,11 @@ export async function GET(request: NextRequest) {
     headers[key] = value;
   });
   delete headers['x-vercel-protection-bypass'];
+  delete headers['x-vercel-sc-headers'];
+  delete headers['x-vercel-proxy-signature'];
   return NextResponse.json({
     now: Date.now(),
-    cache: 'no-store',
+    site: '>>>:tc-vercel.dev',
     headers: headers,
   });
 }
