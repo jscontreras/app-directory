@@ -34,7 +34,7 @@ export default function HeadersPage({ headers }: { headers: Object }) {
   );
 }
 
-export async function getServerSideProps() {
+export async function getServerSideProps({ req }: { req: Request }) {
   const ip = ipAddress(req) || '';
   // JSON request
   const headers = {
