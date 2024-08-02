@@ -8,7 +8,9 @@ export function middleware(request: NextRequest) {
   // You can also set request headers in NextResponse.rewrite
 
   // Create a new response with the rewritten URL
-  const response = NextResponse.rewrite('https://echo.free.beeceptor.com');
+  const response = NextResponse.rewrite(
+    'https://cookies-middleware.vercel.app/api/print-headers',
+  );
   requestHeaders.forEach((value, key) => {
     response.headers.set(key, value);
   });
