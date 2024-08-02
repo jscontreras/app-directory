@@ -1,5 +1,6 @@
 import { ExternalLink } from '#/ui/external-link';
 import { BasicLayout } from '#/ui/pages-layout';
+import { ipAddress } from '@vercel/functions';
 
 export default function HeadersPage({ headers }: { headers: Object }) {
   return (
@@ -34,10 +35,13 @@ export default function HeadersPage({ headers }: { headers: Object }) {
 }
 
 export async function getServerSideProps() {
+  const ip = ipAddress(req) || '';
   // JSON request
   const headers = {
     'X-Forwarded-Host': 'overriden-host.com',
     'x-forwarded-custom-host': 'overriden-host.com',
+    'X-Forwarded-For': ip,
+    'x-jscontreras-s-team-connecting-ip': ip,
   };
   const echoHeaders = await fetch(
     `https://cookies-middleware.vercel.app/api/print-headers`,

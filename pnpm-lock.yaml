@@ -23,6 +23,9 @@ dependencies:
   '@radix-ui/react-switch':
     specifier: 1.0.3
     version: 1.0.3(@types/react-dom@18.0.9)(@types/react@18.0.26)(react-dom@18.2.0)(react@18.2.0)
+  '@vercel/functions':
+    specifier: 1.4.0
+    version: 1.4.0
   '@vercel/speed-insights':
     specifier: 1.0.10
     version: 1.0.10(next@14.2.3)(react@18.2.0)
@@ -2819,6 +2822,16 @@ packages:
 
   /@vercel/error-utils@2.0.1:
     resolution: {integrity: sha512-ZUVpRFArh5eyKpJmdfEuCaMpZKQvZgUq0pQ7PdK8m5FgRYEvF4I0TMJH3JnkbYaMMUH82aYWZr+/hFJtEBcmTQ==}
+    dev: false
+
+  /@vercel/functions@1.4.0:
+    resolution: {integrity: sha512-Ln6SpIkms1UJg306X2kbEMyG9ol+mjDr2xx389cvsBxgFyFMI9Bm+LYOG4N3TSik4FI59MECyyc4oz7AIAYmqQ==}
+    engines: {node: '>= 16'}
+    peerDependencies:
+      '@aws-sdk/credential-provider-web-identity': '*'
+    peerDependenciesMeta:
+      '@aws-sdk/credential-provider-web-identity':
+        optional: true
     dev: false
 
   /@vercel/gatsby-plugin-vercel-analytics@1.0.11:

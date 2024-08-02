@@ -1,5 +1,6 @@
 import { ExternalLink } from '#/ui/external-link';
 import { BasicLayout } from '#/ui/pages-layout';
+import { ipAddress } from '@vercel/functions';
 
 export default function HeadersPage({ headers }: { headers: Object }) {
   return (
@@ -34,12 +35,16 @@ export default function HeadersPage({ headers }: { headers: Object }) {
 }
 
 export async function getServerSideProps({ req }: { req: Request }) {
+  const ip = ipAddress(req) || '';
   // JSON request
   const headers = {
     'X-Forwarded-Host': 'overriden-host.com',
     'x-forwarded-custom-host': 'overriden-host.com',
+    'X-Forwarded-For': ip,
+    'x-jscontreras-s-team-connecting-ip': ip,
   };
   const reqHeaders: any = req.headers;
+  console.log('req.heders', req.headers);
   const host = reqHeaders.host;
   const protocol = reqHeaders['x-forwarded-proto'] || 'http';
   const url = `${protocol}://${host}/proxy-via-middleware`;
