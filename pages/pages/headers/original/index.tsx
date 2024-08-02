@@ -1,5 +1,4 @@
 import { ExternalLink } from '#/ui/external-link';
-import { Highlight } from '#/ui/highlight';
 import { BasicLayout } from '#/ui/pages-layout';
 
 export default function HeadersPage({ headers }: { headers: Object }) {
@@ -44,6 +43,7 @@ export async function getServerSideProps() {
     `https://cookies-middleware.vercel.app/api/print-headers`,
     {
       headers: new Headers(headers),
+      cache: 'no-store',
     },
   );
 
