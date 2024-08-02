@@ -38,6 +38,18 @@ function PageLayout({ children }: { children: React.ReactNode }) {
   );
 }
 
+export function BasicLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <PageLayout>
+      <div className="">
+        <div className="flex flex-wrap items-center gap-2">
+          <div>{children}</div>
+        </div>
+      </div>
+    </PageLayout>
+  );
+}
+
 export default function RevalidatePageLayout({
   children,
   id,
