@@ -15,7 +15,7 @@ export default function HeadersPage({ headers }: { headers: Object }) {
         <div className="mb-8 grid grid-cols-3 gap-x-6 gap-y-3">
           <div className="col-span-full space-y-3 lg:col-span-4">
             <h1 className="truncate text-2xl font-medium capitalize text-gray-200">
-              JSON Headers (Original)
+              JSON Headers (Overriden)
             </h1>
             <pre>{JSON.stringify(headers, null, 2)}</pre>
           </div>
