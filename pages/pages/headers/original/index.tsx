@@ -36,9 +36,7 @@ export default function HeadersPage({ headers }: { headers: Object }) {
 
 export async function getServerSideProps() {
   // JSON request
-  const echoHeaders = await fetch(
-    `https://cookies-middleware.vercel.app/api/print-headers`,
-  );
+  const echoHeaders = await fetch(`https://echo.free.beeceptor.com`);
 
   const response: any = await echoHeaders.json();
   return {
