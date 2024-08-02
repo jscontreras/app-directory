@@ -25,7 +25,7 @@ export default function HeadersPage({ headers }: { headers: Object }) {
           <ExternalLink href="https://nextjs.org/docs/app/api-reference/functions/fetch">
             Docs
           </ExternalLink>
-          <ExternalLink href="https://github.com/jscontreras/app-directory/blob/main/pages/pages/headers/original/index.tsx">
+          <ExternalLink href="https://github.com/jscontreras/app-directory/blob/main/pages/pages/headers/overridden/index.tsx">
             Code
           </ExternalLink>
         </div>
