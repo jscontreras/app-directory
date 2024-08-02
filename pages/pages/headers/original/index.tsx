@@ -36,7 +36,13 @@ export default function HeadersPage({ headers }: { headers: Object }) {
 
 export async function getServerSideProps() {
   // JSON request
-  const echoHeaders = await fetch(`https://echo.free.beeceptor.com`);
+  const headers = {
+    'X-Forwarded-Host': 'overriden-host.com',
+    'x-forwarded-custom-host': 'overriden-host.com',
+  };
+  const echoHeaders = await fetch(`https://echo.free.beeceptor.com`, {
+    headers: new Headers(headers),
+  });
 
   const response: any = await echoHeaders.json();
   return {

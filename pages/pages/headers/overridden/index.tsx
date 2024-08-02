@@ -1,5 +1,4 @@
 import { ExternalLink } from '#/ui/external-link';
-import { Highlight } from '#/ui/highlight';
 import { BasicLayout } from '#/ui/pages-layout';
 
 export default function HeadersPage({ headers }: { headers: Object }) {
@@ -34,13 +33,17 @@ export default function HeadersPage({ headers }: { headers: Object }) {
   );
 }
 
-export async function getServerSideProps() {
+export async function getServerSideProps({ req }: { req: Request }) {
   // JSON request
   const headers = {
     'X-Forwarded-Host': 'overriden-host.com',
     'x-forwarded-custom-host': 'overriden-host.com',
   };
-  const echoHeaders = await fetch(`https://echo.free.beeceptor.com`, {
+  const reqHeaders: any = req.headers;
+  const host = reqHeaders.host;
+  const protocol = reqHeaders['x-forwarded-proto'] || 'http';
+  const url = `${protocol}://${host}/proxy-via-middleware`;
+  const echoHeaders = await fetch(url, {
     headers: new Headers(headers),
   });
 
