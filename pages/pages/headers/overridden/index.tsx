@@ -37,7 +37,8 @@ export default function HeadersPage({ headers }: { headers: Object }) {
 export async function getServerSideProps() {
   // JSON request
   const headers = {
-    'X-Forwarded-Host': 'original-host.com',
+    'X-Forwarded-Host': 'overriden-host.com',
+    'x-forwarded-host': 'overriden-host.com',
   };
   const echoHeaders = await fetch(
     `https://cookies-middleware.vercel.app/api/print-headers`,
