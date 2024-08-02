@@ -48,6 +48,7 @@ export async function getServerSideProps() {
   return {
     props: {
       headers: response,
+      cache: 'no-store',
     },
   };
 }
