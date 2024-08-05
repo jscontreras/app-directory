@@ -51,7 +51,7 @@ module.exports = {
     };
   },
   experimental: {
-    instrumentationHook: true,
-    //  !!process.env.VERCEL_ENV && process.env.VERCEL_ENV !== 'development',
+    instrumentationHook:
+      !!process.env.VERCEL_ENV && process.env.VERCEL_ENV !== 'development',
   },
 };
