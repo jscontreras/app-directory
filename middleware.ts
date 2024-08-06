@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
+import { register } from './instrumentation';
 
+register();
 export function middleware(request: NextRequest) {
   // Clone the request headers
   // You can modify them with headers API: https://developer.mozilla.org/en-US/docs/Web/API/Headers
