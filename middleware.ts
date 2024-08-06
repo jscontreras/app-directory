@@ -28,10 +28,13 @@ export function middleware(request: NextRequest, context: NextFetchEvent) {
   } else if (url.pathname === '/api/print-headers-middleware') {
     context.waitUntil(getProduct().then((json) => console.log({ json })));
 
-    return new Response(JSON.stringify({ hello: 'world' }), {
-      status: 200,
-      headers: { 'content-type': 'application/json' },
-    });
+    return new Response(
+      JSON.stringify({ hello: `world ${new Date().getMilliseconds()}` }),
+      {
+        status: 200,
+        headers: { 'content-type': 'application/json' },
+      },
+    );
   }
 }
 
