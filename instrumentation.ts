@@ -8,7 +8,7 @@ export async function register() {
       await import('./lib/intrumentation.node');
     } else {
       registerOTel({
-        serviceName: 'my-vercel-app',
+        serviceName: process.env.NEW_RELIC_APP_NAME,
         instrumentationConfig: {
           fetch: {
             propagateContextUrls: ['*'],
