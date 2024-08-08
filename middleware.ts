@@ -8,7 +8,7 @@ register();
 const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 async function getProduct() {
   return await trace
-    .getTracer(process.env.NEW_RELIC_APP_NAME || 'app-router-tc')
+    .getTracer('products-middleware')
     .startActiveSpan('fetchingProductsMiddleware', async (span) => {
       try {
         const res = await fetch('https://api.vercel.app/products/1');
