@@ -1,14 +1,23 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest, NextFetchEvent } from 'next/server';
 import { register } from './instrumentation';
+import { trace } from '@opentelemetry/api';
 
 register();
 
 const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 async function getProduct() {
-  const res = await fetch('https://api.vercel.app/products/1');
-  await wait(2000);
-  return res.json();
+  return await trace
+    .getTracer(process.env.NEW_RELIC_APP_NAME || 'app-router-tc')
+    .startActiveSpan('fetchingProductsMiddleware', async (span) => {
+      try {
+        const res = await fetch('https://api.vercel.app/products/1');
+        await wait(2000);
+        return res.json();
+      } finally {
+        span.end();
+      }
+    });
 }
 
 export function middleware(request: NextRequest, context: NextFetchEvent) {
