@@ -35,7 +35,7 @@ export function middleware(request: NextRequest, context: NextFetchEvent) {
     });
     return response;
   } else if (url.pathname === '/api/print-headers-middleware') {
-    context.waitUntil(getProduct().then((json) => console.log({ json })));
+    context.waitUntil(getProduct().then(() => true));
 
     return new Response(
       JSON.stringify({ hello: `world ${new Date().getMilliseconds()}` }),
