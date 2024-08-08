@@ -93,6 +93,11 @@
         "x64",
         "arm64"
       ]
+    },
+    "overrides": {
+      "undici@<5.26.2": ">=5.26.2",
+      "undici@<5.28.4": ">=5.28.4",
+      "undici@<=5.28.2": ">=5.28.3"
     }
   },
   "optionalDependencies": {
