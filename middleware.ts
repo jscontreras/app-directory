@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest, NextFetchEvent } from 'next/server';
 import { register } from './instrumentation';
+import { logs, SeverityNumber } from '@opentelemetry/api-logs';
 
 // service name
 const serviceName = process.env.NEW_RELIC_APP_NAME || '';
@@ -27,6 +28,15 @@ export async function middleware(
 
     return response;
   } else if (url.pathname === '/api/print-headers-middleware') {
+    const logger = logs.getLogger(serviceName);
+    // Emmitting Log with Open Telemetry Custom Provisioning (not working)
+    logger.emit({
+      body: `[${process.env.TELEMETRY_CUSTOM_PRODUCER}]** (OpenTelemetry) Testing Log Emiter for Middleware`,
+      severityNumber: SeverityNumber.INFO,
+      attributes: {
+        key: 'value',
+      },
+    });
     const response = await fetch('https://echo.free.beeceptor.com');
     const data = await response.json();
     return new Response(

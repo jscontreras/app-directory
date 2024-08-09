@@ -12,9 +12,10 @@ const otlpLogExporter = new OTLPLogExporter({
   url: 'https://otlp.nr-data.net:4318/v1/logs', // New Relic OTLP endpoint
   headers: {
     'api-key': process.env.NEW_RELIC_LICENSE_KEY,
-    'Content-Type': 'application/json',
   },
   keepAlive: true,
+  concurrencyLimit: 10,
+  timeoutMillis: 5000,
 });
 
 const METRICS_COLLECTOR_STRING = 'https://otlp.nr-data.net:4318/v1/metrics';

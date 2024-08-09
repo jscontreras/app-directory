@@ -12,6 +12,8 @@ const otlpLogExporter = new OTLPLogExporter({
     'api-key': process.env.NEW_RELIC_LICENSE_KEY,
   },
   keepAlive: true,
+  concurrencyLimit: 10,
+  timeoutMillis: 5000,
 });
 
 const METRICS_COLLECTOR_STRING = 'https://otlp.nr-data.net:4318/v1/metrics';
