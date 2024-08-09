@@ -2,6 +2,7 @@ import { serverLogger } from '#/lib/logger';
 import { ExternalLink } from '#/ui/external-link';
 import { BasicLayout } from '#/ui/pages-layout';
 import { logs, SeverityNumber } from '@opentelemetry/api-logs';
+
 // service name
 const serviceName = process.env.NEW_RELIC_APP_NAME || '';
 
@@ -51,7 +52,7 @@ export async function getServerSideProps({ req }: { req: Request }) {
 
   // Emitting Log with winston to NewRelic Directly
   serverLogger.log(
-    serverLogger.info,
+    'info',
     '** Testing Log Emiter for rewrite to echo.free.beeceptor.com',
   );
   // JSON request
