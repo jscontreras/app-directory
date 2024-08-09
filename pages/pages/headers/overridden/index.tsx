@@ -1,3 +1,4 @@
+import { serverLogger } from '#/lib/logger';
 import { ExternalLink } from '#/ui/external-link';
 import { BasicLayout } from '#/ui/pages-layout';
 import { logs, SeverityNumber } from '@opentelemetry/api-logs';
@@ -38,6 +39,7 @@ export default function HeadersPage({ headers }: { headers: Object }) {
 
 export async function getServerSideProps({ req }: { req: Request }) {
   const logger = logs.getLogger(serviceName);
+  // Emmitting Log with Open Telemetry Custom Provisioning (not working)
   logger.emit({
     body: '** Testing Log Emiter for rewrite to echo.free.beeceptor.com',
     severityNumber: SeverityNumber.INFO,
@@ -46,6 +48,12 @@ export async function getServerSideProps({ req }: { req: Request }) {
       key: 'value',
     },
   });
+
+  // Emitting Log with winston to NewRelic Directly
+  serverLogger.log(
+    serverLogger.info,
+    '** Testing Log Emiter for rewrite to echo.free.beeceptor.com',
+  );
   // JSON request
   const headers = {
     'X-Forwarded-Host': 'overriden-host.com',
