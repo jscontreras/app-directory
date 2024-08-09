@@ -20,7 +20,10 @@ async function getProduct() {
     });
 }
 
-export function middleware(request: NextRequest, context: NextFetchEvent) {
+export async function middleware(
+  request: NextRequest,
+  context: NextFetchEvent,
+) {
   const url = request.nextUrl;
   if (url.pathname === '/proxy-via-middleware') {
     // Clone the request headers
@@ -36,9 +39,13 @@ export function middleware(request: NextRequest, context: NextFetchEvent) {
     return response;
   } else if (url.pathname === '/api/print-headers-middleware') {
     context.waitUntil(getProduct().then(() => true));
-
+    const response = await fetch('https://echo.free.beeceptor.com');
+    const data = await response.json();
     return new Response(
-      JSON.stringify({ hello: `world ${new Date().getMilliseconds()}` }),
+      JSON.stringify({
+        hello: `world ${new Date().getMilliseconds()}`,
+        ...data,
+      }),
       {
         status: 200,
         headers: { 'content-type': 'application/json' },
