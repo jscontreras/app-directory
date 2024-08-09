@@ -7,7 +7,7 @@ import { OTLPLogExporter } from '@opentelemetry/exporter-logs-otlp-http/build/sr
 
 // Configure the OTLP log exporter
 const otlpLogExporter = new OTLPLogExporter({
-  url: 'https://log-api.newrelic.com/log/v1', // New Relic OTLP endpoint
+  url: 'https://otlp.nr-data.net:4318/v1/logs', // New Relic OTLP endpoint
   headers: {
     'api-key': process.env.NEW_RELIC_LICENSE_KEY,
   },
