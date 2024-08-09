@@ -1,0 +1,8 @@
+Progress: resolved 1, reused 0, downloaded 0, added 0
+ ERR_PNPM_FETCH_404  GET https://registry.npmjs.org/19.0.0: Not Found - 404
+
+This error happened while installing a direct dependency of /Users/scontreras/workspace/vercel/app-directory
+
+19.0.0 is not in the npm registry, or you have no permission to fetch it. Did you mean 1?
+
+No authorization header was set for the request.

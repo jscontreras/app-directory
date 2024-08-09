@@ -2,7 +2,7 @@
 import { registerOTel } from '@vercel/otel';
 import { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-proto';
 import { PeriodicExportingMetricReader } from '@opentelemetry/sdk-metrics';
-import { BatchLogRecordProcessor } from '@opentelemetry/sdk-logs';
+import { SimpleLogRecordProcessor } from '@opentelemetry/sdk-logs';
 import { OTLPLogExporter } from '@opentelemetry/exporter-logs-otlp-http/build/src/platform/node';
 
 // Configure the OTLP log exporter
@@ -43,5 +43,5 @@ registerOTel({
   serviceName: process.env.NEW_RELIC_APP_NAME,
   traceExporter: newRelicExporter,
   metricReader: metricReader,
-  logRecordProcessor: new BatchLogRecordProcessor(otlpLogExporter),
+  logRecordProcessor: new SimpleLogRecordProcessor(otlpLogExporter),
 });
