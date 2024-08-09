@@ -1,28 +1,12 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest, NextFetchEvent } from 'next/server';
 import { register } from './instrumentation';
-import { trace } from '@opentelemetry/api';
 
 // service name
 const serviceName = process.env.NEW_RELIC_APP_NAME || '';
 
 // Register Service
 register();
-
-const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
-async function getProduct() {
-  return await trace
-    .getTracer(serviceName)
-    .startActiveSpan('fetchingProductsMiddleware', async (span) => {
-      try {
-        const res = await fetch('https://api.vercel.app/products/1');
-        await wait(2000);
-        return res.json();
-      } finally {
-        span.end();
-      }
-    });
-}
 
 export async function middleware(
   request: NextRequest,
@@ -43,7 +27,6 @@ export async function middleware(
 
     return response;
   } else if (url.pathname === '/api/print-headers-middleware') {
-    context.waitUntil(getProduct().then(() => true));
     const response = await fetch('https://echo.free.beeceptor.com');
     const data = await response.json();
     return new Response(
