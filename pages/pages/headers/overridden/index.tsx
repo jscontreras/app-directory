@@ -1,4 +1,3 @@
-import { register } from '#/instrumentation';
 import { serverLogger } from '#/lib/logger';
 import { ExternalLink } from '#/ui/external-link';
 import { BasicLayout } from '#/ui/pages-layout';
