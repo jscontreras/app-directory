@@ -1,5 +1,8 @@
 import { ExternalLink } from '#/ui/external-link';
 import { BasicLayout } from '#/ui/pages-layout';
+import { logs, SeverityNumber } from '@opentelemetry/api-logs';
+// service name
+const serviceName = process.env.NEW_RELIC_APP_NAME || '';
 
 export default function HeadersPage({ headers }: { headers: Object }) {
   return (
@@ -34,6 +37,15 @@ export default function HeadersPage({ headers }: { headers: Object }) {
 }
 
 export async function getServerSideProps({ req }: { req: Request }) {
+  const logger = logs.getLogger(serviceName);
+  logger.emit({
+    body: '** Testing Log Emiter for rewrite to echo.free.beeceptor.com',
+    severityNumber: SeverityNumber.INFO,
+    severityText: 'INFO',
+    attributes: {
+      key: 'value',
+    },
+  });
   // JSON request
   const headers = {
     'X-Forwarded-Host': 'overriden-host.com',
