@@ -3,9 +3,10 @@ import { NodeSDK } from '@opentelemetry/sdk-node';
 import { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-proto';
 import { PeriodicExportingMetricReader } from '@opentelemetry/sdk-metrics';
 import { SimpleLogRecordProcessor } from '@opentelemetry/sdk-logs';
-import { OTLPLogExporter } from '@opentelemetry/exporter-logs-otlp-http/build/src/platform/node';
+
 import { Resource } from '@opentelemetry/resources';
 import { SimpleSpanProcessor } from '@opentelemetry/sdk-trace-node';
+import { OTLPLogExporter } from '@opentelemetry/exporter-logs-otlp-http';
 
 // Configure the OTLP log exporter
 const otlpLogExporter = new OTLPLogExporter({

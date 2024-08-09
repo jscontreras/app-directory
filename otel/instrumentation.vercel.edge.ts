@@ -14,11 +14,17 @@ registerOTel({
   },
   traceExporter: new OTLPHttpJsonTraceExporter({
     url: 'https://otel.highlight.io:4318/v1/traces',
+    headers: {
+      'api-key': process.env.NEW_RELIC_LICENSE_KEY,
+    },
   }),
   spanProcessors: [
     new BatchSpanProcessor(
       new OTLPHttpJsonTraceExporter({
         url: 'https://otel.highlight.io:4318/v1/traces',
+        headers: {
+          'api-key': process.env.NEW_RELIC_LICENSE_KEY,
+        },
       }),
     ),
   ],
