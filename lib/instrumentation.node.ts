@@ -11,6 +11,7 @@ const otlpLogExporter = new OTLPLogExporter({
   headers: {
     'api-key': process.env.NEW_RELIC_LICENSE_KEY,
   },
+  keepAlive: true,
 });
 
 const METRICS_COLLECTOR_STRING = 'https://otlp.nr-data.net:4318/v1/metrics';

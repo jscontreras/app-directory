@@ -1,3 +1,4 @@
+import { register } from '#/instrumentation';
 import { serverLogger } from '#/lib/logger';
 import { ExternalLink } from '#/ui/external-link';
 import { BasicLayout } from '#/ui/pages-layout';
@@ -42,7 +43,7 @@ export async function getServerSideProps({ req }: { req: Request }) {
   const logger = logs.getLogger(serviceName);
   // Emmitting Log with Open Telemetry Custom Provisioning (not working)
   logger.emit({
-    body: '** Testing Log Emiter for rewrite to echo.free.beeceptor.com',
+    body: '** (OpenTelemetry) Testing Log Emiter for rewrite to echo.free.beeceptor.com',
     severityNumber: SeverityNumber.INFO,
     severityText: 'INFO',
     attributes: {
@@ -53,7 +54,7 @@ export async function getServerSideProps({ req }: { req: Request }) {
   // Emitting Log with winston to NewRelic Directly
   serverLogger.log(
     'info',
-    '** Testing Log Emiter for rewrite to echo.free.beeceptor.com',
+    '** (winston) Testing Log Emiter for rewrite to echo.free.beeceptor.com',
   );
   // JSON request
   const headers = {
