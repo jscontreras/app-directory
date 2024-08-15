@@ -1,6 +1,7 @@
 import { Logger } from 'winston';
 import { NewRelicTransport } from 'winston-nr';
 
+// Sending Logs directly to New Relic
 const newRelicTransport = new NewRelicTransport({
   apiUrl: 'https://log-api.newrelic.com/log/v1',
   apiKey: process.env.NEW_RELIC_LICENSE_KEY || '',
