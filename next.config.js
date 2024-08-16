@@ -42,7 +42,7 @@ module.exports = {
             'https://app-directory-git-main-success-tc-vtest314.vercel.app/context/electronics',
         },
         {
-          source: '/speed-insights-rewrite',
+          source: '/speed-insights-rewrite.js',
           destination: 'https://tc-vercel.dev/_vercel/speed-insights/script.js',
         },
       ],

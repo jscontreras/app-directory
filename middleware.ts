@@ -16,7 +16,7 @@ export async function middleware(
   const url = request.nextUrl;
   if (url.pathname === '/proxy-speed-insights') {
     const response = NextResponse.rewrite(
-      'https://www.tc-vercel.dev/speed-insights-rewrite',
+      'https://www.tc-vercel.dev/speed-insights-rewrite.js',
     );
     return response;
   } else if (url.pathname === '/proxy-via-middleware') {
@@ -62,6 +62,6 @@ export const config = {
   matcher: [
     '/proxy-via-middleware',
     '/api/print-headers-middleware',
-    '/proxy-speed-insights',
+    '/proxy-speed-insights.js',
   ],
 };
