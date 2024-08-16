@@ -18,6 +18,7 @@ export async function middleware(
     const response = NextResponse.rewrite(
       'https://www.tc-vercel.dev/_vercel/speed-insights/script.js',
     );
+    return response;
   } else if (url.pathname === '/proxy-via-middleware') {
     // Clone the request headers
     // You can modify them with headers API: https://developer.mozilla.org/en-US/docs/Web/API/Headers
