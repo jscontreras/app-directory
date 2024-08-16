@@ -14,9 +14,13 @@ export async function middleware(
   context: NextFetchEvent,
 ) {
   const url = request.nextUrl;
-  if (url.pathname === '/proxy-speed-insights') {
+  if (url.pathname === '/proxy-speed-insights.js') {
     const response = NextResponse.rewrite(
-      'https://www.tc-vercel.dev/speed-insights-rewrite.js',
+      'https://www.tc-vercel.dev/_vercel/speed-insights/script.js',
+    );
+    response.headers.set(
+      'content-type',
+      'application/javascript; charset=utf-8',
     );
     return response;
   } else if (url.pathname === '/proxy-via-middleware') {
