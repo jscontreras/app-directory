@@ -14,7 +14,11 @@ export async function middleware(
   context: NextFetchEvent,
 ) {
   const url = request.nextUrl;
-  if (url.pathname === '/proxy-via-middleware') {
+  if (url.pathname === '/proxy-speed-insights') {
+    const response = NextResponse.rewrite(
+      'https://www.tc-vercel.dev/_vercel/speed-insights/script.js',
+    );
+  } else if (url.pathname === '/proxy-via-middleware') {
     // Clone the request headers
     // You can modify them with headers API: https://developer.mozilla.org/en-US/docs/Web/API/Headers
     const requestHeaders = new Headers(request.headers);
@@ -54,5 +58,9 @@ export async function middleware(
 
 // See "Matching Paths" below to learn more
 export const config = {
-  matcher: ['/proxy-via-middleware', '/api/print-headers-middleware'],
+  matcher: [
+    '/proxy-via-middleware',
+    '/api/print-headers-middleware',
+    '/proxy-speed-insights',
+  ],
 };
