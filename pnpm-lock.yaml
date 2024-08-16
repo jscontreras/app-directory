@@ -94,6 +94,9 @@ dependencies:
   add:
     specifier: 2.0.6
     version: 2.0.6
+  axios:
+    specifier: '>=1.7.4'
+    version: 1.7.4
   class-variance-authority:
     specifier: 0.7.0
     version: 0.7.0
@@ -2131,7 +2134,7 @@ packages:
   /@newrelic/security-agent@1.4.0:
     resolution: {integrity: sha512-dBfMAnJ2uRwfoszsEG/LM4WKVNmiMvfhq2GWkBntd83p52xuVcnuCaNtp0zXnSwkPuPgU5wCcYY26jOou45NdA==}
     dependencies:
-      axios: 1.7.3
+      axios: 1.7.4
       check-disk-space: 3.4.0
       content-type: 1.0.5
       fast-safe-stringify: 2.1.1
@@ -4743,8 +4746,8 @@ packages:
     engines: {node: '>=4'}
     dev: true
 
-  /axios@1.7.3:
-    resolution: {integrity: sha512-Ar7ND9pU99eJ9GpoGQKhKf58GpUOgnzuaB7ueNQ5BMi0p+LZ5oaEnfF999fAArcTIBwXTCHAmGcHOZJaWPq9Nw==}
+  /axios@1.7.4:
+    resolution: {integrity: sha512-DukmaFRnY6AzAALSH4J2M3k6PkaC+MfaAGdEERRWcC9q3/TWQwLpHR8ZRLKTdQ3aBDL64EdluRDjJqKw+BPZEw==}
     dependencies:
       follow-redirects: 1.15.6
       form-data: 4.0.0
