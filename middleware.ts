@@ -15,14 +15,20 @@ export async function middleware(
 ) {
   const url = request.nextUrl;
   if (url.pathname === '/proxy-speed-insights.js') {
-    const response = NextResponse.rewrite(
-      'https://www.tc-vercel.dev/speed-insights-rewrite.js',
+    const response = await fetch(
+      'https://www.tc-vercel.dev/_vercel/speed-insights/script.js',
     );
-    response.headers.set(
-      'content-type',
-      'application/javascript; charset=utf-8',
-    );
-    return response;
+    // Check if the fetch was successful
+    if (!response.ok) {
+      return NextResponse.redirect('/error-page'); // Redirect to an error page if the fetch fails
+    }
+    // Get the content of the JavaScript file
+    const jsContent = await response.text();
+
+    // Return the JavaScript content as a response
+    return new NextResponse(jsContent, {
+      headers: { 'Content-Type': 'application/javascript' },
+    });
   } else if (url.pathname === '/proxy-via-middleware') {
     // Clone the request headers
     // You can modify them with headers API: https://developer.mozilla.org/en-US/docs/Web/API/Headers
