@@ -2,6 +2,7 @@ import '#/styles/globals.css';
 import { AddressBar } from '#/ui/address-bar';
 import Byline from '#/ui/byline';
 import { GlobalNav } from '#/ui/global-nav';
+import { NewRelicBrowserAgentScript } from '#/ui/new-relic-script';
 import { SpeedInsightsAdapter } from '#/ui/speed-isights-adapter';
 import { VercelToolbarUI } from '#/ui/vercel-toolbar-ui';
 import { Metadata } from 'next';
@@ -33,8 +34,8 @@ export default function RootLayout({
   return (
     <html lang="en" className="[color-scheme:dark]">
       <body className="bg-gray-1100 overflow-y-scroll bg-[url('/grid.svg')] pb-36">
+        <NewRelicBrowserAgentScript />
         <GlobalNav />
-
         <div className="lg:pl-72">
           <div className="mx-auto max-w-4xl space-y-8 px-2 pt-20 lg:px-8 lg:py-8">
             <div className="bg-vc-border-gradient rounded-lg p-px shadow-lg shadow-black/20">
