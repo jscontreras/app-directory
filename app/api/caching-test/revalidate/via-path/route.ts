@@ -2,7 +2,11 @@ import { revalidatePath } from 'next/cache';
 import { NextResponse } from 'next/server';
 
 export async function GET(): Promise<NextResponse> {
-  const paths = ['/api/caching-test', '/api/caching-test/fetch'];
+  const paths = [
+    '/api/caching-test',
+    '/api/caching-test/fetch',
+    '/api/caching-test/static',
+  ];
   //revalidateTag('api-caching-test');
   const promises = paths.map((path) => {
     return revalidatePath(path);
