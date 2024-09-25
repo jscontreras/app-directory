@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { unstable_cache } from 'next/cache';
 
+export const runtime = 'edge';
 export const dynamic = 'force-dynamic'; // static by default, unless reading the request
 
 const cached_res = unstable_cache(
