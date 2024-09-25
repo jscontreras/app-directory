@@ -1,7 +1,5 @@
 import { NextResponse } from 'next/server';
 
-export const dynamic = 'force-static'; // CDN
-
 export async function GET(): Promise<NextResponse> {
   const res = await fetch(`https://worldtimeapi.org/api/ip`, {
     cache: 'no-store',
@@ -14,9 +12,19 @@ export async function GET(): Promise<NextResponse> {
     minute: 'numeric',
     second: 'numeric',
   });
-  return NextResponse.json({
-    status: 'ok',
-    timeNYC: currentTime,
-    note: `This won't get path revalidated :(`,
-  });
+  return NextResponse.json(
+    {
+      status: 'ok',
+      timeNYC: currentTime,
+      note: `This cache is time revalidated (30 secs)`,
+    },
+    {
+      status: 200,
+      headers: {
+        'Cache-Control': 'max-age=30',
+        'CDN-Cache-Control': 'max-age=60',
+        'Vercel-CDN-Cache-Control': 'max-age=3600',
+      },
+    },
+  );
 }
