@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 
 export async function GET(): Promise<NextResponse> {
-  const duration = 30;
+  const duration = 60;
   const res = await fetch(`https://worldtimeapi.org/api/ip`, {
     cache: 'no-store',
   });
@@ -17,7 +17,7 @@ export async function GET(): Promise<NextResponse> {
     {
       status: 'ok',
       timeNYC: currentTime,
-      note: `This cache is time revalidated (30 secs)`,
+      note: `This cache is time revalidated (${duration} secs)`,
     },
     {
       status: 200,
