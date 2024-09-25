@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 
 export async function GET(): Promise<NextResponse> {
+  const duration = 30;
   const res = await fetch(`https://worldtimeapi.org/api/ip`, {
     cache: 'no-store',
   });
@@ -21,9 +22,9 @@ export async function GET(): Promise<NextResponse> {
     {
       status: 200,
       headers: {
-        'Cache-Control': 'max-age=30',
-        'CDN-Cache-Control': 'max-age=60',
-        'Vercel-CDN-Cache-Control': 'max-age=3600',
+        'Cache-Control': `max-age=${duration}`,
+        'CDN-Cache-Control': `max-age=${duration}`,
+        'Vercel-CDN-Cache-Control': `max-age=${duration}`,
       },
     },
   );
