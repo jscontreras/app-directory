@@ -6,7 +6,12 @@ export const dynamic = 'force-dynamic'; // static by default, unless reading the
 
 const cached_res = unstable_cache(
   async () => {
-    return { ok: true, now: Date.now() };
+    return {
+      ok: true,
+      now: Date.now(),
+      runtime: 'edge',
+      dataCache: 'unstable_cache',
+    };
   },
   ['api-caching-test-key'],
   {

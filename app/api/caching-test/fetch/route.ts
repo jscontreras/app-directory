@@ -15,5 +15,10 @@ export async function GET(): Promise<NextResponse> {
     minute: 'numeric',
     second: 'numeric',
   });
-  return NextResponse.json({ status: 'ok', timeNYC: currentTime });
+  return NextResponse.json({
+    status: 'ok',
+    timeNYC: currentTime,
+    runtime: 'nodejs',
+    dataCache: 'fetch',
+  });
 }
