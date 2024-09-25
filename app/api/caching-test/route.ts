@@ -6,9 +6,20 @@ export const dynamic = 'force-dynamic'; // static by default, unless reading the
 
 const cached_res = unstable_cache(
   async () => {
+    const res = await fetch(`https://worldtimeapi.org/api/ip`, {
+      cache: 'no-store',
+    });
+    const data = (await res.json()) as { datetime: string };
+
+    const currentTime = new Date(data.datetime).toLocaleString('en-US', {
+      timeZone: 'America/New_York',
+      hour: 'numeric',
+      minute: 'numeric',
+      second: 'numeric',
+    });
     return {
       ok: true,
-      now: Date.now(),
+      timeNYC: currentTime,
       runtime: 'edge',
       dataCache: 'unstable_cache',
     };
