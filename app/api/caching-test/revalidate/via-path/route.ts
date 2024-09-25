@@ -5,7 +5,7 @@ export async function GET(): Promise<NextResponse> {
   const paths = [
     '/api/caching-test',
     '/api/caching-test/fetch',
-    '/api/caching-test/static',
+    '/api/caching-test/via-headers',
   ];
   //revalidateTag('api-caching-test');
   const promises = paths.map((path) => {
