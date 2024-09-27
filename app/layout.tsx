@@ -9,6 +9,7 @@ import { VercelToolbarUI } from '#/ui/vercel-toolbar-ui';
 import { Metadata } from 'next';
 import { Suspense } from 'react';
 import { showBottomBar } from '#/flags';
+import { FlagValues } from '@vercel/flags/react';
 
 export const metadata: Metadata = {
   title: {
@@ -38,6 +39,7 @@ export default async function RootLayout({
   return (
     <html lang="en" className="[color-scheme:dark]">
       <body className="bg-gray-1100 overflow-y-scroll bg-[url('/grid.svg')] pb-36">
+        <FlagValues values={''} />
         <NewRelicBrowserAgentScript />
         <GlobalNav />
         <div className="lg:pl-72">
