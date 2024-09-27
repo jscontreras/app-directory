@@ -4,9 +4,11 @@ import Byline from '#/ui/byline';
 import { GlobalNav } from '#/ui/global-nav';
 import { NewRelicBrowserAgentScript } from '#/ui/new-relic-script';
 import { SpeedInsightsAdapter } from '#/ui/speed-isights-adapter';
+import BottomBar from '#/ui/bottom-bar';
 import { VercelToolbarUI } from '#/ui/vercel-toolbar-ui';
 import { Metadata } from 'next';
 import { Suspense } from 'react';
+import { showBottomBar } from '#/flags';
 
 export const metadata: Metadata = {
   title: {
@@ -26,11 +28,13 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  // Reading Flag
+  const bottomBar = await showBottomBar();
   return (
     <html lang="en" className="[color-scheme:dark]">
       <body className="bg-gray-1100 overflow-y-scroll bg-[url('/grid.svg')] pb-36">
@@ -53,6 +57,9 @@ export default function RootLayout({
         <Suspense>
           <VercelToolbarUI />
         </Suspense>
+        {bottomBar && (
+          <BottomBar message="&#127987; Hello World Feature Flag!!" />
+        )}
         <SpeedInsightsAdapter />
       </body>
     </html>
