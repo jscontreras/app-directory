@@ -60,7 +60,7 @@ export default async function RootLayout({
           <VercelToolbarUI />
         </Suspense>
         {bottomBar && (
-          <BottomBar message="&#127987; Hello World Feature Flag!!" />
+          <BottomBar message="&#127987; Hello World Feature Flag (staging)!!" />
         )}
         <SpeedInsightsAdapter />
       </body>
