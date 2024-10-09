@@ -66,7 +66,7 @@ export async function middleware(
         headers: { 'content-type': 'application/json' },
       },
     );
-  } else if (url.pathname.startsWith('/isr')) {
+  } else if (url.pathname.startsWith('/ssg')) {
     // Permutations for ISR feature flags
     const code = await precompute(featureFlags);
     console.log(
