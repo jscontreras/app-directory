@@ -87,7 +87,7 @@ export const config = {
     '/proxy-via-middleware',
     '/api/print-headers-middleware',
     '/proxy-speed-insights.js',
-    '/isr',
-    '/isr/:path*',
+    '/ssg',
+    '/ssg/:path*',
   ],
 };
