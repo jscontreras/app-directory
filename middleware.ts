@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server';
 import type { NextRequest, NextFetchEvent } from 'next/server';
 import { register } from './instrumentation';
 import { logs, SeverityNumber } from '@opentelemetry/api-logs';
+import { unstable_precompute as precompute } from '@vercel/flags/next';
+import { featureFlags } from './flags';
 
 // service name
 const serviceName = process.env.NEW_RELIC_APP_NAME || '';
@@ -64,6 +66,18 @@ export async function middleware(
         headers: { 'content-type': 'application/json' },
       },
     );
+  } else if (url.pathname.startsWith('/isr')) {
+    // Permutations for ISR feature flags
+    const code = await precompute(featureFlags);
+    console.log(
+      '`/flagged/${code}${request.nextUrl.pathname}${request.nextUrl.search}`',
+      `/flagged/${code}${request.nextUrl.pathname}${request.nextUrl.search}`,
+    );
+    const nextUrl = new URL(
+      `/flagged/${code}${request.nextUrl.pathname}${request.nextUrl.search}`,
+      request.url,
+    );
+    return NextResponse.rewrite(nextUrl, { request });
   }
 }
 
@@ -73,5 +87,6 @@ export const config = {
     '/proxy-via-middleware',
     '/api/print-headers-middleware',
     '/proxy-speed-insights.js',
+    '/isr',
   ],
 };

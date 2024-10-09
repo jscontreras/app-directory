@@ -9,6 +9,8 @@ export const showBottomBar = flag({
   ],
   async decide() {
     const { bottomBar } = (await get('flags')) as any; // could use this.key instead
-    return bottomBar ?? false;
+    return bottomBar ?? true;
   },
 });
+
+export const featureFlags = [showBottomBar] as const;
