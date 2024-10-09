@@ -88,5 +88,6 @@ export const config = {
     '/api/print-headers-middleware',
     '/proxy-speed-insights.js',
     '/isr',
+    '/isr/:path*',
   ],
 };
