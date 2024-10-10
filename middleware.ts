@@ -66,13 +66,15 @@ export async function middleware(
         headers: { 'content-type': 'application/json' },
       },
     );
-  } else if (url.pathname.startsWith('/ssg')) {
+  }
+  // FEATURE FLAGS ENABLEMENT
+  else if (url.pathname.startsWith('/ssg') || url.pathname === '/') {
     // Permutations for ISR feature flags
     const code = await precompute(featureFlags);
-    console.log(
-      '`/flagged/${code}${request.nextUrl.pathname}${request.nextUrl.search}`',
-      `/flagged/${code}${request.nextUrl.pathname}${request.nextUrl.search}`,
-    );
+    // console.log(
+    //   '`/flagged/${code}${request.nextUrl.pathname}${request.nextUrl.search}`',
+    //   `/flagged/${code}${request.nextUrl.pathname}${request.nextUrl.search}`,
+    // );
     const nextUrl = new URL(
       `/flagged/${code}${request.nextUrl.pathname}${request.nextUrl.search}`,
       request.url,
@@ -89,5 +91,6 @@ export const config = {
     '/proxy-speed-insights.js',
     '/ssg',
     '/ssg/:path*',
+    '/',
   ],
 };

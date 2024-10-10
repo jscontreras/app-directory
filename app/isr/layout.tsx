@@ -33,3 +33,5 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     </div>
   );
 }
+
+export const dynamic = 'force-static';
