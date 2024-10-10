@@ -8,7 +8,8 @@ export const showBottomBar = flag({
     { value: true, label: 'Show Bar' } as any,
   ],
   async decide() {
-    const { bottomBar } = (await get('flags')) as any; // could use this.key instead
+    // you can use headers() and cookies() as well!
+    const { bottomBar } = (await get('flags')) as any;
     const { threshold } = bottomBar;
     return Math.random() < threshold;
   },
