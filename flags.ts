@@ -11,7 +11,7 @@ export const showBottomBar = flag({
     // you can use headers() and cookies() as well!
     const { bottomBar } = (await get('flags')) as any;
     const { threshold } = bottomBar;
-    return Math.random() < threshold;
+    return Math.random() <= threshold;
   },
 });
 
