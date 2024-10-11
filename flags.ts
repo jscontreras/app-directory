@@ -25,8 +25,8 @@ export const barColor = flag({
   async decide() {
     // you can use headers() and cookies() as well!
     const { bottomBar } = (await get('flags')) as any;
-    const { threshold } = bottomBar;
-    return Math.random() <= threshold;
+    const { barColor } = bottomBar;
+    return barColor || 'bg-pink-200';
   },
 });
 
