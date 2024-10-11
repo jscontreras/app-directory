@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import { unstable_generatePermutations as generatePermutations } from '@vercel/flags/next';
-import { featureFlags } from '#/flags';
+import { barColor, featureFlags } from '#/flags';
 import BottomBar from '#/ui/bottom-bar';
 import { showBottomBar } from '#/flags';
 
@@ -20,11 +20,15 @@ export default async function Layout({
 }) {
   // Reading Flag
   const bottomBar = await showBottomBar(params.code, featureFlags);
+  const color = await barColor(params.code, featureFlags);
 
   return (
     <>
       {bottomBar && (
-        <BottomBar message="&#127987; Hello World Featured Flag!" />
+        <BottomBar
+          message="&#127987; Hello World Featured Flag!"
+          color={color}
+        />
       )}
       {children}
     </>

@@ -15,4 +15,19 @@ export const showBottomBar = flag({
   },
 });
 
-export const featureFlags = [showBottomBar] as const;
+export const barColor = flag({
+  key: 'barColor',
+  options: [
+    { value: 'bg-pink-200', label: 'Pink' },
+    { value: 'bg-amber-200', label: 'Yellow' },
+    { value: 'bg-sky-200', label: 'Blue' } as any,
+  ],
+  async decide() {
+    // you can use headers() and cookies() as well!
+    const { bottomBar } = (await get('flags')) as any;
+    const { threshold } = bottomBar;
+    return Math.random() <= threshold;
+  },
+});
+
+export const featureFlags = [showBottomBar, barColor] as const;
