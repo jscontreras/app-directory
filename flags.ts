@@ -10,6 +10,12 @@ export const showBottomBar = flag({
   ],
   async decide() {
     // you can use headers() and cookies() as well!
+    const headersList = headers();
+    const pathname = headersList.get('x-pathname') || '';
+    // The flag is automatically activated based on path
+    if (['blue', 'pink', 'yellow'].some((color) => pathname.includes(color))) {
+      return true;
+    }
     const { bottomBar } = (await get('flags')) as any;
     const { threshold } = bottomBar;
     return Math.random() <= threshold;
