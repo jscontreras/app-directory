@@ -1,5 +1,6 @@
 import { unstable_flag as flag } from '@vercel/flags/next';
 import { get } from '@vercel/edge-config';
+import { headers } from 'next/headers';
 
 export const showBottomBar = flag({
   key: 'bottomBar',
@@ -24,6 +25,20 @@ export const barColor = flag({
   ],
   async decide() {
     // you can use headers() and cookies() as well!
+    const headersList = headers();
+    // headersList.forEach((value, key) => {
+    //   console.log('>>>>>>>>>>>>>', key, value)
+    // })
+    const pathname = headersList.get('x-pathname') || '';
+    // selecting color based on path
+    if (pathname.includes('blue')) {
+      return 'bg-sky-200';
+    } else if (pathname.includes('pink')) {
+      return 'bg-pink-200';
+    } else if (pathname.includes('yellow')) {
+      return 'bg-amber-200';
+    }
+
     const { bottomBar } = (await get('flags')) as any;
     const { barColor } = bottomBar;
     return barColor || 'bg-pink-200';
