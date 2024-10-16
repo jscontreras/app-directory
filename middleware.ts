@@ -68,7 +68,11 @@ export async function middleware(
     );
   }
   // FEATURE FLAGS ENABLEMENT
-  else if (url.pathname.startsWith('/ssg') || url.pathname === '/') {
+  else if (
+    url.pathname.startsWith('/ssg') ||
+    url.pathname.startsWith('/h') ||
+    url.pathname === '/'
+  ) {
     // Permutations for ISR feature flags
     const code = await precompute(featureFlags);
     // console.log(
@@ -89,8 +93,11 @@ export const config = {
     '/proxy-via-middleware',
     '/api/print-headers-middleware',
     '/proxy-speed-insights.js',
+    // Featured flags paths
     '/ssg',
     '/ssg/:path*',
     '/',
+    '/h',
+    '/h/:path*',
   ],
 };
