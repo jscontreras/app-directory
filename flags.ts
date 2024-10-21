@@ -32,9 +32,9 @@ export const barColor = flag({
   async decide() {
     // you can use headers() and cookies() as well!
     const headersList = headers();
-    headersList.forEach((value, key) => {
-      console.log('>>>>>>>>>>>>>', key, value);
-    });
+    // headersList.forEach((value, key) => {
+    //   console.log('>>>>>>>>>>>>>', key, value);
+    // });
     const pathname = headersList.get('x-pathname') || '';
     // selecting color based on path
     if (pathname.includes('blue')) {

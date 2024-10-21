@@ -77,11 +77,14 @@ export async function middleware(
     request.headers.set('x-pathname', url.pathname);
     // Permutations for ISR feature flags
     const code = await precompute(featureFlags);
+    // Removing the extra header
     request.headers.delete('x-pathname');
+
     // console.log(
     //   '`/flagged/${code}${request.nextUrl.pathname}${request.nextUrl.search}`',
     //   `/flagged/${code}${request.nextUrl.pathname}${request.nextUrl.search}`,
     // );
+
     const nextUrl = new URL(
       `/flagged/${code}${request.nextUrl.pathname}${request.nextUrl.search}`,
       request.url,

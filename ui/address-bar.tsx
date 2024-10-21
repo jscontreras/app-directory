@@ -37,7 +37,6 @@ function Params() {
 
 export function AddressBar() {
   const pathname = usePathname();
-
   return (
     <div className="flex items-center gap-x-2 p-3.5 lg:px-5 lg:py-3">
       <div className="text-gray-600">
@@ -64,6 +63,13 @@ export function AddressBar() {
             {pathname
               .split('/')
               .slice(2)
+              .filter((_URLSearchParams, index) => {
+                if (pathname.startsWith('/flagged')) {
+                  return index > 1;
+                } else {
+                  return true;
+                }
+              })
               .map((segment) => {
                 return (
                   <React.Fragment key={segment}>

@@ -1,16 +1,9 @@
 import { demos } from '#/lib/demos';
 import Link from 'next/link';
-// import BottomBar from '#/ui/bottom-bar';
-// import { showBottomBar } from '#/flags';
 
 export default async function Page() {
-  // Reading Flag
-  // const bottomBar = await showBottomBar();
   return (
     <div className="space-y-8">
-      {/* {bottomBar && (
-        <BottomBar message="&#127987; Hello World Featured Flag!" />
-      )} */}
       <h1 className="text-xl font-medium text-gray-300">Examples</h1>
 
       <div className="space-y-10 text-white">
