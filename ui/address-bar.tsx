@@ -63,13 +63,13 @@ export function AddressBar() {
             {pathname
               .split('/')
               .slice(2)
-              .filter((_URLSearchParams, index) => {
-                if (pathname.startsWith('/flagged')) {
-                  return index > 0;
-                } else {
-                  return true;
-                }
-              })
+              // .filter((_URLSearchParams, index) => {
+              //   if (pathname.startsWith('/flagged')) {
+              //     return index > 0;
+              //   } else {
+              //     return true;
+              //   }
+              // })
               .map((segment) => {
                 return (
                   <React.Fragment key={segment}>
