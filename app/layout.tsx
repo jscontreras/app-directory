@@ -7,6 +7,7 @@ import { SpeedInsightsAdapter } from '#/ui/speed-isights-adapter';
 import { VercelToolbarUI } from '#/ui/vercel-toolbar-ui';
 import { Metadata } from 'next';
 import { Suspense } from 'react';
+import { FlagValues } from '@vercel/flags/react';
 
 export const metadata: Metadata = {
   title: {
@@ -26,7 +27,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -34,6 +35,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="[color-scheme:dark]">
       <body className="bg-gray-1100 overflow-y-scroll bg-[url('/grid.svg')] pb-36">
+        <FlagValues values={''} />
         <NewRelicBrowserAgentScript />
         <GlobalNav />
         <div className="lg:pl-72">
@@ -43,7 +45,6 @@ export default function RootLayout({
                 <AddressBar />
               </div>
             </div>
-
             <div className="bg-vc-border-gradient rounded-lg p-px shadow-lg shadow-black/20">
               <div className="rounded-lg bg-black p-3.5 lg:p-6">{children}</div>
             </div>

@@ -1,4 +1,7 @@
-module.exports = {
+const withVercelToolbar = require('@vercel/toolbar/plugins/next')();
+
+// Adding Vercel Toolbar to Local dev
+module.exports = withVercelToolbar({
   headers: async () => {
     return [
       {
@@ -53,4 +56,4 @@ module.exports = {
   experimental: {
     instrumentationHook: true,
   },
-};
+});

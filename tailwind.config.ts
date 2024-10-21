@@ -7,6 +7,7 @@ export default {
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
     './ui/**/*.{js,ts,jsx,tsx,mdx}',
   ],
+  safelist: ['bg-pink-200', 'bg-amber-200', 'bg-sky-200'],
   future: {
     hoverOnlyWhenSupported: true,
   },
