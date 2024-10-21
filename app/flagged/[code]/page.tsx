@@ -2,8 +2,6 @@ import { demos } from '#/lib/demos';
 import Link from 'next/link';
 
 export default async function Page() {
-  // Reading Flag
-
   return (
     <div className="space-y-8">
       <h1 className="text-xl font-medium text-gray-300">Examples</h1>
