@@ -65,7 +65,7 @@ export function AddressBar() {
               .slice(2)
               .filter((_URLSearchParams, index) => {
                 if (pathname.startsWith('/flagged')) {
-                  return index > 1;
+                  return index > 0;
                 } else {
                   return true;
                 }
