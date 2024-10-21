@@ -73,8 +73,10 @@ export async function middleware(
     url.pathname.startsWith('/h') ||
     url.pathname === '/'
   ) {
-    // Injecting additional headers for flags to operate
-    request.headers.set('x-pathname', url.pathname);
+    if (url.pathname.startsWith('/h')) {
+      // Injecting additional headers for flags to operate
+      request.headers.set('x-pathname', url.pathname);
+    }
     // Permutations for ISR feature flags
     const code = await precompute(featureFlags);
     // console.log(
