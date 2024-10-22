@@ -144,6 +144,9 @@ dependencies:
   react-dom:
     specifier: 19.0.0-rc-cd22717c-20241013
     version: 19.0.0-rc-cd22717c-20241013(react@19.0.0-rc-cd22717c-20241013)
+  require-in-the-middle:
+    specifier: 7.4.0
+    version: 7.4.0
   sass:
     specifier: 1.75.0
     version: 1.75.0
