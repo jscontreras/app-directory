@@ -62,7 +62,7 @@ export function AddressBar() {
             <span className="text-gray-600">/</span>
             {pathname
               .split('/')
-              .slice(2)
+              .slice(1)
               // .filter((_URLSearchParams, index) => {
               //   if (pathname.startsWith('/flagged')) {
               //     return index > 0;
@@ -81,8 +81,9 @@ export function AddressBar() {
                         {segment}
                       </span>
                     </span>
-
-                    <span className="text-gray-600">/</span>
+                    {pathname.length > 1 && (
+                      <span className="text-gray-600">/</span>
+                    )}
                   </React.Fragment>
                 );
               })}
