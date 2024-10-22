@@ -9,7 +9,7 @@ export default function Byline({ className }: { className: string }) {
         <div className="flex items-center gap-x-1.5">
           <div className="text-sm text-gray-400">By</div>
           <a href="https://vercel.com" title="Vercel">
-            <div className="w-16 text-gray-100 hover:text-gray-50">
+            <div className="w-50 flex-column items-bottom flex text-gray-100 hover:text-gray-50">
               <VercelLogo />
             </div>
           </a>

@@ -9,7 +9,8 @@ import { Suspense } from 'react';
 
 export const runtime = 'edge';
 
-export default async function Page({ params }: { params: { id: string } }) {
+export default async function Page(props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
   return (
     <div className="space-y-8 lg:space-y-14">
       {/* @ts-expect-error Async Server Component */}

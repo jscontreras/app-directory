@@ -30,15 +30,15 @@ export async function revalidateTagCahe(tag: string) {
 }
 
 export async function isPreviewModeEnabled() {
-  const { isEnabled } = draftMode();
+  const { isEnabled } = await draftMode();
   return isEnabled;
 }
 
 export async function switchDraftMode(active: boolean) {
   if (active) {
-    draftMode().enable();
+    (await draftMode()).enable();
   } else {
-    draftMode().disable();
+    (await draftMode()).disable();
   }
 }
 

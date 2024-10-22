@@ -7,7 +7,8 @@ export async function generateStaticParams() {
   return [{ id: '1' }, { id: '2' }, { id: '3' }];
 }
 
-export default async function Page({ params }: { params: { id: string } }) {
+export default async function Page(props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
   if (parseInt(params.id) > 60) {
     revalidatePath(`/isr/${params.id}`);
     return <h1>Should not be cached Ever!!!</h1>;

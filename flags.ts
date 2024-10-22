@@ -1,6 +1,6 @@
 import { unstable_flag as flag } from '@vercel/flags/next';
 import { get } from '@vercel/edge-config';
-import { headers } from 'next/headers';
+import { headers, type UnsafeUnwrappedHeaders } from 'next/headers';
 
 export const showBottomBar = flag({
   key: 'bottomBar',
@@ -10,7 +10,7 @@ export const showBottomBar = flag({
   ],
   async decide() {
     // you can use headers() and cookies() as well!
-    const headersList = headers();
+    const headersList = headers() as unknown as UnsafeUnwrappedHeaders;
     const pathname = headersList.get('x-pathname') || '';
     // The flag is automatically activated based on path
     if (['blue', 'pink', 'yellow'].some((color) => pathname.includes(color))) {
@@ -31,7 +31,7 @@ export const barColor = flag({
   ],
   async decide() {
     // you can use headers() and cookies() as well!
-    const headersList = headers();
+    const headersList = headers() as unknown as UnsafeUnwrappedHeaders;
     // headersList.forEach((value, key) => {
     //   console.log('>>>>>>>>>>>>>', key, value);
     // });

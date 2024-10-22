@@ -53,7 +53,4 @@ module.exports = withVercelToolbar({
       ],
     };
   },
-  experimental: {
-    instrumentationHook: true,
-  },
 });

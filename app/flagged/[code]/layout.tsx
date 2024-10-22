@@ -11,13 +11,14 @@ export async function generateStaticParams() {
 
 export const revalidate = 60; // Revalidate every 60 seconds
 
-export default async function Layout({
-  children,
-  params,
-}: {
+export default async function Layout(props: {
   children: ReactNode;
-  params: { code: string };
+  params: Promise<{ code: string }>;
 }) {
+  const params = await props.params;
+
+  const { children } = props;
+
   // Reading Flag
   const bottomBar = await showBottomBar(params.code, featureFlags);
   const color = await barColor(params.code, featureFlags);

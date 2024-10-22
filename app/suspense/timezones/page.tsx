@@ -13,7 +13,8 @@ export async function generateStaticParams() {
  * @param param0
  * @returns
  */
-export default async function Page({ params }: { params: { id: string } }) {
+export default async function Page(props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
   return (
     <div className="grid grid-cols-6 gap-x-6 gap-y-3">
       <div className="col-span-full space-y-3 lg:col-span-4">
