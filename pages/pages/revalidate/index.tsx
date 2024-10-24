@@ -54,8 +54,3 @@ export default function PagesRevalidateHome() {
     </RevalidatePageLayout>
   );
 }
-
-// Function to create a delay
-function delay(ms: number) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
