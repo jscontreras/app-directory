@@ -27,7 +27,7 @@ function delay(ms: number) {
 }
 
 export default async function Page() {
-  await delay(9000);
+  await delay(5000);
   const res = await fetch(`https://worldtimeapi.org/api/ip`, {
     cache: 'force-cache',
     next: { tags: ['test-tag-date'] },
