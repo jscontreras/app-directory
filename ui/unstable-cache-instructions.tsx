@@ -42,7 +42,7 @@ export function UnstableCacheInstructions({
         <ExternalLink href="https://nextjs.org/docs/14/app/api-reference/functions/unstable_cache">
           Docs (Next 14)
         </ExternalLink>
-        <ExternalLink href="https://github.com/jscontreras/app-directory/tree/main/app/pocs/unstable_cache/[id]/page.tsx">
+        <ExternalLink href="https://github.com/jscontreras/app-directory/tree/preview/app/pocs/unstable_cache/[id]/page.tsx">
           Code
         </ExternalLink>
       </div>
