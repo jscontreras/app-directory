@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 export const dynamic = 'force-dynamic'; // static by default, unless reading the request
 
 export async function GET(): Promise<NextResponse> {
-  const res = await fetch(`https://worldtimeapi.org/api/ip`, {
+  const res = await fetch('https://worldtimeapi.org/api/ip', {
     cache: 'force-cache',
     next: { tags: ['api-caching-test'] },
   });
