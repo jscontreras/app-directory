@@ -24,6 +24,7 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
   } catch (e) {
     data = { datetime: new Date().toDateString() };
   }
+  const dateObj = new Date(data.datetime);
 
   const currentTime = dateObj.toLocaleString('en-US', {
     timeZone: 'America/New_York',
