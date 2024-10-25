@@ -6,7 +6,10 @@ export const dynamic = 'force-dynamic'; // static by default, unless reading the
 
 const cached_res = unstable_cache(
   async () => {
-    const res = await fetch(`https://worldtimeapi.org/api/ip`, {
+    const res = await fetch(`https://api.tc-vercel.dev/api/time`, {
+      headers: {
+        'X-Custom-TC-Api-Key': process.env.CUSTOM_API_KEY || '',
+      },
       cache: 'no-store',
     });
 

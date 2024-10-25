@@ -2,7 +2,10 @@ import { NextResponse } from 'next/server';
 
 export async function GET(): Promise<NextResponse> {
   const duration = 60;
-  const res = await fetch(`https://worldtimeapi.org/api/ip`, {
+  const res = await fetch(`https://api.tc-vercel.dev/api/time`, {
+    headers: {
+      'X-Custom-TC-Api-Key': process.env.CUSTOM_API_KEY || '',
+    },
     cache: 'no-store',
   });
   const data = (await res.json()) as { datetime: string };

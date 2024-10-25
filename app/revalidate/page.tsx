@@ -8,7 +8,10 @@ function delay(ms: number) {
 
 export default async function Page() {
   await delay(5000);
-  const res = await fetch(`https://worldtimeapi.org/api/ip`, {
+  const res = await fetch(`https://api.tc-vercel.dev/api/time`, {
+    headers: {
+      'X-Custom-TC-Api-Key': process.env.CUSTOM_API_KEY || '',
+    },
     cache: 'force-cache',
     next: { tags: ['test-tag-date'] },
   });

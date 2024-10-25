@@ -13,7 +13,10 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
   if (Number(params.id) >= 100) {
     notFound();
   }
-  const res = await fetch(`https://worldtimeapi.org/api/ip`, {
+  const res = await fetch(`https://api.tc-vercel.dev/api/time`, {
+    headers: {
+      'X-Custom-TC-Api-Key': process.env.CUSTOM_API_KEY || '',
+    },
     cache: 'force-cache',
     next: { tags: ['test-preview'] },
   });

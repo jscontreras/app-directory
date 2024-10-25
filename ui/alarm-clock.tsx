@@ -9,9 +9,14 @@ const getCurrentHourInCity = cache(async function (timezone: string) {
   `use server`;
 
   const res = await fetch(
-    `https://worldtimeapi.org/api/ip`,
+    `https://api.tc-vercel.dev/api/time`,
     // { next: { revalidate: 300, tags: ['timezone'] },
-    { cache: 'force-cache' },
+    {
+      headers: {
+        'X-Custom-TC-Api-Key': process.env.CUSTOM_API_KEY || '',
+      },
+      cache: 'force-cache',
+    },
   );
   const data = (await res.json()) as { datetime: string };
 
