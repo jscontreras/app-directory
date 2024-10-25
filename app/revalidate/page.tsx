@@ -12,12 +12,7 @@ export default async function Page() {
     cache: 'force-cache',
     next: { tags: ['test-tag-date'] },
   });
-  let data;
-  try {
-    data = (await res.json()) as { datetime: string };
-  } catch (e) {
-    data = { datetime: new Date().toDateString() };
-  }
+  const data = (await res.json()) as { datetime: string };
   const dateObj = new Date(data.datetime);
   const currentTime = dateObj.toLocaleString('en-US', {
     timeZone: 'America/New_York',

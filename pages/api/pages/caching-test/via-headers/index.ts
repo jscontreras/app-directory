@@ -8,12 +8,7 @@ export default async function handler(
   const res = await fetch(`https://worldtimeapi.org/api/ip`, {
     cache: 'no-store',
   });
-  let data;
-  try {
-    data = (await res.json()) as { datetime: string };
-  } catch (e) {
-    data = { datetime: new Date().toDateString() };
-  }
+  const data = (await res.json()) as { datetime: string };
 
   const currentTime = new Date(data.datetime).toLocaleString('en-US', {
     timeZone: 'America/New_York',

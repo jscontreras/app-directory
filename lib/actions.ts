@@ -11,12 +11,7 @@ export async function getCurrentHourInCityServerAction(timezone: string) {
     // { next: { revalidate: 300, tags: ['timezone'] },
     { cache: 'force-cache' },
   );
-  let data;
-  try {
-    data = (await res.json()) as { datetime: string };
-  } catch (e) {
-    data = { datetime: new Date().toDateString() };
-  }
+  const data = (await res.json()) as { datetime: string };
 
   const currentTime = new Date(data.datetime).toLocaleString('en-US', {
     timeZone: timezone,

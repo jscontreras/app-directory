@@ -86,12 +86,7 @@ export async function getStaticProps({ params }: { params: any }) {
   const postId = params?.id.replace('static-', '') || '1';
   await delay(9000);
   const res = await fetch(`https://worldtimeapi.org/api/ip`);
-  let data;
-  try {
-    data = (await res.json()) as { datetime: string };
-  } catch (e) {
-    data = { datetime: new Date().toDateString() };
-  }
+  const data = (await res.json()) as { datetime: string };
   const dateObj = new Date(data.datetime);
   const currentTime = dateObj.toLocaleString('en-US', {
     timeZone: 'America/New_York',
