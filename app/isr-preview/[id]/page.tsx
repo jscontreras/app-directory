@@ -17,8 +17,14 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
     cache: 'force-cache',
     next: { tags: ['test-preview'] },
   });
-  const data = (await res.json()) as { datetime: string };
-  const dateObj = new Date(data.datetime);
+
+  let data;
+  try {
+    data = (await res.json()) as { datetime: string };
+  } catch (e) {
+    data = { datetime: new Date().toDateString() };
+  }
+
   const currentTime = dateObj.toLocaleString('en-US', {
     timeZone: 'America/New_York',
     hour: 'numeric',

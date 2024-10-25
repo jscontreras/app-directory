@@ -13,7 +13,12 @@ const getCurrentHourInCity = cache(async function (timezone: string) {
     // { next: { revalidate: 300, tags: ['timezone'] },
     { cache: 'force-cache' },
   );
-  const data = (await res.json()) as { datetime: string };
+  let data;
+  try {
+    data = (await res.json()) as { datetime: string };
+  } catch (e) {
+    data = { datetime: new Date().toDateString() };
+  }
 
   const currentTime = new Date(data.datetime).toLocaleString('en-US', {
     timeZone: timezone,
