@@ -1,26 +1,6 @@
 import { ExternalLink } from '#/ui/external-link';
 import { Highlight } from '#/ui/highlight';
 
-// Function to format the date and time
-function formatDate(date: Date) {
-  let hours: any = date.getHours();
-  let minutes: any = date.getMinutes();
-  let seconds: any = date.getSeconds();
-
-  // Ensuring two digits for hours, minutes, and seconds
-  hours = hours < 10 ? '0' + hours : hours;
-  minutes = minutes < 10 ? '0' + minutes : minutes;
-  seconds = seconds < 10 ? '0' + seconds : seconds;
-
-  // Formatting the date
-  const year = date.getFullYear();
-  const month = date.getMonth() + 1; // getMonth() returns month from 0-11
-  const day = date.getDate();
-
-  // Returning the formatted string
-  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-}
-
 // Function to create a delay
 function delay(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -32,7 +12,12 @@ export default async function Page() {
     cache: 'force-cache',
     next: { tags: ['test-tag-date'] },
   });
-  const data = (await res.json()) as { datetime: string };
+  let data;
+  try {
+    data = (await res.json()) as { datetime: string };
+  } catch (e) {
+    data = { datetime: new Date().toDateString() };
+  }
   const dateObj = new Date(data.datetime);
   const currentTime = dateObj.toLocaleString('en-US', {
     timeZone: 'America/New_York',
