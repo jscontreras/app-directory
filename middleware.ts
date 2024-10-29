@@ -92,10 +92,7 @@ export async function middleware(
     return NextResponse.rewrite(nextUrl, { request });
   }
   // TESTING NONCE HEADERS
-  else if (
-    url.pathname == '/suspense/timezones' ||
-    url.pathname.startsWith('/_next/static')
-  ) {
+  else if (url.pathname == '/suspense/timezones') {
     console.log('Intjecting', url.pathname);
     return injectCSPheaders(request);
   }
@@ -114,7 +111,6 @@ export const config = {
     '/h',
     '/h/:path*',
     // NONCE headers
-    '/_next/(.*.js)',
     '/suspense/timezones',
   ],
 };
