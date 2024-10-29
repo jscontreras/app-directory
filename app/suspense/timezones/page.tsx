@@ -3,6 +3,8 @@ import { CitiesSelector } from '#/ui/cities-selector';
 import RendererWrapper from '#/ui/renderer-wrapper';
 import SkeletonAlarmClock from '#/ui/skeleton-alarm-clock';
 
+export const dynamic = 'force-dynamic';
+
 export async function generateStaticParams() {
   // Generate two pages at build time and the rest (3-100) on-demand
   return [{ id: '1' }, { id: '2' }];
