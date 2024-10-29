@@ -93,7 +93,6 @@ export async function middleware(
   }
   // TESTING NONCE HEADERS
   else if (url.pathname == '/suspense/timezones') {
-    console.log('Intjecting', url.pathname);
     return injectCSPheaders(request);
   }
 }
