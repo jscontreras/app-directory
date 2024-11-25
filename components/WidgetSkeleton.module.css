@@ -1,0 +1,41 @@
+.widget {
+  background-color: black;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  animation: pulse 1.5s infinite;
+}
+
+.title {
+  height: 1.5rem;
+  width: 75%;
+  background-color: var(--muted);
+  margin-bottom: 1rem;
+  border-radius: 4px;
+}
+
+.content {
+  height: 8rem;
+  background-color: var(--muted);
+  margin-bottom: 1rem;
+  border-radius: 4px;
+}
+
+.footer {
+  height: 1rem;
+  width: 50%;
+  background-color: var(--muted);
+  border-radius: 4px;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.6;
+  }
+}

@@ -1,17 +1,10 @@
-import { cache } from 'react';
+import styles from './WeatherWidget.module.css';
 import { WiDaySunny, WiCloudy, WiRain } from 'react-icons/wi';
 
-const fetchWeatherData = cache(async () => {
-  // Simulate API call
+const fetchWeatherData = async () => {
   await new Promise((resolve) => setTimeout(resolve, 100));
-  const conditions = ['sunny', 'cloudy', 'rainy'];
-  const randomCondition =
-    conditions[Math.floor(Math.random() * conditions.length)];
-  return {
-    temp: Math.floor(Math.random() * 30) + 10,
-    condition: randomCondition,
-  };
-});
+  return { temp: Math.floor(Math.random() * 30) + 10, condition: 'sunny' };
+};
 
 export default async function WeatherWidget() {
   const weather = await fetchWeatherData();
@@ -24,13 +17,13 @@ export default async function WeatherWidget() {
       : WiRain;
 
   return (
-    <div className="widget">
-      <h2 className="widget-title text-yellow-600">Weather</h2>
-      <div className="flex items-center justify-center">
-        <WeatherIcon className="mr-4 text-6xl text-yellow-400" />
+    <div className={styles.widget}>
+      <h2 className={styles.title}>Weather</h2>
+      <div className={styles.content}>
+        <WeatherIcon className={styles.icon} />
         <div>
-          <p className="text-3xl font-bold">{weather.temp}°C</p>
-          <p className="capitalize text-gray-500">{weather.condition}</p>
+          <p className={styles.temperature}>{weather.temp}°C</p>
+          <p className={styles.condition}>{weather.condition}</p>
         </div>
       </div>
     </div>

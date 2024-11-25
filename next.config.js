@@ -53,4 +53,7 @@ module.exports = withVercelToolbar({
       ],
     };
   },
+  experimental: {
+    cssChunking: 'strict',
+  },
 });

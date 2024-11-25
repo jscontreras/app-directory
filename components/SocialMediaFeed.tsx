@@ -1,8 +1,7 @@
-import { cache } from 'react';
+import styles from './SocialMediaFeed.module.css';
 import { FaTwitter, FaFacebook, FaInstagram } from 'react-icons/fa';
 
-const fetchSocialMediaPosts = cache(async () => {
-  // Simulate API call
+const fetchSocialMediaPosts = async () => {
   await new Promise((resolve) => setTimeout(resolve, 100));
   return [
     {
@@ -21,7 +20,7 @@ const fetchSocialMediaPosts = cache(async () => {
       likes: 132,
     },
   ];
-});
+};
 
 export default async function SocialMediaFeed() {
   const posts = await fetchSocialMediaPosts();
@@ -29,30 +28,28 @@ export default async function SocialMediaFeed() {
   const getPlatformIcon = (platform: string) => {
     switch (platform) {
       case 'twitter':
-        return <FaTwitter className="text-blue-400" />;
+        return <FaTwitter className={styles.twitterIcon} />;
       case 'facebook':
-        return <FaFacebook className="text-blue-600" />;
+        return <FaFacebook className={styles.facebookIcon} />;
       case 'instagram':
-        return <FaInstagram className="text-pink-600" />;
+        return <FaInstagram className={styles.instagramIcon} />;
       default:
         return null;
     }
   };
 
   return (
-    <div className="widget bg-black">
-      <h2 className="widget-title text-orange-600">Social Media Feed</h2>
-      <ul className="space-y-4">
+    <div className={styles.widget}>
+      <h2 className={styles.title}>Social Media Feed</h2>
+      <ul className={styles.list}>
         {posts.map((post, index) => (
-          <li key={`social-${index}`} className="border-b pb-2">
-            <div className="mb-2 flex items-center">
+          <li key={`social-${index}`} className={styles.item}>
+            <div className={styles.header}>
               {getPlatformIcon(post.platform)}
-              <span className="ml-2 text-sm capitalize text-gray-500">
-                {post.platform}
-              </span>
+              <span className={styles.platform}>{post.platform}</span>
             </div>
-            <p className="mb-1">{post.content}</p>
-            <span className="text-sm text-gray-500">{post.likes} likes</span>
+            <p className={styles.content}>{post.content}</p>
+            <span className={styles.likes}>{post.likes} likes</span>
           </li>
         ))}
       </ul>

@@ -1,0 +1,40 @@
+.widget {
+  background-color: black;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+}
+
+.title {
+  color: var(--primary);
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  text-align: left;
+  padding: 0.5rem;
+}
+
+.table th {
+  color: var(--muted);
+}
+
+.service {
+  font-weight: 500;
+}
+
+.operational {
+  color: var(--secondary);
+}
+
+.outage {
+  color: var(--accent);
+}

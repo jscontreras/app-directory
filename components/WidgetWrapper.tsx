@@ -7,7 +7,6 @@ const widgets = {
   NewsFeeds: dynamic(() => import('./NewsFeeds') as any),
   StockTicker: dynamic(() => import('./StockTicker') as any),
   CalendarEvents: dynamic(() => import('./CalendarEvents') as any),
-  PerformanceMetrics: dynamic(() => import('./PerformanceMetrics') as any),
   SocialMediaFeed: dynamic(() => import('./SocialMediaFeed') as any),
   SystemStatus: dynamic(() => import('./SystemStatus') as any),
 };

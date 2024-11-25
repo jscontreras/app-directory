@@ -1,0 +1,35 @@
+.widget {
+  background-color: black;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+}
+
+.title {
+  color: var(--primary);
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon {
+  font-size: 4rem;
+  margin-right: 1rem;
+  color: var(--primary);
+}
+
+.temperature {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.condition {
+  color: var(--muted);
+  text-transform: capitalize;
+}

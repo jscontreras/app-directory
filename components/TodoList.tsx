@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import styles from './TodoList.module.css';
 
 export default function TodoList() {
   const [todos, setTodos] = useState([
@@ -18,20 +19,18 @@ export default function TodoList() {
   };
 
   return (
-    <div className="rounded-lg bg-black p-4 shadow-lg">
-      <h2 className="mb-4 text-xl font-semibold text-purple-600">Todo List</h2>
-      <ul className="space-y-2">
+    <div className={styles.widget}>
+      <h2 className={styles.title}>Todo List</h2>
+      <ul className={styles.list}>
         {todos.map((todo) => (
-          <li key={todo.id} className="flex items-center">
+          <li key={todo.id} className={styles.item}>
             <input
               type="checkbox"
               checked={todo.done}
               onChange={() => toggleTodo(todo.id)}
-              className="mr-2"
+              className={styles.checkbox}
             />
-            <span className={todo.done ? 'text-gray-400 line-through' : ''}>
-              {todo.text}
-            </span>
+            <span className={todo.done ? styles.done : ''}>{todo.text}</span>
           </li>
         ))}
       </ul>
