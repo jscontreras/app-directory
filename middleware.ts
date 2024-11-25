@@ -74,11 +74,11 @@ export async function middleware(
     url.pathname === '/'
   ) {
     // Injecting additional headers for flags to operate
-    request.headers.set('x-pathname', url.pathname);
+    await request.headers.set('x-pathname', url.pathname);
     // Permutations for ISR feature flags
     const code = await precompute(featureFlags);
     // Removing the extra header
-    request.headers.delete('x-pathname');
+    await request.headers.delete('x-pathname');
 
     // console.log(
     //   '`/flagged/${code}${request.nextUrl.pathname}${request.nextUrl.search}`',
