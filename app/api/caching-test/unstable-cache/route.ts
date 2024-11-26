@@ -31,6 +31,7 @@ const cached_res = unstable_cache(
       timeNYC: currentTime,
       runtime: 'edge',
       dataCache: 'unstable_cache',
+      tags: 'api-caching-test-key',
     };
   },
   ['api-caching-test-key'],

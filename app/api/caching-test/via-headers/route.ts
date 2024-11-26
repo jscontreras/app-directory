@@ -21,6 +21,7 @@ export async function GET(): Promise<NextResponse> {
       status: 'ok',
       timeNYC: currentTime,
       note: `This cache is time revalidated (${duration} secs)`,
+      cache: 'Using CDN headers',
     },
     {
       status: 200,

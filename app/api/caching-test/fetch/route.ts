@@ -23,5 +23,6 @@ export async function GET(): Promise<NextResponse> {
     timeNYC: currentTime,
     runtime: 'nodejs',
     dataCache: 'fetch',
+    tags: ['api-caching-test'],
   });
 }

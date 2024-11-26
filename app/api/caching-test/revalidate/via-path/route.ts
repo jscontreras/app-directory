@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 
 export async function GET(): Promise<NextResponse> {
   const paths = [
-    '/api/caching-test',
+    '/api/caching-test/unstable-cache',
     '/api/caching-test/fetch',
     '/api/caching-test/via-headers',
   ];
