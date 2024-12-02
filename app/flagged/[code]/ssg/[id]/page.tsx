@@ -2,8 +2,15 @@ import { notFound } from 'next/navigation';
 
 export async function generateStaticParams() {
   // printDiskSize();
-  // Generate two pages at build time and the rest (3-100) on-demand
-  return [];
+  // Generate two pages at build time and the rest (5-100) on-demand
+  return [
+    { id: '1' },
+    { id: '2' },
+    { id: '0' },
+    { id: '3' },
+    { id: '4' },
+    { id: '5' },
+  ];
 }
 
 export default async function Page(props: { params: Promise<{ id: string }> }) {
