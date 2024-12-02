@@ -31,6 +31,16 @@ export async function middleware(
     return new NextResponse(jsContent, {
       headers: { 'Content-Type': 'application/javascript' },
     });
+  }
+  // How to override cache headers (This will break cache as it is private)
+  else if (url.pathname === '/isr/11') {
+    const response = NextResponse.next();
+    // Remove the 'private' directive and set appropriate caching headers for ISR
+    response.headers.set(
+      'Cache-Control',
+      'private, max-age=0, stale-while-revalidate',
+    );
+    return response;
   } else if (url.pathname === '/proxy-via-middleware') {
     // Clone the request headers
     // You can modify them with headers API: https://developer.mozilla.org/en-US/docs/Web/API/Headers
@@ -105,5 +115,6 @@ export const config = {
     '/',
     '/h',
     '/h/:path*',
+    '/isr/11',
   ],
 };
