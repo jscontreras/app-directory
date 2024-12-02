@@ -35,3 +35,4 @@ export default async function Layout(props: {
     </>
   );
 }
+export const dynamicParams = false;
