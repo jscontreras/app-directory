@@ -40,4 +40,4 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
   );
 }
 
-export const dynamic = 'force-static';
+export const dynamicParams = false;
