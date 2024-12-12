@@ -31,11 +31,11 @@ export const barColor = flag({
   ],
   async decide() {
     // you can use headers() and cookies() as well!
-    const headersList = headers() as unknown as UnsafeUnwrappedHeaders;
+    const headersList = await headers();
     // headersList.forEach((value, key) => {
     //   console.log('>>>>>>>>>>>>>', key, value);
     // });
-    const pathname = headersList.get('x-pathname') || '';
+    const pathname = (await headersList).get('x-pathname') || '';
     // selecting color based on path
     if (pathname.includes('blue')) {
       return 'bg-sky-200';
