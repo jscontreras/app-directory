@@ -7,10 +7,8 @@ export default function Page() {
 
       <ul>
         <li>By default, data fetching in Next.js is cached static.</li>
-        <li>This example statically caches data fetches for Post 1 and 2.</li>
         <li>
-          A random third post is fetched on-demand the first time it is
-          requested.
+          This example statically caches data fetches for Post 1 to Post 5.
         </li>
         <li>
           Try navigating to each post and noting the timestamp of when the page

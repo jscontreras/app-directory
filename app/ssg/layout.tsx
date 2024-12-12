@@ -19,7 +19,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <Tab path="/ssg" item={{ text: 'Home' }} />
         <Tab path="/ssg" item={{ text: 'Post 1', slug: '1' }} />
         <Tab path="/ssg" item={{ text: 'Post 2', slug: '2' }} />
-        <RandomPostTab path="/ssg" />
       </div>
 
       <div>{children}</div>
