@@ -4,7 +4,9 @@ import { revalidatePath, revalidateTag } from 'next/cache';
 import { draftMode } from 'next/headers';
 import { getDiskInfo } from 'node-disk-info';
 
-export async function getCurrentHourInCityServerAction(timezone: string) {
+export async function getCurrentHourInCityServerAction(
+  timezone: string = 'America/New_York',
+) {
   console.log('timezone', timezone);
   const res = await fetch(
     `https://api.tc-vercel.dev/api/time`,
@@ -23,6 +25,26 @@ export async function getCurrentHourInCityServerAction(timezone: string) {
     hour: 'numeric',
     minute: 'numeric',
   });
+  return currentTime;
+}
+
+export async function getISODateServerAction(
+  timezone: string = 'America/New_York',
+) {
+  console.log('timezone', timezone);
+  const res = await fetch(
+    `https://api.tc-vercel.dev/api/time`,
+    // { next: { revalidate: 300, tags: ['timezone'] },
+    {
+      headers: {
+        'X-Custom-TC-Api-Key': process.env.CUSTOM_API_KEY || '',
+      },
+      cache: 'force-cache',
+    },
+  );
+  const data = (await res.json()) as { datetime: string };
+
+  const currentTime = new Date(data.datetime).toLocaleString('en-US');
   return currentTime;
 }
 
