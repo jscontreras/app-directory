@@ -19,10 +19,17 @@ export function UnstableCacheInstructions({
         <div className="col-span-full space-y-3 lg:col-span-4">
           Using <Highlight>unstable_cache</Highlight> allows you to control
           caching storage by throwing errors based on custom logic. Overriding{' '}
-          <Highlight colorClass={'text-purple-400'}>revalidate: 20</Highlight>{' '}
-          and adding tag{' '}
-          <Highlight colorClass={'text-purple-400'}>[{dynamicTag}]</Highlight>{' '}
-          to the existing cached data.
+          <Highlight colorClass={'text-purple-400'}>revalidate: 20</Highlight>
+          {dynamicTag && (
+            <>
+              and adding tag{' '}
+              <Highlight colorClass={'text-purple-400'}>
+                [{dynamicTag}]
+              </Highlight>{' '}
+              to the existing cached data
+            </>
+          )}
+          .
         </div>
         <div className="col-span-full space-y-3 lg:col-span-4">
           <div className="flex flex-wrap items-center gap-2">
