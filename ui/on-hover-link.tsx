@@ -13,16 +13,10 @@ export function OnHoverLink({ path, item }: { path: string; item: Item }) {
     setPrefetch(true);
   };
 
-  // Handle mouse leave - disable prefetching
-  const handleMouseLeave = () => {
-    setPrefetch(false);
-  };
-
   return (
     <div
       className={clsx('inline-flex opacity-100 transition')}
       onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
     >
       <Tab path={path} item={item} prefetch={prefetch} />
     </div>
