@@ -1,28 +1,16 @@
 import { UnstableCacheInstructions } from '#/ui/unstable-cache-instructions';
 import { unstable_cache } from 'next/cache';
 
-export const dynamic = 'force-dynamic';
+export const dynamic = 'force-static';
 
-// Define an interface for our data structure
-interface CachedData {
-  id: string;
-  data: string;
-}
-
-// Define the type for our cache function
-type CacheFunction = (id: string) => Promise<CachedData>;
-
-const getCachedData: CacheFunction = unstable_cache(
-  async (id: string) => {
-    if (id === 'error') {
-      throw new Error(
-        `This is an error (Not caching) ${new Date().toISOString()}`,
-      );
-    }
-    return { id: id, data: `Some data (caching) ${new Date().toISOString()}` };
-  },
-  ['my-app-data'],
-);
+const getDataFn = async (id: string) => {
+  if (id === 'error') {
+    throw new Error(
+      `This is an error (Not caching) ${new Date().toISOString()}`,
+    );
+  }
+  return { id: id, data: `Some data (caching) ${new Date().toISOString()}` };
+};
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -31,9 +19,17 @@ interface PageProps {
 export default async function Page({ params }: PageProps) {
   const { id } = await params;
   try {
-    const data = await getCachedData(id);
+    const data = await unstable_cache(getDataFn, ['my-app-data'], {
+      tags: ['default-tag'],
+    })(id);
+
+    // performing second one changing revalidate and tags
+    await unstable_cache(getDataFn, ['my-app-data'], {
+      tags: [`dynamic-tag-${id}`],
+      revalidate: 20,
+    })(id);
     return (
-      <UnstableCacheInstructions>
+      <UnstableCacheInstructions dynamicTag={`dynamic-tag-${id}`}>
         <div>{data.data}</div>
       </UnstableCacheInstructions>
     );
