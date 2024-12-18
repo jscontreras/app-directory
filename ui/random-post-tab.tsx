@@ -42,7 +42,11 @@ export function RandomPostTab({ path }: { path: string }) {
       })}
     >
       {post.time === 0 ? (
-        <Tab path={path} item={{ text: post.text, slug: post.slug }} />
+        <Tab
+          path={path}
+          item={{ text: post.text, slug: post.slug }}
+          prefetch={true}
+        />
       ) : (
         <span
           className={clsx(

@@ -17,7 +17,7 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
 
   const res = await fetch(
     `https://jsonplaceholder.typicode.com/posts/${params.id}`,
-    { next: { revalidate: 60, tags: ['collection'] } },
+    { next: { tags: ['collection'] }, cache: 'force-cache' },
   );
 
   const currentTime = await getISODateServerAction();
