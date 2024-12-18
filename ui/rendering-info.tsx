@@ -15,7 +15,7 @@ export function RenderingInfo({
       break;
     case 'isr':
       msg =
-        'Statically pre-rendered at build time and periodically revalidated';
+        'Statically pre-rendered at build time and periodically revalidated (100 secs)';
       break;
     case 'ssr':
       msg = 'Dynamically rendered at request time';
