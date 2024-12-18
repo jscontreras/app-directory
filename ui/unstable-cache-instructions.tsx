@@ -22,6 +22,7 @@ export function UnstableCacheInstructions({
           <Highlight colorClass={'text-purple-400'}>revalidate: 20</Highlight>
           {dynamicTag && (
             <>
+              {' '}
               and adding tag{' '}
               <Highlight colorClass={'text-purple-400'}>
                 [{dynamicTag}]
