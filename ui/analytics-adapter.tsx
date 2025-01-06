@@ -11,7 +11,8 @@ export function AnalyticsAdapter() {
     return (
       <Analytics
         beforeSend={beforeSendHandler}
-        endpoint="https://www.tc-vercel.dev/_vercel/insights/script.js"
+        scriptSrc="/_vercel/insights/script.debug.js"
+        debug={true}
       />
     );
   } else {

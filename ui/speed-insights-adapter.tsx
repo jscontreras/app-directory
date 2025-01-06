@@ -11,7 +11,8 @@ export function SpeedInsightsAdapter() {
     return (
       <SpeedInsights
         beforeSend={beforeSendHandler}
-        endpoint="https://tc-vercel.dev/_vercel/speed-insights/script.js"
+        scriptSrc="/_vercel/speed-insights/script.debug.js"
+        debug={true}
       />
     );
   } else {

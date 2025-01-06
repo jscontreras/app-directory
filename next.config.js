@@ -39,6 +39,17 @@ module.exports = withVercelToolbar({
           source: '/test_0/:path*',
           destination: '/ssg/:path',
         },
+        // Rewrite for locally debugging Analytics (dev mode)
+        {
+          source: '/_vercel/insights/script.debug.js',
+          destination: 'https://cdn.vercel-insights.com/v1/script.debug.js',
+        },
+        // Rewrite for locally debugging Speed Insights (dev mode)
+        {
+          source: '/_vercel/speed-insights/script.debug.js',
+          destination:
+            'https://cdn.vercel-insights.com/v1/speed-insights/script.debug.js',
+        },
         {
           source: '/rewrite-test',
           destination:
