@@ -18,7 +18,22 @@ export async function middleware(
   const url = request.nextUrl;
   if (url.pathname === '/proxy-speed-insights.js') {
     const response = await fetch(
-      'https://www.tc-vercel.dev/_vercel/speed-insights/script.js',
+      'https://cdn.vercel-insights.com/v1/speed-insights/script.js',
+    );
+    // Check if the fetch was successful
+    if (!response.ok) {
+      return NextResponse.redirect('/error-page'); // Redirect to an error page if the fetch fails
+    }
+    // Get the content of the JavaScript file
+    const jsContent = await response.text();
+
+    // Return the JavaScript content as a response
+    return new NextResponse(jsContent, {
+      headers: { 'Content-Type': 'application/javascript' },
+    });
+  } else if (url.pathname === '/proxy-speed-insights.debug.js') {
+    const response = await fetch(
+      'https://cdn.vercel-insights.com/v1/speed-insights/script.debug.js',
     );
     // Check if the fetch was successful
     if (!response.ok) {
@@ -105,6 +120,7 @@ export const config = {
     '/proxy-via-middleware',
     '/api/print-headers-middleware',
     '/proxy-speed-insights.js',
+    '/proxy-speed-insights.debug.js',
     // Featured flags paths
     '/',
     '/h',

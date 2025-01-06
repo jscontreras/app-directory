@@ -3,12 +3,12 @@ import { AddressBar } from '#/ui/address-bar';
 import Byline from '#/ui/byline';
 import { GlobalNav } from '#/ui/global-nav';
 import { NewRelicBrowserAgentScript } from '#/ui/new-relic-script';
-import { SpeedInsightsAdapter } from '#/ui/speed-isights-adapter';
+import { SpeedInsightsAdapter } from '#/ui/speed-insights-adapter';
 import { VercelToolbarUI } from '#/ui/vercel-toolbar-ui';
 import { Metadata } from 'next';
 import { Suspense } from 'react';
 import { FlagValues } from '@vercel/flags/react';
-import { Analytics } from '@vercel/analytics/next';
+import { AnalyticsProxyAdapter } from '#/ui/analytics-proxy-adapter';
 
 export const metadata: Metadata = {
   title: {
@@ -56,7 +56,7 @@ export default async function RootLayout({
           <VercelToolbarUI />
         </Suspense>
         <SpeedInsightsAdapter />
-        <Analytics debug={true} />;
+        <AnalyticsProxyAdapter />
       </body>
     </html>
   );
