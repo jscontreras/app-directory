@@ -6,7 +6,7 @@ function beforeSendHandler(data: any) {
   return data; // this will send the event as is
 }
 
-export function AnalyticsProxyAdapter() {
+export function AnalyticsAdapter() {
   if (process.env.NODE_ENV !== 'production') {
     return (
       <Analytics

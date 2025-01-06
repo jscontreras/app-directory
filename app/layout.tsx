@@ -8,7 +8,7 @@ import { VercelToolbarUI } from '#/ui/vercel-toolbar-ui';
 import { Metadata } from 'next';
 import { Suspense } from 'react';
 import { FlagValues } from '@vercel/flags/react';
-import { AnalyticsProxyAdapter } from '#/ui/analytics-proxy-adapter';
+import { AnalyticsAdapter } from '#/ui/analytics-adapter';
 
 export const metadata: Metadata = {
   title: {
@@ -56,7 +56,7 @@ export default async function RootLayout({
           <VercelToolbarUI />
         </Suspense>
         <SpeedInsightsAdapter />
-        <AnalyticsProxyAdapter />
+        <AnalyticsAdapter />
       </body>
     </html>
   );
