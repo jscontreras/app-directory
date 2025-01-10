@@ -5,8 +5,8 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 const withVercelToolbar = require('@vercel/toolbar/plugins/next')();
 
 // Adding Vercel Toolbar to Local dev
-module.exports = withVercelToolbar(
-  withBundleAnalyzer({
+module.exports = withBundleAnalyzer(
+  withVercelToolbar({
     headers: async () => {
       return [
         {
