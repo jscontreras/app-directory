@@ -1,4 +1,4 @@
-export const revalidate = 30; // revalidate every 30 seconds
+export const revalidate = 20; // revalidate every 20 seconds
 
 export default async function Page() {
   // Simulate a 5-second delay

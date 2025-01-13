@@ -49,6 +49,10 @@ module.exports = withBundleAnalyzer(
             source: '/_vercel/insights/script.debug.js',
             destination: 'https://cdn.vercel-insights.com/v1/script.debug.js',
           },
+          {
+            source: '/cache-headers/test',
+            destination: 'https://www.tc-vercel.dev/cache-headers/test',
+          },
           // Rewrite for locally debugging Speed Insights (dev mode)
           {
             source: '/_vercel/speed-insights/script.debug.js',

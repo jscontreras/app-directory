@@ -5,14 +5,19 @@ import { DOMParser } from 'linkedom';
 import { Button } from '#/ui/ui/button';
 
 export default function CacheDemo() {
-  const [logs, setLogs] = useState<string[]>([]);
+  const [logs, setLogs] = useState<
+    Array<{ message: string; type?: 'timestamp' | 'cache' | 'timeRemaining' }>
+  >([]);
   const [isRunning, setIsRunning] = useState(false);
   const [requestCount, setRequestCount] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
 
-  const addLog = useCallback((message: string) => {
-    setLogs((prevLogs) => [...prevLogs, message]);
-  }, []);
+  const addLog = useCallback(
+    (message: string, type?: 'timestamp' | 'cache' | 'timeRemaining') => {
+      setLogs((prevLogs) => [...prevLogs, { message, type }]);
+    },
+    [],
+  );
 
   const fetchAPI = useCallback(async () => {
     const start = Date.now();
@@ -25,16 +30,15 @@ export default function CacheDemo() {
     const timestamp =
       doc.getElementById('timestamp')?.textContent || 'Not found';
 
-    const cacheStatus =
-      response.headers.get('x-vercel-cache') ||
-      response.headers.get('x-nextjs-cache');
+    const cacheStatus = response.headers.get('x-vercel-cache');
     const age = parseInt(response.headers.get('age') || '0', 10);
-    const timeRemaining = Math.max(0, 30 - age);
+    console.log('age', age);
+    const timeRemaining = age - 20 < 0 ? 0 : age - 20;
 
     addLog(`Request ${requestCount + 1}:`);
-    addLog(`  Timestamp: ${timestamp}`);
-    addLog(`  Cache: ${cacheStatus}`);
-    addLog(`  Time remaining: ${timeRemaining}s`);
+    addLog(`  Timestamp: ${timestamp}`, 'timestamp');
+    addLog(`  Cache: ${cacheStatus}`, 'cache');
+    addLog(`  Time remaining: ${timeRemaining}s`, 'timeRemaining');
     addLog(`  Response time: ${end - start}ms`);
     addLog('');
 
@@ -60,17 +64,49 @@ export default function CacheDemo() {
     setIsPaused((prev) => !prev);
   };
 
+  const renderLogMessage = (log: {
+    message: string;
+    type?: 'timestamp' | 'cache' | 'timeRemaining';
+  }) => {
+    switch (log.type) {
+      case 'timestamp':
+        return <span className="text-red-500">{log.message}</span>;
+      case 'cache':
+        return <span className="text-orange-500">{log.message}</span>;
+      case 'timeRemaining':
+        return (
+          <span>
+            Time remaining:{' '}
+            <span className="text-blue-500">{log.message.split(': ')[1]}</span>
+          </span>
+        );
+      default:
+        return log.message;
+    }
+  };
+
   return (
     <div className="space-y-4">
-      <Button onClick={startDemo} disabled={isRunning}>
-        {isRunning ? 'Running...' : requestCount === 0 ? 'Start Demo' : 'Retry'}
-      </Button>
-      <Button onClick={togglePause} disabled={!isRunning || requestCount >= 30}>
-        {isPaused ? 'Resume' : 'Pause'}
-      </Button>
-      <div className="rounded-md bg-gray-100 p-4">
+      <div className="space-x-4">
+        <Button onClick={startDemo} disabled={isRunning}>
+          {isRunning
+            ? 'Running...'
+            : requestCount === 0
+            ? 'Start Demo'
+            : 'Retry'}
+        </Button>
+        <Button
+          onClick={togglePause}
+          disabled={!isRunning || requestCount >= 30}
+        >
+          {isPaused ? 'Resume' : 'Pause'}
+        </Button>
+      </div>
+      <div className="rounded-md bg-black p-4">
         <pre className="whitespace-pre-wrap font-mono text-sm">
-          {logs.join('\n')}
+          {logs.map((log, index) => (
+            <div key={index}>{renderLogMessage(log)}</div>
+          ))}
         </pre>
       </div>
     </div>
