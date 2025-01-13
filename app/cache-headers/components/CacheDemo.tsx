@@ -21,7 +21,7 @@ export default function CacheDemo() {
 
   const fetchAPI = useCallback(async () => {
     const start = Date.now();
-    const response = await fetch('/cache-headers/test');
+    const response = await fetch('/cache-headers/timestamp');
     const end = Date.now();
     const html = await response.text();
 
@@ -32,13 +32,12 @@ export default function CacheDemo() {
 
     const cacheStatus = response.headers.get('x-vercel-cache');
     const age = parseInt(response.headers.get('age') || '0', 10);
-    console.log('age', age);
-    const timeRemaining = age - 20 < 0 ? 0 : age - 20;
+    const timeRemaining = 20 - age < 0 ? 0 : 20 - age;
 
     addLog(`Request ${requestCount + 1}:`);
     addLog(`  Timestamp: ${timestamp}`, 'timestamp');
     addLog(`  Cache: ${cacheStatus}`, 'cache');
-    addLog(`  Time remaining: ${timeRemaining}s`, 'timeRemaining');
+    addLog(`  : ${timeRemaining}s`, 'timeRemaining');
     addLog(`  Response time: ${end - start}ms`);
     addLog('');
 
@@ -70,13 +69,18 @@ export default function CacheDemo() {
   }) => {
     switch (log.type) {
       case 'timestamp':
-        return <span className="text-red-500">{log.message}</span>;
+        return (
+          <>
+            {'  ISR cached content: '}
+            <span className="text-red-500">{log.message}</span>
+          </>
+        );
       case 'cache':
         return <span className="text-orange-500">{log.message}</span>;
       case 'timeRemaining':
         return (
           <span>
-            Time remaining:{' '}
+            {'  Time remaining (cache time-based revalidation): '}
             <span className="text-blue-500">{log.message.split(': ')[1]}</span>
           </span>
         );
