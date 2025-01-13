@@ -21,7 +21,7 @@ export default function Page() {
         <ExternalLink href="https://nextjs.org/docs/app/building-your-application/data-fetching/fetching#revalidating-data">
           Docs
         </ExternalLink>
-        <ExternalLink href="https://github.com/vercel/app-playground/tree/main/app/isr">
+        <ExternalLink href="https://github.com/jscontreras/app-directory/blob/main/app/pocs/hover/layout.tsx">
           Code
         </ExternalLink>
       </div>
