@@ -41,6 +41,18 @@ module.exports = withBundleAnalyzer(
       const devRedirects =
         process.env.NODE_ENV == 'development'
           ? [
+              // Rewrite for locally debugging Analytics (dev mode)
+              {
+                source: '/_vercel/insights/script.debug.js',
+                destination:
+                  'https://cdn.vercel-insights.com/v1/script.debug.js',
+              },
+              // Rewrite for locally debugging Speed Insights (dev mode)
+              {
+                source: '/_vercel/speed-insights/script.debug.js',
+                destination:
+                  'https://cdn.vercel-insights.com/v1/speed-insights/script.debug.js',
+              },
               {
                 source: '/cache-headers/test',
                 destination: 'https://www.tc-vercel.dev/cache-headers/test',
@@ -52,17 +64,6 @@ module.exports = withBundleAnalyzer(
           {
             source: '/test_0/:path*',
             destination: '/ssg/:path',
-          },
-          // Rewrite for locally debugging Analytics (dev mode)
-          {
-            source: '/_vercel/insights/script.debug.js',
-            destination: 'https://cdn.vercel-insights.com/v1/script.debug.js',
-          },
-          // Rewrite for locally debugging Speed Insights (dev mode)
-          {
-            source: '/_vercel/speed-insights/script.debug.js',
-            destination:
-              'https://cdn.vercel-insights.com/v1/speed-insights/script.debug.js',
           },
           {
             source: '/rewrite-test',
