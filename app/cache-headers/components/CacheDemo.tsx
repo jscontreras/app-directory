@@ -66,6 +66,7 @@ export default function CacheDemo() {
       }`,
       'cache',
     );
+    addLog(`  Age Header: ${age}`);
     addLog(`  : ${timeRemaining}s`, 'timeRemaining');
     addLog(`  Response time: ${end - start}ms`);
     addLog('');
@@ -109,7 +110,7 @@ export default function CacheDemo() {
       case 'timeRemaining':
         return (
           <span>
-            {'  Time remaining (cache time-based revalidation): '}
+            {'  Time to Cache Expiration (revalidation): '}
             <span className="text-blue-500">{log.message.split(': ')[1]}</span>
           </span>
         );
