@@ -38,6 +38,15 @@ module.exports = withBundleAnalyzer(
       ];
     },
     rewrites: async () => {
+      const devRedirects =
+        process.env.NODE_ENV == 'development'
+          ? [
+              {
+                source: '/cache-headers/test',
+                destination: 'https://www.tc-vercel.dev/cache-headers/test',
+              },
+            ]
+          : [];
       return {
         beforeFiles: [
           {
@@ -48,10 +57,6 @@ module.exports = withBundleAnalyzer(
           {
             source: '/_vercel/insights/script.debug.js',
             destination: 'https://cdn.vercel-insights.com/v1/script.debug.js',
-          },
-          {
-            source: '/cache-headers/test',
-            destination: 'https://www.tc-vercel.dev/cache-headers/test',
           },
           // Rewrite for locally debugging Speed Insights (dev mode)
           {
@@ -64,6 +69,11 @@ module.exports = withBundleAnalyzer(
             destination:
               'https://app-directory-git-main-success-tc-vtest314.vercel.app/context/electronics',
           },
+          {
+            source: '/cache-headers/test',
+            destination: 'https://www.tc-vercel.dev/cache-headers/test',
+          },
+          ...devRedirects,
         ],
         afterFiles: [
           {
