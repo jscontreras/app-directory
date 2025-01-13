@@ -40,7 +40,7 @@ export default function CacheDemo() {
 
   const fetchAPI = useCallback(async () => {
     const start = Date.now();
-    const response = await fetch('/cache-headers/timestamp');
+    const response = await fetch(`/cache-headers/timestamp?${start}`);
     const end = Date.now();
     const html = await response.text();
 
