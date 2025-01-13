@@ -104,7 +104,7 @@ export default async function Page() {
         <ExternalLink href="https://nextjs.org/docs/pages/building-your-application/data-fetching/incremental-static-regeneration#on-demand-revalidation">
           Docs
         </ExternalLink>
-        <ExternalLink href="https://github.com/jscontreras/app-directory/blob/main/app/revalidate/page.tsx">
+        <ExternalLink href="https://github.com/jscontreras/app-directory/blob/main/app/cache-headers/page.tsx">
           Code
         </ExternalLink>
       </div>

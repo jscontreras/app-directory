@@ -5,6 +5,11 @@ import { DOMParser } from 'linkedom';
 import { Button } from '#/ui/ui/button';
 
 const revalidationPeriod = 15;
+interface Log {
+  message: string;
+  type?: 'timestamp' | 'cache' | 'timeRemaining';
+  colorOverride?: string;
+}
 
 export default function CacheDemo() {
   const [logs, setLogs] = useState<
@@ -13,7 +18,7 @@ export default function CacheDemo() {
       type?: 'timestamp' | 'cache' | 'timeRemaining';
       colorOverride?: string;
     }>
-  >([{ message: 'Click Start Fetchin to fetch requests...' }]);
+  >([{ message: 'Request details...' }]);
   const [isRunning, setIsRunning] = useState(false);
   const [requestCount, setRequestCount] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
@@ -55,7 +60,12 @@ export default function CacheDemo() {
       'timestamp',
       cacheStatus == 'STALE' ? 'text-green-500' : 'text-orange-500',
     );
-    addLog(`  Cache: ${cacheStatus}`, 'cache');
+    addLog(
+      `  Cache: ${
+        cacheStatus === 'STALE' ? 'STALE (rebuilding page)' : cacheStatus
+      }`,
+      'cache',
+    );
     addLog(`  : ${timeRemaining}s`, 'timeRemaining');
     addLog(`  Response time: ${end - start}ms`);
     addLog('');
@@ -82,11 +92,7 @@ export default function CacheDemo() {
     setIsPaused((prev) => !prev);
   };
 
-  const renderLogMessage = (log: {
-    message: string;
-    type?: 'timestamp' | 'cache' | 'timeRemaining';
-    colorOverride?: string;
-  }) => {
+  const renderLogMessage = (log: Log) => {
     switch (log.type) {
       case 'timestamp':
         return (
@@ -133,7 +139,7 @@ export default function CacheDemo() {
           {isPaused ? 'Resume' : 'Pause'}
         </Button>
       </div>
-      <div className="rounded-md bg-black p-4">
+      <div className="mb-4 rounded-md bg-gray-900 p-4">
         <pre className="whitespace-pre-wrap font-mono text-sm">
           {logs.map((log, index) => (
             <div key={index}>{renderLogMessage(log)}</div>

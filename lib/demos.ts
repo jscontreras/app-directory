@@ -73,7 +73,12 @@ export const demos: { name: string; items: Item[] }[] = [
       {
         name: 'Revalidate Path | Tag',
         slug: 'revalidate',
-        description: 'Revalidate path + Vercel cache stale',
+        description: 'Revalidate path + Vercel cache invalidation',
+      },
+      {
+        name: 'ISR Cache STALE',
+        slug: 'cache-headers',
+        description: 'Cache Staling on time-based ISR revalidation',
       },
       {
         name: 'Preview (Draft) Mode',

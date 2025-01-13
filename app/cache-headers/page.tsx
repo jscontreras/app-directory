@@ -9,8 +9,8 @@ export default function Page() {
       <StaleCacheInstructions />
       <CacheDemo />
 
-      <div className="flex gap-2">
-        <ExternalLink href="https://nextjs.org/docs/app/building-your-application/data-fetching/fetching#revalidating-data">
+      <div className="mt-6 flex gap-2">
+        <ExternalLink href="https://nextjs.org/docs/app/building-your-application/data-fetching/incremental-static-regeneration">
           Docs
         </ExternalLink>
         <ExternalLink href="https://github.com/vercel/app-playground/tree/main/app/isr">
