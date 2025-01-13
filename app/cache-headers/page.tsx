@@ -1,10 +1,12 @@
 import { ExternalLink } from '#/ui/external-link';
 import CacheDemo from './components/CacheDemo';
+import { StaleCacheInstructions } from './components/StaleCacheInstructions';
 
 export default function Page() {
   return (
     <div className="prose prose-sm prose-invert max-w-none">
       <h1 className="text-xl font-bold">Vercel STALE Cache Demo</h1>
+      <StaleCacheInstructions />
       <CacheDemo />
 
       <div className="flex gap-2">

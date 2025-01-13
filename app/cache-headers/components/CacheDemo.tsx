@@ -4,17 +4,31 @@ import { useState, useEffect, useCallback } from 'react';
 import { DOMParser } from 'linkedom';
 import { Button } from '#/ui/ui/button';
 
+const revalidationPeriod = 15;
+
 export default function CacheDemo() {
   const [logs, setLogs] = useState<
-    Array<{ message: string; type?: 'timestamp' | 'cache' | 'timeRemaining' }>
-  >([]);
+    Array<{
+      message: string;
+      type?: 'timestamp' | 'cache' | 'timeRemaining';
+      colorOverride?: string;
+    }>
+  >([{ message: 'Click Start Fetchin to fetch requests...' }]);
   const [isRunning, setIsRunning] = useState(false);
   const [requestCount, setRequestCount] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
 
   const addLog = useCallback(
-    (message: string, type?: 'timestamp' | 'cache' | 'timeRemaining') => {
-      setLogs((prevLogs) => [...prevLogs, { message, type }]);
+    (
+      message: string,
+      type?: 'timestamp' | 'cache' | 'timeRemaining',
+      colorOverride?: string,
+    ) => {
+      if (colorOverride) {
+        setLogs((prevLogs) => [...prevLogs, { message, type, colorOverride }]);
+      } else {
+        setLogs((prevLogs) => [...prevLogs, { message, type }]);
+      }
     },
     [],
   );
@@ -32,10 +46,15 @@ export default function CacheDemo() {
 
     const cacheStatus = response.headers.get('x-vercel-cache');
     const age = parseInt(response.headers.get('age') || '0', 10);
-    const timeRemaining = 20 - age < 0 ? 0 : 20 - age;
+    const timeRemaining =
+      revalidationPeriod - age < 0 ? 0 : revalidationPeriod - age;
 
     addLog(`Request ${requestCount + 1}:`);
-    addLog(`  Timestamp: ${timestamp}`, 'timestamp');
+    addLog(
+      `  Timestamp: ${timestamp}`,
+      'timestamp',
+      cacheStatus == 'STALE' ? 'text-green-500' : 'text-orange-500',
+    );
     addLog(`  Cache: ${cacheStatus}`, 'cache');
     addLog(`  : ${timeRemaining}s`, 'timeRemaining');
     addLog(`  Response time: ${end - start}ms`);
@@ -66,17 +85,21 @@ export default function CacheDemo() {
   const renderLogMessage = (log: {
     message: string;
     type?: 'timestamp' | 'cache' | 'timeRemaining';
+    colorOverride?: string;
   }) => {
     switch (log.type) {
       case 'timestamp':
         return (
           <>
             {'  ISR cached content: '}
-            <span className="text-red-500">{log.message}</span>
+            <span className={log.colorOverride}>{log.message}</span>
           </>
         );
       case 'cache':
-        return <span className="text-orange-500">{log.message}</span>;
+        const color = log.message.includes('STALE')
+          ? 'text-green-500'
+          : 'text-orange-500';
+        return <span className={color}>{log.message}</span>;
       case 'timeRemaining':
         return (
           <span>
@@ -92,11 +115,15 @@ export default function CacheDemo() {
   return (
     <div className="space-y-4">
       <div className="space-x-4">
-        <Button onClick={startDemo} disabled={isRunning}>
+        <Button
+          onClick={startDemo}
+          disabled={isRunning}
+          className="text-purple-600"
+        >
           {isRunning
             ? 'Running...'
             : requestCount === 0
-            ? 'Start Demo'
+            ? 'Start Fetching'
             : 'Retry'}
         </Button>
         <Button

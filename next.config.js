@@ -54,7 +54,7 @@ module.exports = withBundleAnalyzer(
                   'https://cdn.vercel-insights.com/v1/speed-insights/script.debug.js',
               },
               {
-                source: '/cache-headers/test',
+                source: '/cache-headers/timestamp',
                 destination:
                   'https://www.tc-vercel.dev/cache-headers/timestamp',
               },
