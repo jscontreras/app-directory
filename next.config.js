@@ -69,10 +69,6 @@ module.exports = withBundleAnalyzer(
             destination:
               'https://app-directory-git-main-success-tc-vtest314.vercel.app/context/electronics',
           },
-          {
-            source: '/cache-headers/test',
-            destination: 'https://www.tc-vercel.dev/cache-headers/test',
-          },
           ...devRedirects,
         ],
         afterFiles: [
