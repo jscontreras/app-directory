@@ -130,15 +130,15 @@ export const demos: { name: string; items: Item[] }[] = [
     ],
   },
   {
-    name: 'Legacy (pages)',
+    name: 'Legacy (Pages Router)',
     items: [
       {
-        name: 'Revalidate Path',
+        name: 'Revalidate Path (pages-router)',
         slug: 'pages/revalidate',
         description: 'Revalidate path + Vercel cache stale',
       },
       {
-        name: 'ISR Cache STALE',
+        name: 'ISR Cache STALE (pages-router',
         slug: 'cache-headers/pages-router',
         description: 'Cache Staling on time-based ISR revalidation',
       },
