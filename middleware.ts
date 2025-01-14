@@ -11,10 +11,33 @@ const serviceName = process.env.NEW_RELIC_APP_NAME || '';
 // Register Service
 register();
 
+// List of allowed origins
+const allowedOrigins = ['https://example.com', 'https://www.example.com'];
+
 export async function middleware(
   request: NextRequest,
   context: NextFetchEvent,
 ) {
+  // Get the origin from the request headers
+  const origin = request.headers.get('origin');
+
+  // Check if the origin is in the list of allowed origins
+  const isAllowedOrigin = origin && allowedOrigins.includes(origin);
+
+  // Handle preflight requests
+  if (request.method === 'OPTIONS') {
+    return new NextResponse(null, {
+      status: 204,
+      headers: {
+        'Access-Control-Allow-Origin': isAllowedOrigin ? origin : '',
+        'Access-Control-Allow-Methods': 'GET,OPTIONS,PATCH,DELETE,POST,PUT',
+        'Access-Control-Allow-Headers':
+          'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version',
+        'Access-Control-Max-Age': '86400',
+      },
+    });
+  }
+
   const url = request.nextUrl;
   if (url.pathname === '/proxy-speed-insights.js') {
     const response = await fetch(
@@ -46,6 +69,11 @@ export async function middleware(
     return new NextResponse(jsContent, {
       headers: { 'Content-Type': 'application/javascript' },
     });
+  } else if (url.pathname === '/isr/12') {
+    // Get the origin from the request headers
+    const response = NextResponse.next();
+    response.headers.set('Access-Control-Allow-Origin', '');
+    return response;
   }
   // How to override cache headers (This will break cache as it is private)
   else if (url.pathname === '/isr/11') {
@@ -126,5 +154,6 @@ export const config = {
     '/h',
     '/h/:path*',
     '/isr/11',
+    '/isr/12',
   ],
 };
