@@ -7,7 +7,7 @@ export default function Page() {
     <div className="prose prose-sm prose-invert max-w-none">
       <h1 className="text-xl font-bold">Vercel STALE Cache Demo</h1>
       <StaleCacheInstructions pageUrl="/cache-headers/timestamp" />
-      <CacheDemo pageUrl="/cache-headers/timestamp" />
+      <CacheDemo pageUrl="/isr-cache-headers/timestamp" />
 
       <div className="mt-6 flex gap-2">
         <ExternalLink href="https://nextjs.org/docs/app/building-your-application/data-fetching/incremental-static-regeneration">
