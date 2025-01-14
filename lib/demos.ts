@@ -77,7 +77,7 @@ export const demos: { name: string; items: Item[] }[] = [
       },
       {
         name: 'ISR Cache STALE',
-        slug: 'cache-headers',
+        slug: 'isr-cache-headers',
         description: 'Cache Staling on time-based ISR revalidation',
       },
       {
@@ -138,8 +138,8 @@ export const demos: { name: string; items: Item[] }[] = [
         description: 'Revalidate path + Vercel cache stale',
       },
       {
-        name: 'ISR Cache STALE (pages-router',
-        slug: 'cache-headers/pages-router',
+        name: 'ISR Cache STALE (pages-router)',
+        slug: 'pages/isr-cache-headers',
         description: 'Cache Staling on time-based ISR revalidation',
       },
     ],

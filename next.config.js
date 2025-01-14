@@ -7,6 +7,15 @@ const withVercelToolbar = require('@vercel/toolbar/plugins/next')();
 // Adding Vercel Toolbar to Local dev
 module.exports = withBundleAnalyzer(
   withVercelToolbar({
+    async redirects() {
+      return [
+        {
+          source: '/cache-headers',
+          destination: '/isr-cache-headers-app',
+          permanent: true,
+        },
+      ];
+    },
     headers: async () => {
       return [
         {
@@ -38,7 +47,7 @@ module.exports = withBundleAnalyzer(
       ];
     },
     rewrites: async () => {
-      const devRedirects =
+      const devRewrites =
         process.env.NODE_ENV == 'development'
           ? [
               // Rewrite for locally debugging Analytics (dev mode)
@@ -67,6 +76,10 @@ module.exports = withBundleAnalyzer(
       return {
         beforeFiles: [
           {
+            source: '/pages/isr-cache-headers',
+            destination: '/isr-cache-headers/pages-router',
+          },
+          {
             source: '/test_0/:path*',
             destination: '/ssg/:path',
           },
@@ -75,7 +88,7 @@ module.exports = withBundleAnalyzer(
             destination:
               'https://app-directory-git-main-success-tc-vtest314.vercel.app/context/electronics',
           },
-          ...devRedirects,
+          ...devRewrites,
         ],
         afterFiles: [
           {
