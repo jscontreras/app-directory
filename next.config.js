@@ -11,7 +11,7 @@ module.exports = withBundleAnalyzer(
       return [
         {
           source: '/cache-headers',
-          destination: '/isr-cache-headers-app',
+          destination: '/isr-cache-headers',
           permanent: true,
         },
       ];
