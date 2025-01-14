@@ -11,7 +11,7 @@ interface Log {
   colorOverride?: string;
 }
 
-export default function CacheDemo() {
+export default function CacheDemo({ pageUrl }: { pageUrl: string }) {
   const [logs, setLogs] = useState<
     Array<{
       message: string;
@@ -40,7 +40,7 @@ export default function CacheDemo() {
 
   const fetchAPI = useCallback(async () => {
     const start = Date.now();
-    const response = await fetch(`/cache-headers/timestamp?${start}`);
+    const response = await fetch(`${pageUrl}?${start}`);
     const end = Date.now();
     const html = await response.text();
 

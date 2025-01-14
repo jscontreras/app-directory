@@ -137,6 +137,11 @@ export const demos: { name: string; items: Item[] }[] = [
         slug: 'pages/revalidate',
         description: 'Revalidate path + Vercel cache stale',
       },
+      {
+        name: 'ISR Cache STALE',
+        slug: 'cache-headers/pages-router',
+        description: 'Cache Staling on time-based ISR revalidation',
+      },
     ],
   },
 ];

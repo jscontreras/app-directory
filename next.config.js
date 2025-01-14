@@ -58,6 +58,10 @@ module.exports = withBundleAnalyzer(
                 destination:
                   'https://www.tc-vercel.dev/cache-headers/timestamp',
               },
+              {
+                source: '/pages/timestamp',
+                destination: 'https://www.tc-vercel.dev/pages/timestamp',
+              },
             ]
           : [];
       return {

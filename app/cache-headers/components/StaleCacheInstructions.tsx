@@ -1,14 +1,14 @@
 import Link from 'next/link';
 import { Highlight } from '#/ui/highlight';
 
-export function StaleCacheInstructions() {
+export function StaleCacheInstructions({ pageUrl }: { pageUrl: string }) {
   return (
     <ul>
       <li>This example tests cache STALE for time-revalidated ISR pages.</li>
       <li>
         The{' '}
-        <Link prefetch={true} href={'/cache-headers/timestamp'}>
-          {'/cache-headers/timestamp'}
+        <Link prefetch={true} href={pageUrl}>
+          {pageUrl}
         </Link>{' '}
         is an ISR page with a <Highlight>15s</Highlight> revalidation period.
       </li>
