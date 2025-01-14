@@ -19,28 +19,6 @@ module.exports = withBundleAnalyzer(
     headers: async () => {
       return [
         {
-          source: '/:path*',
-          headers: [
-            {
-              key: 'Access-Control-Allow-Origin',
-              value: 'https://www.example.com',
-            },
-          ],
-        },
-        {
-          source: '/revalidate',
-          headers: [
-            {
-              key: 'Cache-Control',
-              value: 's-maxage=31536000, public, stale-while-revalidate=120',
-            },
-            {
-              key: 'x-custom-header',
-              value: 'my custom header value',
-            },
-          ],
-        },
-        {
           source: '/rewrite-test',
           headers: [
             {
@@ -68,9 +46,9 @@ module.exports = withBundleAnalyzer(
                   'https://cdn.vercel-insights.com/v1/speed-insights/script.debug.js',
               },
               {
-                source: '/cache-headers/timestamp',
+                source: '/isr-cache-headers/timestamp',
                 destination:
-                  'https://www.tc-vercel.dev/cache-headers/timestamp',
+                  'https://www.tc-vercel.dev/isr-cache-headers/timestamp',
               },
               {
                 source: '/pages/timestamp',

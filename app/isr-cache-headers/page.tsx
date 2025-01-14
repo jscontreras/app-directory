@@ -6,7 +6,7 @@ export default function Page() {
   return (
     <div className="prose prose-sm prose-invert max-w-none">
       <h1 className="text-xl font-bold">Vercel STALE Cache Demo</h1>
-      <StaleCacheInstructions pageUrl="/cache-headers/timestamp" />
+      <StaleCacheInstructions pageUrl="/isr-cache-headers/timestamp" />
       <CacheDemo pageUrl="/isr-cache-headers/timestamp" />
 
       <div className="mt-6 flex gap-2">
