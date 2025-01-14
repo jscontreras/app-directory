@@ -22,10 +22,6 @@ module.exports = withBundleAnalyzer(
           source: '/:path*',
           headers: [
             {
-              key: 'x-custom-header',
-              value: 'my custom header value',
-            },
-            {
               key: 'Access-Control-Allow-Credentials',
               value: 'true',
             },
@@ -36,6 +32,11 @@ module.exports = withBundleAnalyzer(
             {
               key: 'Access-Control-Allow-Methods',
               value: 'GET,OPTIONS,PATCH,DELETE,POST,PUT',
+            },
+            { key: 'Cross-Origin-Opener-Policy', value: 'same-origin' },
+            {
+              key: 'Referrer-Policy',
+              value: 'strict-origin-when-cross-origin',
             },
             {
               key: 'Access-Control-Allow-Headers',
