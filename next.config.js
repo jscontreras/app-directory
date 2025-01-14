@@ -19,6 +19,32 @@ module.exports = withBundleAnalyzer(
     headers: async () => {
       return [
         {
+          source: '/:path*',
+          headers: [
+            {
+              key: 'x-custom-header',
+              value: 'my custom header value',
+            },
+            {
+              key: 'Access-Control-Allow-Credentials',
+              value: 'true',
+            },
+            {
+              key: 'Access-Control-Allow-Origin',
+              value: 'htts://www.example.com',
+            },
+            {
+              key: 'Access-Control-Allow-Methods',
+              value: 'GET,OPTIONS,PATCH,DELETE,POST,PUT',
+            },
+            {
+              key: 'Access-Control-Allow-Headers',
+              value:
+                'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version',
+            },
+          ],
+        },
+        {
           source: '/revalidate',
           headers: [
             {
@@ -37,10 +63,6 @@ module.exports = withBundleAnalyzer(
             {
               key: 'Cache-Control',
               value: 's-maxage=31536000, public, stale-while-revalidate=120',
-            },
-            {
-              key: 'x-custom-header',
-              value: 'my custom header value',
             },
           ],
         },
