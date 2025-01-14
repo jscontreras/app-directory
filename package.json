@@ -87,10 +87,11 @@
     "@types/node": "18.11.17",
     "@types/react": "npm:types-react@19.0.0-rc.1",
     "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1",
+    "@typescript-eslint/parser": "8.20.0",
     "@vercel/git-hooks": "1.0.0",
     "autoprefixer": "10.4.13",
-    "eslint": "8.30.0",
-    "eslint-config-next": "15.0.0-rc.1",
+    "eslint": "9.18.0",
+    "eslint-config-next": "15.1.4",
     "eslint-plugin-custom-rules": "file:eslint-rules",
     "lint-staged": "13.1.0",
     "postcss": "8.4.33",
@@ -116,7 +117,8 @@
       "undici@<5.28.4": ">=5.28.4",
       "undici@<=5.28.2": ">=5.28.3",
       "@types/react": "npm:types-react@19.0.0-rc.1",
-      "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1"
+      "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1",
+      "path-to-regexp": ">=6.3.0"
     }
   },
   "optionalDependencies": {
