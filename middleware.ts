@@ -123,6 +123,7 @@ export async function middleware(
         request.headers.get('tracestate') || '',
       );
     }
+    return response;
   }
 }
 
