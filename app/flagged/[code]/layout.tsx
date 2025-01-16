@@ -9,7 +9,7 @@ export async function generateStaticParams() {
   return codes.map((code) => ({ code: `${code}` }));
 }
 
-export const revalidate = false; // Revalidate every 60 seconds
+export const revalidate = 60; // Revalidate every 60 seconds
 
 export default async function Layout(props: {
   children: ReactNode;
@@ -35,4 +35,4 @@ export default async function Layout(props: {
     </>
   );
 }
-export const dynamicParams = false;
+export const dynamicParams = true;
