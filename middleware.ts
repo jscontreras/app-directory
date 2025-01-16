@@ -110,7 +110,19 @@ export async function middleware(
       `/flagged/${code}${request.nextUrl.pathname}${request.nextUrl.search}`,
       request.url,
     );
-    return NextResponse.rewrite(nextUrl, { request });
+    const response = NextResponse.rewrite(nextUrl, { request });
+    if (request.headers.has('traceparent')) {
+      response.headers.set(
+        'traceparent',
+        request.headers.get('traceparent') || '',
+      );
+    }
+    if (request.headers.has('tracestate')) {
+      response.headers.set(
+        'tracestate',
+        request.headers.get('tracestate') || '',
+      );
+    }
   }
 }
 
