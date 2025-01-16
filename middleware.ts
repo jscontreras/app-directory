@@ -101,10 +101,10 @@ export async function middleware(
     // Removing the extra header
     await request.headers.delete('x-pathname');
 
-    // console.log(
-    //   '`/flagged/${code}${request.nextUrl.pathname}${request.nextUrl.search}`',
-    //   `/flagged/${code}${request.nextUrl.pathname}${request.nextUrl.search}`,
-    // );
+    console.log(
+      '`/flagged/${code}${request.nextUrl.pathname}${request.nextUrl.search}`',
+      `/flagged/${code}${request.nextUrl.pathname}${request.nextUrl.search}`,
+    );
 
     const nextUrl = new URL(
       `/flagged/${code}${request.nextUrl.pathname}${request.nextUrl.search}`,
