@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { unstable_generatePermutations as generatePermutations } from '@vercel/flags/next';
+import { generatePermutations } from '@vercel/flags/next';
 import { barColor, featureFlags } from '#/flags';
 import BottomBar from '#/ui/bottom-bar';
 import { showBottomBar } from '#/flags';

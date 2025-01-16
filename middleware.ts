@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import type { NextRequest, NextFetchEvent } from 'next/server';
 import { register } from './instrumentation';
 import { logs, SeverityNumber } from '@opentelemetry/api-logs';
-import { unstable_precompute as precompute } from '@vercel/flags/next';
+import { precompute } from '@vercel/flags/next';
 import { featureFlags } from './flags';
 
 // service name
