@@ -11,6 +11,7 @@ export default function EmbedPage() {
   useEffect(() => {
     const handleMessage = (event: MessageEvent) => {
       // Ensure the message is from the iframe domain
+      console.log('event', event);
       if (event.origin !== iframeUrl) return;
 
       if (event.data.type === 'IFRAME_MESSAGE') {
@@ -29,6 +30,7 @@ export default function EmbedPage() {
         { type: 'PARENT_MESSAGE', payload: 'Activate your Toolbar' },
         iframeUrl,
       );
+      console.log('Message sent!');
     }
   };
 
