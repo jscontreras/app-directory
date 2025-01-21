@@ -1,6 +1,17 @@
 'use client';
 import { mountVercelToolbar, unmountVercelToolbar } from '@vercel/toolbar';
 
+function setCookie(name: string, value: string, days: number) {
+  const expires = new Date(Date.now() + days * 864e5).toUTCString();
+  document.cookie = `${name}=${encodeURIComponent(
+    value,
+  )}; expires=${expires}; path=/`;
+}
+
+function removeCookie(name: string) {
+  document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/`;
+}
+
 const settings = {
   scriptHostName: 'https://vercel.live',
   projectId: 'prj_EynROlxBukHxBfAbBsef1XEnykEq',
@@ -11,8 +22,12 @@ const settings = {
 
 export default function VercelToolbarAdapter() {
   if (typeof window !== 'undefined') {
-    (window as any).unmountVercelToolbar = unmountVercelToolbar;
-    (window as any).mountVercelToolbar = () => {
+    (window as any).unmountVercelToolbar = () => {
+      removeCookie('flags_site');
+      unmountVercelToolbar();
+    };
+    (window as any).mountVercelToolbarProxied = () => {
+      setCookie('flags_site', 'https://svelte.tc-vercel.dev', 30); // Set the cookie for 30 days
       mountVercelToolbar(settings);
     };
   }

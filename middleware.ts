@@ -111,18 +111,6 @@ export async function middleware(
       request.url,
     );
     const response = NextResponse.rewrite(nextUrl, { request });
-    if (request.headers.has('traceparent')) {
-      response.headers.set(
-        'traceparent',
-        request.headers.get('traceparent') || '',
-      );
-    }
-    if (request.headers.has('tracestate')) {
-      response.headers.set(
-        'tracestate',
-        request.headers.get('tracestate') || '',
-      );
-    }
     return response;
   }
 }
