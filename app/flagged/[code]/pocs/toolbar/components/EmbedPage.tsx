@@ -20,8 +20,8 @@ export default function EmbedPage() {
     const handleMessage = (event: MessageEvent) => {
       // https:// using vercel.live for flags sync
       if (event.origin === domain) {
-        const oldCookieValue = Cookies.get('vercel-flag-mirror');
-        const vercelOverrides = Cookies.get('vercel-flag-overrides');
+        const oldCookieValue = Cookies.get('vercel-flag-mirror') || '';
+        const vercelOverrides = Cookies.get('vercel-flag-overrides') || '';
         if (oldCookieValue != vercelOverrides) {
           Cookies.set('vercel-flag-mirror', vercelOverrides || '');
           sendMessageToIframe();
@@ -53,7 +53,8 @@ export default function EmbedPage() {
         if (iframeRef.current) {
           iframeRef.current.src = iframeRef.current.src;
         }
-      }, 1000);
+        console.log('Reloading IFRAME app');
+      }, 2000);
     }
   };
 
