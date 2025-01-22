@@ -11,6 +11,7 @@ export default function EmbedPage() {
 
   useEffect(() => {
     const handleMessage = (event: MessageEvent) => {
+      console.log(event);
       // Ensure the message is from the iframe domain
       if (event.origin !== iframeUrl) return;
 
