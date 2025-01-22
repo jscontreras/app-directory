@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import Cookies from 'js-cookie';
 
 const iframeUrl = 'https://svelte.tc-vercel.dev';
 
@@ -11,7 +12,6 @@ export default function EmbedPage() {
   useEffect(() => {
     const handleMessage = (event: MessageEvent) => {
       // Ensure the message is from the iframe domain
-      console.log('event', event);
       if (event.origin !== iframeUrl) return;
 
       if (event.data.type === 'IFRAME_MESSAGE') {
@@ -26,12 +26,23 @@ export default function EmbedPage() {
 
   const sendMessageToIframe = () => {
     if (iframeRef.current && iframeRef.current.contentWindow) {
+      const payload = Cookies.get('vercel-flag-overrides') || null;
       iframeRef.current.contentWindow.postMessage(
-        { type: 'PARENT_MESSAGE', payload: 'Activate your Toolbar' },
+        { type: 'PARENT_MESSAGE', payload: payload ? payload : 'null' },
         iframeUrl,
       );
-      console.log('Message sent!');
+      console.log('Message sent!', payload);
     }
+  };
+
+  // Example of setting a cookie using js-cookie
+  const setCookieExample = () => {
+    Cookies.set('exampleCookie', 'Hello from js-cookie!', { expires: 7 });
+  };
+
+  // Example of removing a cookie using js-cookie
+  const removeCookieExample = () => {
+    Cookies.remove('exampleCookie');
   };
 
   return (
@@ -41,8 +52,23 @@ export default function EmbedPage() {
         onClick={sendMessageToIframe}
         className="mb-4 rounded bg-green-500 px-4 py-2 font-bold text-white hover:bg-green-700"
       >
-        Send Message to Iframe
+        Sync Flags with Iframe
       </button>
+
+      <button
+        onClick={setCookieExample}
+        className="mb-4 ml-2 rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
+      >
+        Set Cookie Example
+      </button>
+
+      <button
+        onClick={removeCookieExample}
+        className="mb-4 ml-2 rounded bg-red-500 px-4 py-2 font-bold text-white hover:bg-red-700"
+      >
+        Remove Cookie Example
+      </button>
+
       {message && <p className="mb-4">Message from iframe: {message}</p>}
       <iframe
         ref={iframeRef}

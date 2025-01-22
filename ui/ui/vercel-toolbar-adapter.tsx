@@ -16,7 +16,7 @@ const settings = {
   scriptHostName: 'https://vercel.live',
   projectId: 'prj_EynROlxBukHxBfAbBsef1XEnykEq',
   branch: 'main',
-  deploymentId: 'dpl_Bxu69LNwdvwvqouB7XHa3h5KKSaE',
+  deploymentId: process.env.IFRAME_DEPL_ID,
   ownerId: 'team_qt72u6Ug7jZRH1AY3zX9AkUU',
 };
 
