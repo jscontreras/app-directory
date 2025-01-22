@@ -29,13 +29,13 @@ export default function VercelToolbarAdapter() {
           mountVercelToolbar();
           setToolbarState({ pathname: pathname, initialized: true });
         } else {
+          Cookies.remove('flags_site');
           if (toolbarState.pathname === '/pocs/toolbar') {
-            Cookies.remove('flags_site');
             unmountVercelToolbar();
-            await sleep(5000);
-            mountVercelToolbar();
-            setToolbarState({ pathname: pathname, initialized: true });
           }
+          await sleep(5000);
+          mountVercelToolbar();
+          setToolbarState({ pathname: pathname, initialized: true });
         }
         console.log('Toolbar Repainted!!');
       }
