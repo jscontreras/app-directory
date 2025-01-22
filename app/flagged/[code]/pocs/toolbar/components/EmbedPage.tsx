@@ -54,7 +54,7 @@ export default function EmbedPage() {
           iframeRef.current.src = iframeRef.current.src;
         }
         console.log('Reloading IFRAME app');
-      }, 2000);
+      }, 1000);
     }
   };
 

@@ -1,5 +1,5 @@
 'use client';
-import { mountVercelToolbar, unmountVercelToolbar } from '@vercel/toolbar';
+import { mountVercelToolbar } from '@vercel/toolbar';
 import Cookies from 'js-cookie';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -24,20 +24,14 @@ export default function VercelToolbarAdapter() {
           Cookies.set('flags_site', 'https://svelte.tc-vercel.dev', {
             expires: 30,
           });
-          unmountVercelToolbar();
-          await sleep(1000);
           mountVercelToolbar();
           setToolbarState({ pathname: pathname, initialized: true });
         } else {
           Cookies.remove('flags_site');
-          if (toolbarState.pathname === '/pocs/toolbar') {
-            unmountVercelToolbar();
-          }
-          await sleep(5000);
           mountVercelToolbar();
           setToolbarState({ pathname: pathname, initialized: true });
+          console.log('Toolbar Repainted!!');
         }
-        console.log('Toolbar Repainted!!');
       }
     };
     asyncVercelBarLoading();
