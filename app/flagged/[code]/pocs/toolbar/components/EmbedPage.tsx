@@ -72,7 +72,7 @@ export default function EmbedPage() {
         src={iframeUrl}
         width="100%"
         height="800"
-        className="rounded border-2 border-gray-300 bg-white"
+        className="rounded border-2 border-gray-300"
       />
     </div>
   );
