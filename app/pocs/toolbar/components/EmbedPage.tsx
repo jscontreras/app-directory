@@ -35,16 +35,6 @@ export default function EmbedPage() {
     }
   };
 
-  // Example of setting a cookie using js-cookie
-  const setCookieExample = () => {
-    Cookies.set('exampleCookie', 'Hello from js-cookie!', { expires: 7 });
-  };
-
-  // Example of removing a cookie using js-cookie
-  const removeCookieExample = () => {
-    Cookies.remove('exampleCookie');
-  };
-
   return (
     <div className="min-h-dvh bg-wh p-4">
       <h1 className="mb-4 text-2xl font-bold">Parent App</h1>
@@ -53,20 +43,6 @@ export default function EmbedPage() {
         className="mb-4 rounded bg-green-500 px-4 py-2 font-bold text-white hover:bg-green-700"
       >
         Sync Flags with Iframe
-      </button>
-
-      <button
-        onClick={setCookieExample}
-        className="mb-4 ml-2 rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
-      >
-        Set Cookie Example
-      </button>
-
-      <button
-        onClick={removeCookieExample}
-        className="mb-4 ml-2 rounded bg-red-500 px-4 py-2 font-bold text-white hover:bg-red-700"
-      >
-        Remove Cookie Example
       </button>
 
       {message && <p className="mb-4">Message from iframe: {message}</p>}
