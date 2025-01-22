@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import Cookies from 'js-cookie';
 
 const validApps = ['https://svelte.tc-vercel.dev', 'http://localhost:5173'];
@@ -10,8 +10,24 @@ export default function EmbedPage() {
   const iframeUrl =
     process.env.NODE_ENV == 'development' ? validApps[1] : validApps[0];
   useEffect(() => {
+    const protocol = window.location.protocol;
+    const hostname = window.location.hostname;
+    const port = window.location.port;
+    const domain =
+      port && port !== '80' && port !== '443'
+        ? `${protocol}//${hostname}:${port}`
+        : `${protocol}//${hostname}`;
     const handleMessage = (event: MessageEvent) => {
-      //console.log(event);
+      // https:// using vercel.live for flags sync
+      if (event.origin === domain) {
+        const oldCookieValue = Cookies.get('vercel-flag-mirror');
+        const vercelOverrides = Cookies.get('vercel-flag-overrides');
+        if (oldCookieValue != vercelOverrides) {
+          Cookies.set('vercel-flag-mirror', vercelOverrides || '');
+          sendMessageToIframe();
+        }
+      }
+
       // Ensure the message is from the iframe domain
       if (!validApps.includes(event.origin)) return;
 
@@ -46,7 +62,7 @@ export default function EmbedPage() {
       <h1 className="mb-4 text-2xl font-bold">Parent App</h1>
       <button
         onClick={sendMessageToIframe}
-        className="mb-4 rounded bg-green-500 px-4 py-2 font-bold text-white hover:bg-green-700"
+        className="mb-4 hidden rounded bg-green-500 px-4 py-2 font-bold text-white hover:bg-green-700"
       >
         Sync Flags with Iframe
       </button>
