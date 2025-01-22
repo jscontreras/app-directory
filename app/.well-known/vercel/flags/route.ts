@@ -29,8 +29,16 @@ export async function GET(request: NextRequest) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      const data = await response.json();
-      return NextResponse.json(data);
+      const jsonFlagsEmbeddedSite = await response.json();
+      const jsonParentAppFlags = getProviderData(flags);
+      const mergedFlags = {
+        ...jsonParentAppFlags,
+        definitions: {
+          ...jsonParentAppFlags.definitions,
+          ...jsonFlagsEmbeddedSite.definitions,
+        },
+      };
+      return NextResponse.json(mergedFlags);
     } catch (error) {
       console.error('Invalid URL in flags_site cookie:', error.message);
       const access = await verifyAccess(request.headers.get('Authorization'));

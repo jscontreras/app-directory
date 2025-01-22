@@ -4,22 +4,43 @@ import Cookies from 'js-cookie';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
+async function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 export default function VercelToolbarAdapter() {
-  const [toolbarState, setToolbarState] = useState({ initialized: false });
   const pathname = usePathname();
+  const [toolbarState, setToolbarState] = useState({
+    initialized: false,
+    pathname: pathname,
+  });
   useEffect(() => {
-    if (!toolbarState.initialized) {
-      if (pathname === '/pocs/toolbar') {
-        // Cookies.set("flags_site", "https://svelte.tc-vercel.dev", { expires: 30 })
-        mountVercelToolbar();
-        setToolbarState({ initialized: true });
-      } else {
-        Cookies.remove('flags_site');
-        unmountVercelToolbar();
-        mountVercelToolbar();
-        setToolbarState({ initialized: true });
+    const asyncVercelBarLoading = async () => {
+      if (
+        pathname != toolbarState.pathname ||
+        toolbarState.initialized == false
+      ) {
+        if (pathname === '/pocs/toolbar') {
+          Cookies.set('flags_site', 'https://svelte.tc-vercel.dev', {
+            expires: 30,
+          });
+          unmountVercelToolbar();
+          await sleep(1000);
+          mountVercelToolbar();
+          setToolbarState({ pathname: pathname, initialized: true });
+        } else {
+          if (toolbarState.pathname === '/pocs/toolbar') {
+            Cookies.remove('flags_site');
+            unmountVercelToolbar();
+            await sleep(5000);
+            mountVercelToolbar();
+            setToolbarState({ pathname: pathname, initialized: true });
+          }
+        }
+        console.log('Toolbar Repainted!!');
       }
-    }
-  }, [toolbarState, pathname]);
+    };
+    asyncVercelBarLoading();
+  }, [pathname]);
   return null;
 }

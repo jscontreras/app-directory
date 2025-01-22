@@ -3,20 +3,20 @@
 import { useState, useEffect, useRef } from 'react';
 import Cookies from 'js-cookie';
 
-const iframeUrl = 'https://svelte.tc-vercel.dev';
+const validApps = ['https://svelte.tc-vercel.dev', 'http://localhost:5173'];
 
 export default function EmbedPage() {
-  const [message, setMessage] = useState<string>('');
   const iframeRef = useRef<HTMLIFrameElement>(null);
-
+  const iframeUrl =
+    process.env.NODE_ENV == 'development' ? validApps[1] : validApps[0];
   useEffect(() => {
     const handleMessage = (event: MessageEvent) => {
-      console.log(event);
+      //console.log(event);
       // Ensure the message is from the iframe domain
-      if (event.origin !== iframeUrl) return;
+      if (!validApps.includes(event.origin)) return;
 
       if (event.data.type === 'IFRAME_MESSAGE') {
-        setMessage(event.data.payload);
+        console.log('FROM:SVELTE APP>>', event.data.payload);
       }
     };
 
@@ -32,7 +32,12 @@ export default function EmbedPage() {
         { type: 'PARENT_MESSAGE', payload: payload ? payload : 'null' },
         iframeUrl,
       );
-      console.log('Message sent!', payload);
+      setTimeout(() => {
+        // reload iframe here
+        if (iframeRef.current) {
+          iframeRef.current.src = iframeRef.current.src;
+        }
+      }, 1000);
     }
   };
 
@@ -45,8 +50,6 @@ export default function EmbedPage() {
       >
         Sync Flags with Iframe
       </button>
-
-      {message && <p className="mb-4">Message from iframe: {message}</p>}
       <iframe
         ref={iframeRef}
         src={iframeUrl}
