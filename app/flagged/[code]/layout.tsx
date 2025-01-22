@@ -22,7 +22,6 @@ export default async function Layout(props: {
   // Reading Flag
   const bottomBar = await showBottomBar(params.code, featureFlags);
   const color = await barColor(params.code, featureFlags);
-
   return (
     <>
       {bottomBar && (

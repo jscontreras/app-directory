@@ -8,6 +8,7 @@ import { Metadata } from 'next';
 import { Suspense } from 'react';
 import { FlagValues } from '@vercel/flags/react';
 import { AnalyticsAdapter } from '#/ui/analytics-adapter';
+import VercelToolbarAdapter from '#/ui/ui/vercel-toolbar-adapter';
 
 export const metadata: Metadata = {
   title: {
@@ -53,6 +54,7 @@ export default async function RootLayout({
         </div>
         <Suspense></Suspense>
         <SpeedInsightsAdapter />
+        <VercelToolbarAdapter />
         <AnalyticsAdapter />
       </body>
     </html>

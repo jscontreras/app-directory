@@ -93,7 +93,11 @@ export async function middleware(
     );
   }
   // FEATURE FLAGS ENABLEMENT
-  else if (url.pathname.startsWith('/h') || url.pathname === '/') {
+  else if (
+    url.pathname.startsWith('/h') ||
+    url.pathname === '/' ||
+    url.pathname === '/pocs/toolbar'
+  ) {
     // Injecting additional headers for flags to operate
     await request.headers.set('x-pathname', url.pathname);
     // Permutations for ISR feature flags
@@ -128,5 +132,6 @@ export const config = {
     '/h/:path*',
     '/isr/11',
     '/isr/12',
+    '/pocs/toolbar',
   ],
 };
