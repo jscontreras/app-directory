@@ -72,7 +72,7 @@ export default function CacheDemo({ pageUrl }: { pageUrl: string }) {
     addLog('');
 
     setRequestCount((prev) => prev + 1);
-  }, [addLog, requestCount]);
+  }, [addLog, requestCount, pageUrl]);
 
   useEffect(() => {
     if (isRunning && !isPaused && requestCount < 30) {
