@@ -3,7 +3,12 @@
 import { useEffect, useRef } from 'react';
 import Cookies from 'js-cookie';
 
-const validApps = ['https://svelte.tc-vercel.dev', 'http://localhost:5173'];
+const validApps = [
+  'https://svelte.tc-vercel.dev',
+  'http://localhost:5173',
+  'https://www.tc-vercel.dev',
+  'https://preview.tc-vercel.dev/',
+];
 
 export default function EmbedPage() {
   const iframeRef = useRef<HTMLIFrameElement>(null);
