@@ -55,11 +55,14 @@ export default function EmbedPage() {
 
       if (event.data.type === 'IFRAME_MESSAGE') {
         console.log('FROM:SVELTE APP>> COOKIE UPDATED!');
-        // reload iframe here (as the app has already received the cookie update message)
-        if (iframeRef.current) {
-          iframeRef.current.src = iframeRef.current.src;
+        // On Vercel, the toolbar reloads the site on Flag updates.
+        if (process.env.NODE_ENV == 'development') {
+          // reload iframe here (as the app has already received the cookie update message)
+          if (iframeRef.current) {
+            iframeRef.current.src = iframeRef.current.src;
+          }
+          console.log('Reloading IFRAME app');
         }
-        console.log('Reloading IFRAME app');
       }
     };
     setTimeout(() => {
