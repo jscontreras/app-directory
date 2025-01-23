@@ -23,14 +23,12 @@ export default function EmbedPage() {
         ? `${protocol}//${hostname}:${port}`
         : `${protocol}//${hostname}`;
     const handleMessage = (event: MessageEvent) => {
-      // https:// using vercel.live for flags sync
-      if (event.origin === domain) {
-        const oldCookieValue = Cookies.get('vercel-flag-mirror') || '';
-        const vercelOverrides = Cookies.get('vercel-flag-overrides') || '';
-        if (oldCookieValue != vercelOverrides) {
-          Cookies.set('vercel-flag-mirror', vercelOverrides || '');
-          sendMessageToIframe();
-        }
+      // Only sync if cookies are not matching
+      const oldCookieValue = Cookies.get('vercel-flag-mirror') || '';
+      const vercelOverrides = Cookies.get('vercel-flag-overrides') || '';
+      if (oldCookieValue != vercelOverrides) {
+        Cookies.set('vercel-flag-mirror', vercelOverrides || '');
+        sendMessageToIframe();
       }
 
       // Ensure the message is from the iframe domain
