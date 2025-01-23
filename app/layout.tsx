@@ -52,7 +52,6 @@ export default async function RootLayout({
             <Byline className="fixed sm:hidden" />
           </div>
         </div>
-        <Suspense></Suspense>
         <SpeedInsightsAdapter />
         <VercelToolbarAdapter />
         <AnalyticsAdapter />
