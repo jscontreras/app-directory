@@ -6,6 +6,7 @@ import Cookies from 'js-cookie';
 const validApps = [
   'https://svelte.tc-vercel.dev',
   'http://localhost:5173',
+  'http://localhost:3000',
   'https://www.tc-vercel.dev',
   'https://preview.tc-vercel.dev/',
 ];
@@ -28,13 +29,6 @@ export default function EmbedPage() {
   };
 
   useEffect(() => {
-    const protocol = window.location.protocol;
-    const hostname = window.location.hostname;
-    const port = window.location.port;
-    const domain =
-      port && port !== '80' && port !== '443'
-        ? `${protocol}//${hostname}:${port}`
-        : `${protocol}//${hostname}`;
     const handleMessage = (event: MessageEvent) => {
       // Only sync if cookies are not matching
       if (semaphoreOpen) {
@@ -56,7 +50,6 @@ export default function EmbedPage() {
         }
         semaphoreOpen = true;
       }
-
       // Ensure the message is from the iframe domain
       if (!validApps.includes(event.origin)) return;
 
@@ -69,8 +62,9 @@ export default function EmbedPage() {
         console.log('Reloading IFRAME app');
       }
     };
-
-    window.addEventListener('message', handleMessage);
+    setTimeout(() => {
+      window.addEventListener('message', handleMessage);
+    }, 500);
 
     return () => window.removeEventListener('message', handleMessage);
   }, []);
@@ -80,7 +74,7 @@ export default function EmbedPage() {
       <h1 className="mb-4 text-2xl font-bold">Parent App</h1>
       <button
         onClick={sendMessageToIframe}
-        className="mb-4 rounded bg-green-500 px-4 py-2 font-bold text-white hover:bg-green-700"
+        className="mb-4 hidden rounded bg-green-500 px-4 py-2 font-bold text-white hover:bg-green-700"
       >
         Sync Flags with Iframe
       </button>
