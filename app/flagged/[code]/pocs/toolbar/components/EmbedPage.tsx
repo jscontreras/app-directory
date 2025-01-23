@@ -10,6 +10,8 @@ const validApps = [
   'https://preview.tc-vercel.dev/',
 ];
 
+let semaphoreOpen = true;
+
 export default function EmbedPage() {
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const iframeUrl =
@@ -24,11 +26,15 @@ export default function EmbedPage() {
         : `${protocol}//${hostname}`;
     const handleMessage = (event: MessageEvent) => {
       // Only sync if cookies are not matching
-      const oldCookieValue = Cookies.get('vercel-flag-mirror') || '';
-      const vercelOverrides = Cookies.get('vercel-flag-overrides') || '';
-      if (oldCookieValue != vercelOverrides) {
-        Cookies.set('vercel-flag-mirror', vercelOverrides || '');
-        sendMessageToIframe();
+      if (semaphoreOpen) {
+        semaphoreOpen = false;
+        const oldCookieValue = Cookies.get('vercel-flag-mirror') || '';
+        const vercelOverrides = Cookies.get('vercel-flag-overrides') || '';
+        if (oldCookieValue != vercelOverrides) {
+          Cookies.set('vercel-flag-mirror', vercelOverrides || '');
+          sendMessageToIframe();
+        }
+        semaphoreOpen = true;
       }
 
       // Ensure the message is from the iframe domain
