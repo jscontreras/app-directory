@@ -32,7 +32,12 @@ export default function EmbedPage() {
       if (!validApps.includes(event.origin)) return;
 
       if (event.data.type === 'IFRAME_MESSAGE') {
-        console.log('FROM:SVELTE APP>>', event.data.payload);
+        console.log('FROM:SVELTE APP>> COOKIE UPDATED!');
+        // reload iframe here (as the app has already received the cookie update message)
+        if (iframeRef.current) {
+          iframeRef.current.src = iframeRef.current.src;
+        }
+        console.log('Reloading IFRAME app');
       }
     };
 
@@ -48,13 +53,6 @@ export default function EmbedPage() {
         { type: 'PARENT_MESSAGE', payload: payload ? payload : 'null' },
         iframeUrl,
       );
-      setTimeout(() => {
-        // reload iframe here
-        if (iframeRef.current) {
-          iframeRef.current.src = iframeRef.current.src;
-        }
-        console.log('Reloading IFRAME app');
-      }, 1000);
     }
   };
 
@@ -63,7 +61,7 @@ export default function EmbedPage() {
       <h1 className="mb-4 text-2xl font-bold">Parent App</h1>
       <button
         onClick={sendMessageToIframe}
-        className="mb-4 hidden rounded bg-green-500 px-4 py-2 font-bold text-white hover:bg-green-700"
+        className="mb-4  hidden rounded bg-green-500 px-4 py-2 font-bold text-white hover:bg-green-700"
       >
         Sync Flags with Iframe
       </button>

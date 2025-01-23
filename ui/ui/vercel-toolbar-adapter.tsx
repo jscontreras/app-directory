@@ -27,10 +27,12 @@ export default function VercelToolbarAdapter() {
           mountVercelToolbar();
           setToolbarState({ pathname: pathname, initialized: true });
         } else {
-          Cookies.remove('flags_site');
-          mountVercelToolbar();
-          setToolbarState({ pathname: pathname, initialized: true });
-          console.log('Toolbar Repainted!!');
+          if (Cookies.get('flags_site')) {
+            Cookies.remove('flags_site');
+            mountVercelToolbar();
+            setToolbarState({ pathname: pathname, initialized: true });
+            console.log('Toolbar Repainted!!');
+          }
         }
       }
     };
