@@ -9,6 +9,17 @@ export default function EmbedPage() {
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const iframeUrl =
     process.env.NODE_ENV == 'development' ? validApps[1] : validApps[0];
+
+  const sendMessageToIframe = () => {
+    if (iframeRef.current && iframeRef.current.contentWindow) {
+      const payload = Cookies.get('vercel-flag-overrides') || null;
+      iframeRef.current.contentWindow.postMessage(
+        { type: 'PARENT_MESSAGE', payload: payload ? payload : 'null' },
+        iframeUrl,
+      );
+    }
+  };
+
   useEffect(() => {
     const protocol = window.location.protocol;
     const hostname = window.location.hostname;
@@ -24,7 +35,16 @@ export default function EmbedPage() {
         const vercelOverrides = Cookies.get('vercel-flag-overrides') || '';
         if (oldCookieValue != vercelOverrides) {
           Cookies.set('vercel-flag-mirror', vercelOverrides || '');
-          sendMessageToIframe();
+          // send message to iframe
+          const iframeUrl =
+            process.env.NODE_ENV == 'development' ? validApps[1] : validApps[0];
+          if (iframeRef.current && iframeRef.current.contentWindow) {
+            const payload = Cookies.get('vercel-flag-overrides') || null;
+            iframeRef.current.contentWindow.postMessage(
+              { type: 'PARENT_MESSAGE', payload: payload ? payload : 'null' },
+              iframeUrl,
+            );
+          }
         }
       }
 
@@ -45,16 +65,6 @@ export default function EmbedPage() {
 
     return () => window.removeEventListener('message', handleMessage);
   }, []);
-
-  const sendMessageToIframe = () => {
-    if (iframeRef.current && iframeRef.current.contentWindow) {
-      const payload = Cookies.get('vercel-flag-overrides') || null;
-      iframeRef.current.contentWindow.postMessage(
-        { type: 'PARENT_MESSAGE', payload: payload ? payload : 'null' },
-        iframeUrl,
-      );
-    }
-  };
 
   return (
     <div className="min-h-dvh bg-wh p-4">
