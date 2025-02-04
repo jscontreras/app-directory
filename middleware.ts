@@ -16,6 +16,33 @@ export async function middleware(
   context: NextFetchEvent,
 ) {
   const url = request.nextUrl;
+  if (url.pathname.startsWith('/isr/')) {
+    // Use fetch to get the response
+    const response = await fetch(request.url, {
+      headers: request.headers,
+      method: request.method,
+      body: request.body,
+      cache: 'no-store',
+    });
+
+    // Read the response body as text
+    const bodyText = await response.text();
+    // Check if the body contains the not-found page content
+    if (bodyText.includes('not-found.tsx')) {
+      // If it does, create a new response with status 404
+      return new NextResponse(bodyText, {
+        status: 404,
+        headers: response.headers,
+      });
+    }
+
+    // If it's not a 404, return the original response
+    return new NextResponse(bodyText, {
+      status: response.status,
+      statusText: response.statusText,
+      headers: response.headers,
+    });
+  }
   if (url.pathname === '/proxy-speed-insights.js') {
     const response = await fetch(
       'https://cdn.vercel-insights.com/v1/speed-insights/script.js',
@@ -133,5 +160,7 @@ export const config = {
     '/isr/11',
     '/isr/12',
     '/pocs/toolbar',
+    // Overriding 404s
+    '/isr/:path*',
   ],
 };
