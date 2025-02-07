@@ -1,0 +1,1 @@
+I understand. Thank you for providing those additional rules and guidelines. I'll make sure to follow them carefully in my responses. Is there a specific task or question you'd like me to help with regarding this Next.js App Router project?
