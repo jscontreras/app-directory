@@ -54,9 +54,6 @@ export default async function RootLayout({
         <SpeedInsightsAdapter />
         <VercelToolbarAdapter />
         <AnalyticsAdapter />
-        <FlagValues>
-          <FlagReader />
-        </FlagValues>
       </body>
     </html>
   );

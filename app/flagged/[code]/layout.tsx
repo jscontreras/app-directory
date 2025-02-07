@@ -4,6 +4,7 @@ import { barColor, featureFlags } from '#/flags';
 import BottomBar from '#/ui/bottom-bar';
 import { showBottomBar } from '#/flags';
 import { FlagValues } from '@vercel/flags/react';
+import { FlagsReader } from '#/components/FlagReader';
 
 export async function generateStaticParams() {
   const codes = await generatePermutations(featureFlags);
