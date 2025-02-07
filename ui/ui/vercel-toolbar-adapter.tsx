@@ -3,12 +3,10 @@ import { mountVercelToolbar } from '@vercel/toolbar';
 import Cookies from 'js-cookie';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
-
-async function sleep(ms: number): Promise<void> {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
+import { VercelToolbar } from '@vercel/toolbar/next';
 
 export default function VercelToolbarAdapter() {
+  const shouldInjectToolbar = process.env.NODE_ENV === 'development';
   const pathname = usePathname();
   const [toolbarState, setToolbarState] = useState({
     initialized: false,
@@ -38,5 +36,5 @@ export default function VercelToolbarAdapter() {
     };
     asyncVercelBarLoading();
   }, [pathname]);
-  return null;
+  return shouldInjectToolbar ? <VercelToolbar /> : null;
 }
