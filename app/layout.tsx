@@ -7,8 +7,6 @@ import { SpeedInsightsAdapter } from '#/ui/speed-insights-adapter';
 import { Metadata } from 'next';
 import { AnalyticsAdapter } from '#/ui/analytics-adapter';
 import VercelToolbarAdapter from '#/ui/ui/vercel-toolbar-adapter';
-import { FlagReader } from '../components/FlagReader';
-import { FlagValues } from '@vercel/flags/react';
 
 export const metadata: Metadata = {
   title: {
