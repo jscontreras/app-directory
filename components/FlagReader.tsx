@@ -39,6 +39,9 @@ export function useFlagStateObserver() {
 
   useEffect(() => {
     function processScriptTags() {
+      if (Object.entries(flagState).length > 0) {
+        return;
+      }
       const nodes = document.querySelectorAll('[data-flag-values]');
       const { plaintext } = searchNodes(nodes);
       setFlagState(plaintext);
@@ -65,7 +68,7 @@ export function useFlagStateObserver() {
     return () => {
       observer.disconnect();
     };
-  }, []);
+  }, [flagState]);
 
   return flagState;
 }
