@@ -4,7 +4,6 @@ import { register } from './instrumentation';
 import { logs, SeverityNumber } from '@opentelemetry/api-logs';
 import { precompute } from '@vercel/flags/next';
 import { featureFlags } from './flags';
-import { draftMode } from 'next/headers';
 
 // service name
 const serviceName = process.env.NEW_RELIC_APP_NAME || '';
@@ -17,11 +16,29 @@ export async function middleware(
   context: NextFetchEvent,
 ) {
   const url = request.nextUrl;
+  // ENABLING DRAFT BY URL PARAM
   if (url.pathname === '/isr-preview/1') {
     const { searchParams } = new URL(request.url);
     const secret = searchParams.get('_draft');
+    const DRAFT_SECRET = process.env.DRAFT_SECRET;
+    const bypassCookie = request.cookies.get('__prerender_bypass');
     // Check if the secret query parameter is present and matches your secret token
-    if (secret === process.env.DRAFT_SECRET) {
+    // If the bypass cookie is already set, we're in draft mode
+    if (bypassCookie) {
+      // Append the secret to the original request if it's present
+      const url = request.nextUrl.clone();
+      // Hide secret from being exposed
+      if (secret !== 'true') {
+        url.searchParams.delete('_draft');
+        url.searchParams.set('_draft', 'true');
+        return NextResponse.redirect(url);
+      } else {
+        return NextResponse.next();
+      }
+    }
+
+    // Only proceed if the secret is present and correct
+    if (secret === DRAFT_SECRET) {
       // Fetch to the API route that enables Draft Mode
       const draftResponse = await fetch(
         new URL(`/api/enable-draft?secret=${secret}`, request.url),
@@ -29,17 +46,14 @@ export async function middleware(
 
       // Extract the Draft Mode bypass cookie
       const draftCookie = draftResponse.headers.get('set-cookie');
+
       // If we got a bypass cookie, add it to the original request
       if (draftCookie) {
         const response = NextResponse.next();
         response.headers.set('set-cookie', draftCookie);
         return response;
       }
-
-      // If no bypass cookie was set, just continue with the original request
-      return NextResponse.next();
     }
-
     return NextResponse.next();
   } else if (url.pathname === '/proxy-speed-insights.js') {
     const response = await fetch(
