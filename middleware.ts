@@ -36,7 +36,6 @@ export async function middleware(
         return NextResponse.next();
       }
     }
-
     // Only proceed if the secret is present and correct
     if (secret === DRAFT_SECRET) {
       // Fetch to the API route that enables Draft Mode
@@ -45,16 +44,25 @@ export async function middleware(
       );
 
       // Extract the Draft Mode bypass cookie
-      const draftCookie = draftResponse.headers.get('set-cookie');
-
-      // If we got a bypass cookie, add it to the original request
-      if (draftCookie) {
-        const response = NextResponse.next();
-        response.headers.set('set-cookie', draftCookie);
-        return response;
+      const draftCookie = draftResponse.headers.get('set-cookie') || '';
+      url.searchParams.delete('_draft');
+      url.searchParams.set('_draft', 'true');
+      const redirectUrl = new URL(url);
+      const response = NextResponse.redirect(redirectUrl);
+      response.headers.set('set-cookie', draftCookie);
+      return response;
+    } else {
+      // If secret is invalid and cookie is not set then clean _draft
+      if (secret && secret !== 'true') {
+        url.searchParams.delete('_draft');
+        const redirectUrl = new URL(url);
+        return NextResponse.redirect(redirectUrl);
+      }
+      // If url is clean then proceed
+      else {
+        return NextResponse.next();
       }
     }
-    return NextResponse.next();
   } else if (url.pathname === '/proxy-speed-insights.js') {
     const response = await fetch(
       'https://cdn.vercel-insights.com/v1/speed-insights/script.js',
