@@ -53,7 +53,7 @@ export async function middleware(
       return response;
     } else {
       // If secret is invalid and cookie is not set then clean _draft
-      if (secret && secret !== 'true') {
+      if (secret && secret == 'true') {
         url.searchParams.delete('_draft');
         const redirectUrl = new URL(url);
         return NextResponse.redirect(redirectUrl);
