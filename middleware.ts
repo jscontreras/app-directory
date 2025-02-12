@@ -4,6 +4,7 @@ import { register } from './instrumentation';
 import { logs, SeverityNumber } from '@opentelemetry/api-logs';
 import { precompute } from '@vercel/flags/next';
 import { featureFlags } from './flags';
+import { draftMode } from 'next/headers';
 
 // service name
 const serviceName = process.env.NEW_RELIC_APP_NAME || '';
@@ -16,7 +17,31 @@ export async function middleware(
   context: NextFetchEvent,
 ) {
   const url = request.nextUrl;
-  if (url.pathname === '/proxy-speed-insights.js') {
+  if (url.pathname === '/isr-preview/1') {
+    const { searchParams } = new URL(request.url);
+    const secret = searchParams.get('_draft');
+    // Check if the secret query parameter is present and matches your secret token
+    if (secret === process.env.DRAFT_SECRET) {
+      // Fetch to the API route that enables Draft Mode
+      const draftResponse = await fetch(
+        new URL(`/api/enable-draft?secret=${secret}`, request.url),
+      );
+
+      // Extract the Draft Mode bypass cookie
+      const draftCookie = draftResponse.headers.get('set-cookie');
+      // If we got a bypass cookie, add it to the original request
+      if (draftCookie) {
+        const response = NextResponse.next();
+        response.headers.set('set-cookie', draftCookie);
+        return response;
+      }
+
+      // If no bypass cookie was set, just continue with the original request
+      return NextResponse.next();
+    }
+
+    return NextResponse.next();
+  } else if (url.pathname === '/proxy-speed-insights.js') {
     const response = await fetch(
       'https://cdn.vercel-insights.com/v1/speed-insights/script.js',
     );
@@ -131,7 +156,7 @@ export const config = {
     '/h',
     '/h/:path*',
     '/isr/11',
-    '/isr/12',
+    '/isr-preview/1',
     '/pocs/toolbar',
   ],
 };

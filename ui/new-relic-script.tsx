@@ -3,5 +3,9 @@
 import Script from 'next/script';
 
 export function NewRelicBrowserAgentScript() {
-  return <Script src="/js/nr-script.js" />;
+  if (process.env.NODE_ENV === 'production') {
+    return <Script src="/js/nr-script.js" />;
+  } else {
+    return <></>;
+  }
 }

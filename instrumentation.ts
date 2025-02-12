@@ -1,6 +1,10 @@
 import { registerOTel } from '@vercel/otel';
 
 export async function register() {
+  // Tracking prod Only
+  if (process.env.NODE_ENV !== 'production') {
+    return;
+  }
   // vercel means using @vercel/otel natively without NewRelic extension.
   if (process.env.TELEMETRY_CUSTOM_PRODUCER === 'vercel') {
     // For Node it supports open telemetry logs

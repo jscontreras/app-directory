@@ -5,7 +5,6 @@ import { GlobalNav } from '#/ui/global-nav';
 import { NewRelicBrowserAgentScript } from '#/ui/new-relic-script';
 import { SpeedInsightsAdapter } from '#/ui/speed-insights-adapter';
 import { Metadata } from 'next';
-import { Suspense } from 'react';
 import { FlagValues } from '@vercel/flags/react';
 import { AnalyticsAdapter } from '#/ui/analytics-adapter';
 import VercelToolbarAdapter from '#/ui/ui/vercel-toolbar-adapter';
