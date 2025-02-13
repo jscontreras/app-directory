@@ -1,22 +1,18 @@
 name: Change Tracking Marker
 
 on:
-  push:
-    branches:
-      - main
-  workflow_dispatch:
   release:
     types: [published]
+  repository_dispatch:
+    types: [vercel-webhook]
 
 jobs:
   newrelic:
     runs-on: ubuntu-latest
     name: New Relic
     steps:
-      # This step builds a var with the release tag value to use later
       - name: Set Release Version from Tag
         run: echo "RELEASE_VERSION=${{ github.ref_name }}" >> $GITHUB_ENV
-      # This step creates a new Change Tracking Marker for App123
       - name: App123 Marker
         uses: newrelic/deployment-marker-action@v2.3.0
         with:
@@ -29,7 +25,6 @@ jobs:
           deploymentType: 'ROLLING'
           groupId: 'Workshop App Release: ${{ github.ref_name }}'
           user: '${{ github.actor }}'
-      # This step creates a new Change Tracking Marker for App456
       - name: App456 Marker
         uses: newrelic/deployment-marker-action@v2.3.0
         with:
