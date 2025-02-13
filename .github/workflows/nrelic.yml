@@ -3,8 +3,15 @@ name: Change Tracking Marker
 on:
   release:
     types: [published]
-  repository_dispatch:
-    types: [vercel-webhook]
+  # https://docs.github.com/en/actions/writing-workflows/choosing-when-your-workflow-runs/events-that-trigger-workflows#workflow_dispatch
+  workflow_dispatch:
+    inputs:
+      name:
+        description: 'What is your name'
+        type: string
+      home:
+        description: 'WHere is your Home'
+        type: string
 
 jobs:
   newrelic:
