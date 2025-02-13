@@ -1,4 +1,4 @@
-name: Change Tracking Marker
+name: Vercel NewRelic DeplChangeEvent
 
 on:
   release:
