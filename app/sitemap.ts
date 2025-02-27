@@ -8,13 +8,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     {
       url: root,
       lastModified: new Date(),
-      changeFrequency: 'weekly',
+      changeFrequency: 'daily',
       priority: priority,
     },
     {
-      url: `${root}/pocs/images`,
+      url: `${root}pocs/images`,
       lastModified: new Date(),
-      changeFrequency: 'weekly',
+      changeFrequency: 'daily',
       priority: priority,
     },
   ];
@@ -26,7 +26,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       entries.push({
         url: `${root}${item.slug}/`,
         lastModified: new Date(),
-        changeFrequency: 'weekly',
+        changeFrequency: 'daily',
         priority: priority,
       });
     });
