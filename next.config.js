@@ -84,5 +84,17 @@ module.exports = withBundleAnalyzer(
     experimental: {
       cssChunking: 'strict',
     },
+    images: {
+      domains: ['www.andersenwindows.com'],
+      // This is important - it tells Next.js to use the unoptimized prop for external images
+      // which will prevent the _next/image URL format issues with search engines
+      remotePatterns: [
+        {
+          protocol: 'https',
+          hostname: 'www.andersenwindows.com',
+          pathname: '/**',
+        },
+      ],
+    },
   }),
 );
