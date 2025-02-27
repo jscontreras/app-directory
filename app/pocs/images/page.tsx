@@ -16,7 +16,7 @@ export default function Home() {
           <div className="relative flex aspect-[1009/875] w-full items-center justify-center overflow-hidden rounded-lg bg-gray-100 p-6">
             <Image
               src={encodeURI(
-                `/products/windows/awning/interior/black/awning-interior-black.webp`,
+                `/products/windows/awning/interior/black/awning-interior-black.png`,
               )}
               alt="Black Awning Window Interior View"
               width={600}

@@ -1,3 +1,7 @@
+// @ts-check
+
+/** @type {import('next').NextConfig} */
+
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 });
@@ -86,6 +90,8 @@ module.exports = withBundleAnalyzer(
     },
     images: {
       domains: ['www.andersenwindows.com'],
+      formats: ['image/avif'],
+
       // This is important - it tells Next.js to use the unoptimized prop for external images
       // which will prevent the _next/image URL format issues with search engines
       remotePatterns: [
