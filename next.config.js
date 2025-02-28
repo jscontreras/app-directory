@@ -14,6 +14,7 @@ module.exports = withBundleAnalyzer(
           destination: '/isr-cache-headers',
           permanent: true,
         },
+        // Redirect for SAML Authentication
         {
           source: '/:path*',
           has: [
@@ -28,6 +29,20 @@ module.exports = withBundleAnalyzer(
               key: 'referer',
               // value: '(.*preview\\.tc-vercel\\.dev.*)',
               value: '(.*vercel\\.com.*)',
+            },
+          ],
+          destination: 'https://preview.tc-vercel.dev/:path*',
+          permanent: false,
+        },
+        // Redirect for Password Authentication
+        {
+          source: '/:path*',
+          has: [
+            {
+              type: 'header',
+              key: 'origin',
+              // value: '(.*preview\\.tc-vercel\\.dev.*)',
+              value: '(.*vercel\\.app.*)',
             },
           ],
           destination: 'https://preview.tc-vercel.dev/:path*',
