@@ -41,8 +41,13 @@ module.exports = withBundleAnalyzer(
             {
               type: 'header',
               key: 'referer',
-              // value: '(.*preview\\.tc-vercel\\.dev.*)',
               value: '(.*vercel\\.app.*)',
+            },
+          ],
+          missing: [
+            {
+              type: 'host',
+              value: 'preview.tc-vercel.dev',
             },
           ],
           destination: 'https://preview.tc-vercel.dev/:path*',
