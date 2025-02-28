@@ -21,9 +21,10 @@ module.exports = withBundleAnalyzer(
               type: 'header',
               key: 'referer',
               value: '(.*preview\\.tc-vercel\\.dev.*)',
+              value: '(.*vercel\\.com.*)',
             },
           ],
-          destination: 'https://www.tc-vercel.dev/:path*',
+          destination: 'https://preview.tc-vercel.dev/:path*',
           permanent: false,
         },
       ];
