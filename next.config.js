@@ -20,7 +20,7 @@ module.exports = withBundleAnalyzer(
             {
               type: 'header',
               key: 'referer',
-              value: '(.*preview\\.tc-vercel\\.dev.*)',
+              // value: '(.*preview\\.tc-vercel\\.dev.*)',
               value: '(.*vercel\\.com.*)',
             },
           ],
