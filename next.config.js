@@ -40,7 +40,7 @@ module.exports = withBundleAnalyzer(
           has: [
             {
               type: 'header',
-              key: 'origin',
+              key: 'referer',
               // value: '(.*preview\\.tc-vercel\\.dev.*)',
               value: '(.*vercel\\.app.*)',
             },
