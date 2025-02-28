@@ -14,6 +14,18 @@ module.exports = withBundleAnalyzer(
           destination: '/isr-cache-headers',
           permanent: true,
         },
+        {
+          source: '/:path*',
+          has: [
+            {
+              type: 'header',
+              key: 'referer',
+              value: '(.*preview\\.tc-vercel\\.dev.*)',
+            },
+          ],
+          destination: 'https://www.tc-vercel.dev/:path*',
+          permanent: false,
+        },
       ];
     },
     headers: async () => {
