@@ -67,12 +67,20 @@ export async function getServerSideProps({ req }: { req: Request }) {
   const echoHeaders = await fetch(url, {
     headers: new Headers(headers),
   });
-
-  const response: any = await echoHeaders.json();
-  return {
-    props: {
-      headers: response,
-      cache: 'no-store',
-    },
-  };
+  try {
+    const response: any = await echoHeaders.json();
+    return {
+      props: {
+        headers: response,
+        cache: 'no-store',
+      },
+    };
+  } catch (e) {
+    return {
+      props: {
+        headers: 'Wait',
+        cache: 'no-store',
+      },
+    };
+  }
 }

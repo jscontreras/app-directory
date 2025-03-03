@@ -25,6 +25,8 @@ export async function register() {
   // By default it uses the credentials from newRelic-Vercel extension
   // This way will not work for middleware tracing
   else {
-    registerOTel({ serviceName: process.env.NEW_RELIC_APP_NAME });
+    registerOTel({
+      serviceName: process.env.NEW_RELIC_APP_NAME,
+    });
   }
 }

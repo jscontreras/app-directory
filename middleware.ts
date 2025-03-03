@@ -8,13 +8,9 @@ import { featureFlags } from './flags';
 // service name
 const serviceName = process.env.NEW_RELIC_APP_NAME || '';
 
-// Register Service
-register();
-
-export async function middleware(
-  request: NextRequest,
-  context: NextFetchEvent,
-) {
+export async function middleware(request: NextRequest) {
+  // Register Service
+  await register();
   const url = request.nextUrl;
   // ENABLING DRAFT BY URL PARAM
   if (url.pathname === '/isr-preview/1') {
@@ -95,13 +91,15 @@ export async function middleware(
     });
   }
   // How to override cache headers (This will break cache as it is private)
-  else if (url.pathname === '/isr/11') {
+  else if (url.pathname.startsWith('/isr/')) {
     const response = NextResponse.next();
-    // Remove the 'private' directive and set appropriate caching headers for ISR
-    response.headers.set(
-      'Cache-Control',
-      'private, max-age=0, stale-while-revalidate',
-    );
+    if (url.pathname === '/isr/11') {
+      // Remove the 'private' directive and set appropriate caching headers for ISR
+      response.headers.set(
+        'Cache-Control',
+        'private, max-age=0, stale-while-revalidate',
+      );
+    }
     return response;
   } else if (url.pathname === '/proxy-via-middleware') {
     // Clone the request headers
@@ -177,7 +175,7 @@ export const config = {
     '/',
     '/h',
     '/h/:path*',
-    '/isr/11',
+    '/isr/:path*',
     '/isr-preview/1',
     '/pocs/toolbar',
   ],
