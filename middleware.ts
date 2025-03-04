@@ -3,13 +3,13 @@ import type { NextRequest } from 'next/server';
 import { logs, SeverityNumber } from '@opentelemetry/api-logs';
 import { precompute } from '@vercel/flags/next';
 import { featureFlags } from './flags';
+// Open Telemetry
+import { Span, SpanStatusCode, trace as traceApi } from '@opentelemetry/api';
+import { register } from './instrumentation';
 
 // Trying with register()
 register();
 
-// Open Telemetry
-import { Span, SpanStatusCode, trace as traceApi } from '@opentelemetry/api';
-import { register } from './instrumentation';
 // service name
 const serviceName = process.env.NEW_RELIC_APP_NAME || '';
 
