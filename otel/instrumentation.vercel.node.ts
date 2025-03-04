@@ -10,7 +10,7 @@ import { BatchSpanProcessor } from '@opentelemetry/sdk-trace-base';
 const otlpLogExporter = new OTLPLogExporter({
   url: 'https://otlp.nr-data.net:4318/v1/logs', // New Relic OTLP endpoint
   headers: {
-    'api-key': process.env.NEW_RELIC_LICENSE_KEY,
+    'api-key': process.env.NEW_RELIC_LICENSE_KEY || '',
   },
   keepAlive: true,
   concurrencyLimit: 10,
@@ -22,7 +22,7 @@ const METRICS_COLLECTOR_STRING = 'https://otlp.nr-data.net:4318/v1/metrics';
 const newRelicMetricsExporter: any = new OTLPTraceExporter({
   url: METRICS_COLLECTOR_STRING,
   headers: {
-    'api-key': process.env.NEW_RELIC_LICENSE_KEY,
+    'api-key': process.env.NEW_RELIC_LICENSE_KEY || '',
   },
 });
 
@@ -38,7 +38,7 @@ const COLLECTOR_STRING = 'https://otlp.nr-data.net:4318/v1/traces';
 const newRelicTraceExporter = new OTLPTraceExporter({
   url: COLLECTOR_STRING,
   headers: {
-    'api-key': process.env.NEW_RELIC_LICENSE_KEY, // Ensure your New Relic Ingest License key is set in the environment variables
+    'api-key': process.env.NEW_RELIC_LICENSE_KEY || '', // Ensure your New Relic Ingest License key is set in the environment variables
   },
 });
 
