@@ -32,8 +32,19 @@ registerOTel({
   serviceName: process.env.NEW_RELIC_APP_NAME,
   instrumentationConfig: {
     fetch: {
-      propagateContextUrls: ['*'],
+      ignoreUrls: [/^https:\/\/telemetry.nextjs.org/],
+      propagateContextUrls: [/^.*/],
+      dontPropagateContextUrls: [/no-propagation\=1/],
+      attributesFromRequestHeaders: {
+        'request.cmd': 'X-Cmd',
+      },
+      attributesFromResponseHeaders: {
+        'response.server': 'X-Server',
+      },
     },
+  },
+  attributesFromHeaders: {
+    client: 'X-Client',
   },
   attributes: {
     'highlight.project_id': process.env.PROJECT_ID,
