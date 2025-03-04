@@ -1,18 +1,15 @@
 import { NextResponse } from 'next/server';
-import type { NextRequest, NextFetchEvent } from 'next/server';
-import { register } from './instrumentation';
+import type { NextRequest } from 'next/server';
 import { logs, SeverityNumber } from '@opentelemetry/api-logs';
 import { precompute } from '@vercel/flags/next';
 import { featureFlags } from './flags';
+
 // Open Telemetry
 import { Span, SpanStatusCode, trace as traceApi } from '@opentelemetry/api';
-
 // service name
 const serviceName = process.env.NEW_RELIC_APP_NAME || '';
 
 async function originalMiddleware(request: NextRequest) {
-  // Register Service
-  await register();
   const url = request.nextUrl;
   // ENABLING DRAFT BY URL PARAM
   if (url.pathname === '/isr-preview/1') {
@@ -190,17 +187,14 @@ export const config = {
  * @param event
  * @returns
  */
-export async function middleware(
-  request: NextRequest,
-  event?: NextFetchEvent,
-): Promise<Response> {
-  return trace(`sample-span`, async () => {
-    return originalMiddleware(request) as any;
+export async function middleware(request: NextRequest): Promise<Response> {
+  return trace(`middleware-span`, async () => {
+    return (await originalMiddleware(request)) as any;
   });
 }
 
 function trace<T>(name: string, fn: (span: Span) => Promise<T>): Promise<T> {
-  const tracer = traceApi.getTracer('sample');
+  const tracer = traceApi.getTracer(serviceName);
   return tracer.startActiveSpan(name, async (span) => {
     try {
       const result = fn(span);
