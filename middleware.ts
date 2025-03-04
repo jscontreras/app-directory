@@ -238,7 +238,9 @@ function trace<T>(name: string, fn: (span: Span) => Promise<T>): Promise<T> {
   let spanName = name;
   if (activeSpan) {
     // Getting active span name so it groups in New Relic Dashboard
-    spanName = `Middleware: ${activeSpan.spanContext.name}`;
+    spanName = activeSpan.spanContext.name.length
+      ? `Middleware: ${activeSpan.spanContext.name}`
+      : name;
   }
   // Sending Trace
   return tracer.startActiveSpan(spanName, options, spanFn);
