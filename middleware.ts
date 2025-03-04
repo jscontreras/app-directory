@@ -227,14 +227,14 @@ function trace<T>(name: string, fn: (span: Span) => Promise<T>): Promise<T> {
       middleware: 'hello from Vercel Middleware!!',
     },
   };
+  // Get activeSpan will capture the context (parent trace)
   const activeSpan = traceApi.getActiveSpan() || null;
   let spanName = name;
   if (activeSpan) {
     // Getting active span name so it groups in New Relic Dashboard
-    spanName = activeSpan.spanContext.name;
+    spanName = `Middleware: ${activeSpan.spanContext.name}`;
   }
-  // Sending 2 for testing purposes
-  tracer.startActiveSpan(name, options, spanFn);
+  // Sending Trace
   return tracer.startActiveSpan(spanName, options, spanFn);
 }
 
