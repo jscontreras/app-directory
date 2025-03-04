@@ -200,6 +200,12 @@ export async function middleware(request: NextRequest): Promise<Response> {
   });
 }
 
+/**
+ * This function gets the active tracer (and span if any) and creates a new span with context
+ * @param name
+ * @param fn
+ * @returns
+ */
 function trace<T>(name: string, fn: (span: Span) => Promise<T>): Promise<T> {
   const spanFn = async (span: any) => {
     try {
