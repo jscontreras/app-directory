@@ -28,7 +28,7 @@ const traceExporter = new OTLPHttpProtoTraceExporter({
 
 const spanProcesor = new SimpleSpanProcessor(traceExporter);
 
-registerOTel({
+let otelConfig = {
   serviceName: process.env.NEW_RELIC_APP_NAME,
   instrumentationConfig: {
     fetch: {
@@ -52,6 +52,12 @@ registerOTel({
   },
   traceExporter: traceExporter,
   spanProcessors: [spanProcesor],
-  // Pending fix https://github.com/sfishel18/vercel-otel/commit/d134528067900299d212072dfa1a9ed31e1ac653
-  //logRecordProcessor: logsProcessor
-});
+};
+
+// For Node it supports open telemetry logs
+// Pending fix https://github.com/sfishel18/vercel-otel/commit/d134528067900299d212072dfa1a9ed31e1ac653
+if (process.env.NEXT_RUNTIME === 'nodejs') {
+  otelConfig = { ...otelConfig, ...{ logRecordProcessor: logsProcessor } };
+}
+
+registerOTel(otelConfig);
