@@ -227,7 +227,15 @@ function trace<T>(name: string, fn: (span: Span) => Promise<T>): Promise<T> {
       middleware: 'hello from Vercel Middleware!!',
     },
   };
-  return tracer.startActiveSpan(name, options, spanFn);
+  const activeSpan = traceApi.getActiveSpan() || null;
+  let spanName = name;
+  if (activeSpan) {
+    // Getting active span name so it groups in New Relic Dashboard
+    spanName = activeSpan.spanContext.name;
+  }
+  // Sending 2 for testing purposes
+  tracer.startActiveSpan(name, options, spanFn);
+  return tracer.startActiveSpan(spanName, options, spanFn);
 }
 
 /**
