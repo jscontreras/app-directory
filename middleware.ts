@@ -4,11 +4,13 @@ import { logs, SeverityNumber } from '@opentelemetry/api-logs';
 import { precompute } from '@vercel/flags/next';
 import { featureFlags } from './flags';
 // Open Telemetry
-import { Span, SpanStatusCode, trace as traceApi } from '@opentelemetry/api';
-import { register } from './instrumentation';
-
-// Trying with register()
-register();
+import {
+  context,
+  propagation,
+  Span,
+  SpanStatusCode,
+  trace as traceApi,
+} from '@opentelemetry/api';
 
 // service name
 const serviceName = process.env.NEW_RELIC_APP_NAME || '';
@@ -193,7 +195,7 @@ export const config = {
  */
 export async function middleware(request: NextRequest): Promise<Response> {
   return trace(`middleware-span`, async () => {
-    return (await originalMiddleware(request)) as any;
+    return contextInjector(await originalMiddleware(request)) as any;
   });
 }
 
@@ -201,8 +203,7 @@ function trace<T>(name: string, fn: (span: Span) => Promise<T>): Promise<T> {
   const spanFn = async (span: any) => {
     try {
       const result = await fn(span);
-      // Don't end span
-      // span.end();
+      span.end();
       return result;
     } catch (e) {
       if (e instanceof Error) {
@@ -214,7 +215,7 @@ function trace<T>(name: string, fn: (span: Span) => Promise<T>): Promise<T> {
           message: JSON.stringify(e),
         });
       }
-      // span.end();
+      span.end();
       throw e;
     }
   };
@@ -225,4 +226,19 @@ function trace<T>(name: string, fn: (span: Span) => Promise<T>): Promise<T> {
   } else {
     return spanFn(span);
   }
+}
+
+/**
+ * Add existing contextual headers if any
+ * @param response
+ * @returns
+ */
+function contextInjector(response: undefined | Response) {
+  let responseObj = response ? response : NextResponse.next();
+  const { headers } = responseObj || {};
+  propagation.inject(context.active(), headers);
+  Object.keys(headers).forEach((key: string) => {
+    responseObj.headers.append(key, headers.get(key) + '');
+  });
+  return responseObj;
 }

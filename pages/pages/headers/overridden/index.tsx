@@ -1,6 +1,7 @@
 import { serverLogger } from '#/otel/logger';
 import { ExternalLink } from '#/ui/external-link';
 import { BasicLayout } from '#/ui/pages-layout';
+import { context, propagation } from '@opentelemetry/api';
 import { logs, SeverityNumber } from '@opentelemetry/api-logs';
 
 // service name
@@ -61,10 +62,14 @@ export async function getServerSideProps({ req }: { req: Request }) {
     'X-Forwarded-Host': 'overriden-host.com',
     'x-forwarded-custom-host': 'overriden-host.com',
   };
+
   const reqHeaders: any = req.headers;
   const host = reqHeaders.host;
   const protocol = reqHeaders['x-forwarded-proto'] || 'http';
   const url = `${protocol}://${host}/proxy-via-middleware`;
+
+  // Propagate headers
+  propagation.inject(context.active(), headers);
 
   try {
     const echoHeaders = await fetch(url, {
