@@ -1,10 +1,18 @@
-import { createLogger } from 'winston';
-import WinstonNewrelicLogsTransport from 'winston-newrelic-logs-transport';
-export const serverLogger = createLogger({
-  transports: [
-    new WinstonNewrelicLogsTransport({
-      licenseKey: process.env.NEW_RELIC_LICENSE_KEY || '',
-      apiUrl: process.env.NEW_RELIC_API_URL || '',
-    }),
-  ],
+import { Logger } from 'winston';
+import { NewRelicTransport } from 'winston-nr';
+
+// Sending Logs directly to New Relic
+const newRelicTransport = new NewRelicTransport({
+  apiUrl: 'https://log-api.newrelic.com/log/v1',
+  apiKey: process.env.NEW_RELIC_LICENSE_KEY || '',
+  compression: true,
+  retries: 3,
+  batchSize: 10,
+  batchTimeout: 5000,
+});
+
+export const serverLogger = new Logger({
+  level: 'info',
+  defaultMeta: { serviceName: process.env.NEW_RELIC_APP_NAME },
+  transports: [newRelicTransport],
 });

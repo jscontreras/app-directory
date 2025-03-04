@@ -194,8 +194,7 @@ export async function middleware(request: NextRequest): Promise<Response> {
 }
 
 function trace<T>(name: string, fn: (span: Span) => Promise<T>): Promise<T> {
-  const tracer = traceApi.getTracer(serviceName);
-  return tracer.startActiveSpan(name, async (span) => {
+  const spanFn = (span: any) => {
     try {
       const result = fn(span);
       span.end();
@@ -213,5 +212,12 @@ function trace<T>(name: string, fn: (span: Span) => Promise<T>): Promise<T> {
       span.end();
       throw e;
     }
-  });
+  };
+  const span = traceApi.getActiveSpan() || null;
+  if (!span) {
+    const tracer = traceApi.getTracer(serviceName);
+    return tracer.startActiveSpan(name, spanFn);
+  } else {
+    return spanFn(span);
+  }
 }
