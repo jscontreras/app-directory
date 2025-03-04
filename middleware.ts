@@ -194,9 +194,9 @@ export async function middleware(request: NextRequest): Promise<Response> {
 }
 
 function trace<T>(name: string, fn: (span: Span) => Promise<T>): Promise<T> {
-  const spanFn = (span: any) => {
+  const spanFn = async (span: any) => {
     try {
-      const result = fn(span);
+      const result = await fn(span);
       span.end();
       return result;
     } catch (e) {
