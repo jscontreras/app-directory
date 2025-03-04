@@ -1,6 +1,9 @@
 // instrumentation.ts
 import { registerOTel } from '@vercel/otel';
-import { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-proto';
+import {
+  OTLPHttpJsonTraceExporter,
+  OTLPHttpProtoTraceExporter,
+} from '@vercel/otel';
 import { PeriodicExportingMetricReader } from '@opentelemetry/sdk-metrics';
 import { SimpleLogRecordProcessor } from '@opentelemetry/sdk-logs';
 import { OTLPLogExporter } from '@opentelemetry/exporter-logs-otlp-http';
@@ -19,7 +22,7 @@ const otlpLogExporter = new OTLPLogExporter({
 
 const METRICS_COLLECTOR_STRING = 'https://otlp.nr-data.net:4318/v1/metrics';
 
-const newRelicMetricsExporter: any = new OTLPTraceExporter({
+const newRelicMetricsExporter: any = new OTLPHttpJsonTraceExporter({
   url: METRICS_COLLECTOR_STRING,
   headers: {
     'api-key': process.env.NEW_RELIC_LICENSE_KEY || '',
@@ -35,21 +38,29 @@ const metricReader = new PeriodicExportingMetricReader({
 const COLLECTOR_STRING = 'https://otlp.nr-data.net:4318/v1/traces';
 
 // Create an OTLP trace exporter for New Relic
-const newRelicTraceExporter = new OTLPTraceExporter({
+const newRelicJasonTraceExporter = new OTLPHttpProtoTraceExporter({
   url: COLLECTOR_STRING,
   headers: {
     'api-key': process.env.NEW_RELIC_LICENSE_KEY || '', // Ensure your New Relic Ingest License key is set in the environment variables
   },
 });
 
-const spanProcessor = new SimpleSpanProcessor(newRelicTraceExporter);
+const newRelicHtmlTraceExporter = new OTLPHttpJsonTraceExporter({
+  url: COLLECTOR_STRING,
+  headers: {
+    'api-key': process.env.NEW_RELIC_LICENSE_KEY || '', // Ensure your New Relic Ingest License key is set in the environment variables
+  },
+});
 
 // Register the OpenTelemetry SDK
 registerOTel({
   serviceName: process.env.NEW_RELIC_APP_NAME,
-  traceExporter: newRelicTraceExporter,
+  traceExporter: newRelicMetricsExporter,
   metricReader: metricReader,
-  spanProcessors: [spanProcessor],
+  spanProcessors: [
+    new SimpleSpanProcessor(newRelicJasonTraceExporter),
+    new SimpleSpanProcessor(newRelicHtmlTraceExporter),
+  ],
   logRecordProcessor: new SimpleLogRecordProcessor(otlpLogExporter),
   instrumentationConfig: {
     fetch: {

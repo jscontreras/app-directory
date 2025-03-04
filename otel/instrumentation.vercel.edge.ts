@@ -1,6 +1,6 @@
 // instrumentation.ts
 import { registerOTel } from '@vercel/otel';
-import { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-proto';
+import { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-http';
 import { PeriodicExportingMetricReader } from '@opentelemetry/sdk-metrics';
 import { SimpleSpanProcessor } from '@opentelemetry/sdk-trace-base';
 
