@@ -228,7 +228,6 @@ function trace<T>(name: string, fn: (span: Span) => Promise<T>): Promise<T> {
     }
   };
 
-  const tracer = traceApi.getTracer(serviceName);
   const options: SpanOptions = {
     attributes: {
       middleware: 'hello from Vercel Middleware!!',
@@ -240,11 +239,14 @@ function trace<T>(name: string, fn: (span: Span) => Promise<T>): Promise<T> {
   if (activeSpan) {
     // Getting active span name so it groups in New Relic Dashboard
     spanName = activeSpan.spanContext.name.length
-      ? `Middleware: ${activeSpan.spanContext.name}`
+      ? `middleware(custom span): ${activeSpan.spanContext.name}`
       : name;
+    // Adding custom attributes to the Span
+    activeSpan.setAttributes(options.attributes || {});
   }
-  // Sending Trace
-  return tracer.startActiveSpan(spanName, options, spanFn);
+  // Sending Trace (Will create a new span within the middleware)
+  //const tracer = traceApi.getTracer(serviceName);
+  //return tracer.startActiveSpan(spanName, options, spanFn);
 }
 
 /**
