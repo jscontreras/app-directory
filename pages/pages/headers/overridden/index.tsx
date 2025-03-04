@@ -64,10 +64,11 @@ export async function getServerSideProps({ req }: { req: Request }) {
   const host = reqHeaders.host;
   const protocol = reqHeaders['x-forwarded-proto'] || 'http';
   const url = `${protocol}://${host}/proxy-via-middleware`;
-  const echoHeaders = await fetch(url, {
-    headers: new Headers(headers),
-  });
+
   try {
+    const echoHeaders = await fetch(url, {
+      headers: new Headers(headers),
+    });
     const response: any = await echoHeaders.json();
     return {
       props: {
