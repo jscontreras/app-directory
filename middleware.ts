@@ -8,6 +8,7 @@ import {
   context,
   propagation,
   Span,
+  SpanOptions,
   SpanStatusCode,
   trace as traceApi,
 } from '@opentelemetry/api';
@@ -222,8 +223,14 @@ function trace<T>(name: string, fn: (span: Span) => Promise<T>): Promise<T> {
   const span = traceApi.getActiveSpan() || null;
   if (!span) {
     const tracer = traceApi.getTracer(serviceName);
-    return tracer.startActiveSpan(name, spanFn);
+    const options: SpanOptions = {
+      attributes: {
+        middleware: 'hello from Vercel Middleware!!',
+      },
+    };
+    return tracer.startActiveSpan(name, options, spanFn);
   } else {
+    span.setAttribute('middleware', 'hello from Vercel Middleware!!');
     return spanFn(span);
   }
 }
