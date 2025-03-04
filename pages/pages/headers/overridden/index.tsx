@@ -49,12 +49,13 @@ export async function getServerSideProps({ req }: { req: Request }) {
     },
   });
 
-  // Emitting Log with winston to NewRelic Directly
+  // // Emitting Log with winston to NewRelic Directly
   serverLogger.log(
     'info',
     `[${process.env.TELEMETRY_CUSTOM_PRODUCER}]** (winston) Testing Log Emiter for rewrite to echo.free.beeceptor.com`,
     { key: 'value' },
   );
+
   // JSON request
   const headers = {
     'X-Forwarded-Host': 'overriden-host.com',

@@ -1,6 +1,10 @@
+import { serverLogger } from '#/otel/logger';
 import { ExternalLink } from '#/ui/external-link';
-import { Highlight } from '#/ui/highlight';
 import { BasicLayout } from '#/ui/pages-layout';
+import { logs, SeverityNumber } from '@opentelemetry/api-logs';
+
+// service name
+const serviceName = process.env.NEW_RELIC_APP_NAME || '';
 
 export default function HeadersPage({ headers }: { headers: Object }) {
   return (
@@ -43,6 +47,23 @@ export async function getServerSideProps() {
   const echoHeaders = await fetch(`https://echo.free.beeceptor.com`, {
     headers: new Headers(headers),
   });
+
+  const logger = logs.getLogger(serviceName);
+  // Emmitting Log with Open Telemetry Custom Provisioning (not working)
+  logger.emit({
+    body: `[${process.env.TELEMETRY_CUSTOM_PRODUCER}]** (OpenTelemetry) Testing Log Emiter for rewrite to echo.free.beeceptor.com`,
+    severityNumber: SeverityNumber.INFO,
+    attributes: {
+      key: 'value',
+    },
+  });
+
+  // // Emitting Log with winston to NewRelic Directly
+  serverLogger.log(
+    'info',
+    `[${process.env.TELEMETRY_CUSTOM_PRODUCER}]** (winston) Testing Log Emiter for rewrite to echo.free.beeceptor.com`,
+    { key: 'value' },
+  );
 
   const response: any = await echoHeaders.json();
   return {

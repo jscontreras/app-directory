@@ -13,13 +13,13 @@ export const otelBaseConfig = {
     fetch: {
       ignoreUrls: [/^https:\/\/telemetry.nextjs.org/],
       propagateContextUrls: [/^.*/],
-      dontPropagateContextUrls: [/no-propagation\=1/],
-      attributesFromRequestHeaders: {
-        'request.cmd': 'X-Cmd',
-      },
-      attributesFromResponseHeaders: {
-        'response.server': 'X-Server',
-      },
+      // dontPropagateContextUrls: [/no-propagation\=1/],
+      // attributesFromRequestHeaders: {
+      //   'request.cmd': 'X-Cmd',
+      // },
+      // attributesFromResponseHeaders: {
+      //   'response.server': 'X-Server',
+      // },
     },
   },
   attributesFromHeaders: {
