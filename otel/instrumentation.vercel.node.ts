@@ -38,7 +38,7 @@ const metricReader = new PeriodicExportingMetricReader({
 const COLLECTOR_STRING = 'https://otlp.nr-data.net:4318/v1/traces';
 
 // Create an OTLP trace exporter for New Relic
-const newRelicJasonTraceExporter = new OTLPHttpProtoTraceExporter({
+const newRelicJsonTraceExporter = new OTLPHttpProtoTraceExporter({
   url: COLLECTOR_STRING,
   headers: {
     'api-key': process.env.NEW_RELIC_LICENSE_KEY || '', // Ensure your New Relic Ingest License key is set in the environment variables
@@ -55,10 +55,9 @@ const newRelicHtmlTraceExporter = new OTLPHttpJsonTraceExporter({
 // Register the OpenTelemetry SDK
 registerOTel({
   serviceName: process.env.NEW_RELIC_APP_NAME,
-  traceExporter: newRelicMetricsExporter,
   metricReader: metricReader,
   spanProcessors: [
-    new SimpleSpanProcessor(newRelicJasonTraceExporter),
+    new SimpleSpanProcessor(newRelicJsonTraceExporter),
     new SimpleSpanProcessor(newRelicHtmlTraceExporter),
   ],
   logRecordProcessor: new SimpleLogRecordProcessor(otlpLogExporter),
