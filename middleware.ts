@@ -12,6 +12,7 @@ import {
   SpanStatusCode,
   trace as traceApi,
 } from '@opentelemetry/api';
+import { request } from 'http';
 
 // service name
 const serviceName = process.env.NEW_RELIC_APP_NAME || '';
@@ -195,7 +196,7 @@ export const config = {
  * @returns
  */
 export async function middleware(request: NextRequest): Promise<Response> {
-  return trace(`middleware-span`, async () => {
+  return trace(`Middelware: ${request.nextUrl.pathname}`, async () => {
     return contextInjector(await originalMiddleware(request)) as any;
   });
 }
