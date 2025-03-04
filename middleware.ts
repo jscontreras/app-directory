@@ -4,8 +4,12 @@ import { logs, SeverityNumber } from '@opentelemetry/api-logs';
 import { precompute } from '@vercel/flags/next';
 import { featureFlags } from './flags';
 
+// Trying with register()
+register();
+
 // Open Telemetry
 import { Span, SpanStatusCode, trace as traceApi } from '@opentelemetry/api';
+import { register } from './instrumentation';
 // service name
 const serviceName = process.env.NEW_RELIC_APP_NAME || '';
 
@@ -197,7 +201,8 @@ function trace<T>(name: string, fn: (span: Span) => Promise<T>): Promise<T> {
   const spanFn = async (span: any) => {
     try {
       const result = await fn(span);
-      span.end();
+      // Don't end span
+      // span.end();
       return result;
     } catch (e) {
       if (e instanceof Error) {
@@ -209,7 +214,7 @@ function trace<T>(name: string, fn: (span: Span) => Promise<T>): Promise<T> {
           message: JSON.stringify(e),
         });
       }
-      span.end();
+      // span.end();
       throw e;
     }
   };
