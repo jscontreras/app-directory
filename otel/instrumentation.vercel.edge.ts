@@ -2,7 +2,7 @@
 import { registerOTel } from '@vercel/otel';
 import { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-proto';
 import { PeriodicExportingMetricReader } from '@opentelemetry/sdk-metrics';
-import { BatchSpanProcessor } from '@opentelemetry/sdk-trace-base';
+import { SimpleSpanProcessor } from '@opentelemetry/sdk-trace-base';
 
 const METRICS_COLLECTOR_STRING = 'https://otlp.nr-data.net:4318/v1/metrics';
 const newRelicMetricsExporter: any = new OTLPTraceExporter({
@@ -28,7 +28,7 @@ const newRelicTraceExporter = new OTLPTraceExporter({
   },
 });
 
-const spanProcessor = new BatchSpanProcessor(newRelicTraceExporter);
+const spanProcessor = new SimpleSpanProcessor(newRelicTraceExporter);
 
 // Register the OpenTelemetry SDK
 registerOTel({

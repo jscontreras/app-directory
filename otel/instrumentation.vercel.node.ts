@@ -4,7 +4,7 @@ import { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-proto';
 import { PeriodicExportingMetricReader } from '@opentelemetry/sdk-metrics';
 import { SimpleLogRecordProcessor } from '@opentelemetry/sdk-logs';
 import { OTLPLogExporter } from '@opentelemetry/exporter-logs-otlp-http';
-import { BatchSpanProcessor } from '@opentelemetry/sdk-trace-base';
+import { SimpleSpanProcessor } from '@opentelemetry/sdk-trace-base';
 
 // Configure the OTLP log exporter
 const otlpLogExporter = new OTLPLogExporter({
@@ -42,7 +42,7 @@ const newRelicTraceExporter = new OTLPTraceExporter({
   },
 });
 
-const spanProcessor = new BatchSpanProcessor(newRelicTraceExporter);
+const spanProcessor = new SimpleSpanProcessor(newRelicTraceExporter);
 
 // Register the OpenTelemetry SDK
 registerOTel({
