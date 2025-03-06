@@ -24,7 +24,12 @@ module.exports = withBundleAnalyzer(
             {
               // Undortuntalely forcing Cache Headers on rewrites doesn't work
               key: 'Cache-Control',
-              value: 's-maxage=31536000, public, stale-while-revalidate=120',
+              value:
+                'public, max-age=31536000, s-maxage=31536000, stale-while-revalidate=120',
+            },
+            {
+              key: 'X-Custom-Header-Hello',
+              valye: 'hello-world',
             },
           ],
         },
