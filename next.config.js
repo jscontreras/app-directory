@@ -33,7 +33,7 @@ module.exports = withBundleAnalyzer(
             },
             {
               key: 'X-Custom-Header-Hello',
-              valye: 'hello-world',
+              value: 'hello-world',
             },
           ],
         },
