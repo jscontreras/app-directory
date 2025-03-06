@@ -22,6 +22,10 @@ module.exports = withBundleAnalyzer(
           source: '/rewrite-test',
           headers: [
             {
+              key: 'x-vercel-enable-rewrite-caching',
+              value: '1',
+            },
+            {
               // Undortuntalely forcing Cache Headers on rewrites doesn't work
               key: 'Cache-Control',
               value:
