@@ -22,6 +22,7 @@ module.exports = withBundleAnalyzer(
           source: '/rewrite-test',
           headers: [
             {
+              // Undortuntalely forcing Cache Headers on rewrites doesn't work
               key: 'Cache-Control',
               value: 's-maxage=31536000, public, stale-while-revalidate=120',
             },
@@ -68,8 +69,8 @@ module.exports = withBundleAnalyzer(
           },
           {
             source: '/rewrite-test',
-            destination:
-              'https://app-directory-git-main-success-tc-vtest314.vercel.app/context/electronics',
+
+            destination: 'https://api.tc-vercel.dev/api/time?bk2kT23dpMY5=ok',
           },
           ...devRewrites,
         ],
