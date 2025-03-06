@@ -18,25 +18,25 @@ module.exports = withBundleAnalyzer(
     },
     headers: async () => {
       return [
-        {
-          source: '/rewrite-test',
-          headers: [
-            {
-              key: 'x-vercel-enable-rewrite-caching',
-              value: '1',
-            },
-            {
-              // Undortuntalely forcing Cache Headers on rewrites doesn't work
-              key: 'Cache-Control',
-              value:
-                'public, max-age=31536000, s-maxage=31536000, stale-while-revalidate=120',
-            },
-            {
-              key: 'X-Custom-Header-Hello',
-              value: 'hello-world',
-            },
-          ],
-        },
+        // {
+        //   source: '/rewrite-test',
+        //   headers: [
+        //     {
+        //       key: 'x-vercel-enable-rewrite-caching',
+        //       value: '1',
+        //     },
+        //     {
+        //       // Undortuntalely forcing Cache Headers on rewrites doesn't work
+        //       key: 'Cache-Control',
+        //       value:
+        //         'public, max-age=31536000, s-maxage=31536000, stale-while-revalidate=120',
+        //     },
+        //     {
+        //       key: 'X-Custom-Header-Hello',
+        //       value: 'hello-world',
+        //     },
+        //   ],
+        // },
       ];
     },
     rewrites: async () => {
@@ -76,11 +76,11 @@ module.exports = withBundleAnalyzer(
             source: '/test_0/:path*',
             destination: '/ssg/:path',
           },
-          {
-            source: '/rewrite-test',
+          // {
+          //   source: '/rewrite-test',
 
-            destination: 'https://api.tc-vercel.dev/api/time?bk2kT23dpMY5=ok',
-          },
+          //   destination: 'https://api.tc-vercel.dev/api/time?bk2kT23dpMY5=ok',
+          // },
           ...devRewrites,
         ],
         afterFiles: [

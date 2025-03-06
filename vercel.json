@@ -3,6 +3,29 @@
     {
       "source": "/test_3",
       "destination": "https://nextjs-algolia-dual.vercel.app/algolia/c/women/bags"
+    },
+    {
+      "source": "/rewrite-test",
+      "destination": "https://api.tc-vercel.dev/api/time?bk2kT23dpMY5=ok"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/rewrite-test",
+      "headers": [
+        {
+          "key": "x-vercel-enable-rewrite-caching",
+          "value": "1"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, s-maxage=31536000, stale-while-revalidate=120"
+        },
+        {
+          "key": "X-Custom-Header-Hello",
+          "value": "hello-world"
+        }
+      ]
     }
   ],
   "functions": {
