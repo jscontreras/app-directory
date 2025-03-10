@@ -35,7 +35,7 @@
       "memory": 512
     },
     "pages/**/*": {
-      "memory": 102
+      "memory": 512
     }
   }
 }
