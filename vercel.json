@@ -28,11 +28,14 @@
     "app/isr/**/*": {
       "memory": 768
     },
-    "app/**/*": {
+    "app/ssg/**/*": {
+      "memory": 768
+    },
+    "app/(!(isr|ssg))/**/*": {
       "memory": 512
     },
     "pages/**/*": {
-      "memory": 1024
+      "memory": 102
     }
   }
 }
