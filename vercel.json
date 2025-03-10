@@ -16,19 +16,23 @@
         {
           "key": "x-vercel-enable-rewrite-caching",
           "value": "1"
+        },
+        {
+          "key": "X-Custom-Header-Hello",
+          "value": "hello-world"
         }
       ]
     }
   ],
   "functions": {
-    "app/ssg3/**/*": {
-      "memory": 384
+    "app/isr/**/*": {
+      "memory": 768
     },
     "app/**/*": {
       "memory": 512
     },
     "pages/**/*": {
-      "memory": 512
+      "memory": 1024
     }
   }
 }
