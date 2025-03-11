@@ -18,25 +18,20 @@ module.exports = withBundleAnalyzer(
     },
     headers: async () => {
       return [
-        // {
-        //   source: '/rewrite-test',
-        //   headers: [
-        //     {
-        //       key: 'x-vercel-enable-rewrite-caching',
-        //       value: '1',
-        //     },
-        //     {
-        //       // Undortuntalely forcing Cache Headers on rewrites doesn't work
-        //       key: 'Cache-Control',
-        //       value:
-        //         'public, max-age=31536000, s-maxage=31536000, stale-while-revalidate=120',
-        //     },
-        //     {
-        //       key: 'X-Custom-Header-Hello',
-        //       value: 'hello-world',
-        //     },
-        //   ],
-        // },
+        {
+          // Match all files in the public folder
+          source: '/dingos/:file*',
+          headers: [
+            {
+              key: 'Cache-Control',
+              value: 'public, max-age=31536000, immutable',
+            },
+            {
+              key: 'X-Custom-Header-Hello',
+              value: 'hello-world',
+            },
+          ],
+        },
       ];
     },
     rewrites: async () => {
