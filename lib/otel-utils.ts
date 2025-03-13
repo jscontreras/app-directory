@@ -128,3 +128,21 @@ export function addCustomSpan(
   }
   return tracer.startActiveSpan(spanName, options, spanFn);
 }
+
+/**
+ * Generates and returns a set of headers with the current trace context injected.
+ *
+ * This function uses the OpenTelemetry API to propagate the current trace context
+ * into the headers, which can then be used for distributed tracing across services.
+ *
+ * @returns {Headers} A Headers object containing the trace context.
+ */
+export function getTraceContextHeaders(sendLogs: boolean = false) {
+  // Propagate headers
+  const headers = new Headers();
+  propagation.inject(context.active(), headers);
+  if (sendLogs) {
+    console.log('OTEL>>> Trace Headers: ', headers);
+  }
+  return headers;
+}

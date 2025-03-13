@@ -1,7 +1,7 @@
+import { getTraceContextHeaders } from '#/lib/otel-utils';
 import { serverLogger } from '#/otel/logger';
 import { ExternalLink } from '#/ui/external-link';
 import { BasicLayout } from '#/ui/pages-layout';
-import { context, propagation } from '@opentelemetry/api';
 import { logs, SeverityNumber } from '@opentelemetry/api-logs';
 
 // service name
@@ -68,12 +68,9 @@ export async function getServerSideProps({ req }: { req: Request }) {
   const protocol = reqHeaders['x-forwarded-proto'] || 'http';
   const url = `${protocol}://${host}/proxy-via-middleware`;
 
-  // Propagate headers
-  propagation.inject(context.active(), headers);
-
   try {
     const echoHeaders = await fetch(url, {
-      headers: new Headers(headers),
+      headers: new Headers({ ...headers, ...getTraceContextHeaders(true) }),
     });
     const response: any = await echoHeaders.json();
     return {
