@@ -3,21 +3,9 @@ import type { NextRequest } from 'next/server';
 import { logs, SeverityNumber } from '@opentelemetry/api-logs';
 import { precompute } from '@vercel/flags/next';
 import { featureFlags } from './flags';
-// Open Telemetry
-import {
-  context,
-  propagation,
-  Span,
-  SpanOptions,
-  SpanStatusCode,
-  trace as traceApi,
-} from '@opentelemetry/api';
-import { request } from 'http';
+import { traceEnabler } from './lib/otel-utils';
 
-// service name
-const serviceName = process.env.NEW_RELIC_APP_NAME || '';
-
-async function originalMiddleware(request: NextRequest) {
+async function originalMiddleware(request: NextRequest): Promise<Response> {
   const url = request.nextUrl;
   // ENABLING DRAFT BY URL PARAM
   if (url.pathname === '/isr-preview/1') {
@@ -122,7 +110,7 @@ async function originalMiddleware(request: NextRequest) {
 
     return response;
   } else if (url.pathname === '/api/print-headers-middleware') {
-    const logger = logs.getLogger(serviceName);
+    const logger = logs.getLogger(process.env.NEW_RELIC_APP_NAME || '');
     // Emmitting Log with Open Telemetry Custom Provisioning (not working)
     logger.emit({
       body: `[${process.env.TELEMETRY_CUSTOM_PRODUCER}]** (OpenTelemetry) Testing Log Emiter for Middleware`,
@@ -169,6 +157,7 @@ async function originalMiddleware(request: NextRequest) {
     const response = NextResponse.rewrite(nextUrl, { request });
     return response;
   }
+  return NextResponse.next();
 }
 
 // See "Matching Paths" below to learn more
@@ -196,75 +185,12 @@ export const config = {
  * @returns
  */
 export async function middleware(request: NextRequest): Promise<Response> {
-  return trace(`Middelware: ${request.nextUrl.pathname}`, async () => {
-    return contextInjector(await originalMiddleware(request)) as any;
-  });
-}
-
-/**
- * This function gets the active tracer (and span if any) and creates a new span with context
- * @param name
- * @param fn
- * @returns
- */
-function trace<T>(
-  name: string,
-  fn: () => Promise<Response>,
-): Promise<Response> {
-  const spanFn = async (span: any) => {
-    try {
-      // Invoke function
-      const result = await fn();
-      span.end();
-      return result;
-    } catch (e) {
-      if (e instanceof Error) {
-        span.recordException(e);
-        span.setStatus({ code: SpanStatusCode.ERROR, message: e.message });
-      } else {
-        span.setStatus({
-          code: SpanStatusCode.ERROR,
-          message: JSON.stringify(e),
-        });
-      }
-      span.end();
-      throw e;
-    }
-  };
-
-  const options: SpanOptions = {
-    attributes: {
-      middleware: 'hello from Vercel Middleware!!',
+  return traceEnabler(
+    `Middleware: ${request.nextUrl.pathname}`,
+    async () => {
+      return await originalMiddleware(request);
     },
-  };
-  // Get activeSpan will capture the context (parent trace)
-  const activeSpan = traceApi.getActiveSpan() || null;
-  let spanName = name;
-  if (activeSpan) {
-    // Getting active span name so it groups in New Relic Dashboard
-    spanName = activeSpan.spanContext.name.length
-      ? `middleware(custom span): ${activeSpan.spanContext.name}`
-      : name;
-    // Adding custom attributes to the Span
-    activeSpan.setAttributes(options.attributes || {});
-  }
-  // Sending Trace (Will create a new span within the middleware)
-  // const tracer = traceApi.getTracer(serviceName);
-  // return tracer.startActiveSpan(spanName, options, spanFn);
-  return fn();
-}
-
-/**
- * Add existing contextual headers if any
- * @param response
- * @returns
- */
-function contextInjector(response: undefined | Response) {
-  let responseObj = response ? response : NextResponse.next();
-  const { headers } = responseObj || {};
-  propagation.inject(context.active(), headers);
-  Object.keys(headers).forEach((key: string) => {
-    responseObj.headers.append(key, headers.get(key) + '');
-  });
-  return responseObj;
+    true,
+    { middleware: 'Hello World!!' },
+  );
 }
