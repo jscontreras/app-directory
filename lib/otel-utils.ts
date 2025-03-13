@@ -130,12 +130,10 @@ export function addCustomSpan(
 }
 
 /**
- * Generates and returns a set of headers with the current trace context injected.
+ * Generates and returns trace context headers for OpenTelemetry propagation.
  *
- * This function uses the OpenTelemetry API to propagate the current trace context
- * into the headers, which can then be used for distributed tracing across services.
- *
- * @returns {Headers} A Headers object containing the trace context.
+ * @param {boolean} [sendLogs=false] - Optional flag to log the generated headers to the console.
+ * @returns {Headers} The generated trace context headers.
  */
 export function getTraceContextHeaders(sendLogs: boolean = false) {
   // Propagate headers
