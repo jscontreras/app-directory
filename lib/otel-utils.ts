@@ -31,11 +31,12 @@ interface Carrier {
 export async function apiTraceEnabler(
   name: string,
   fn: () => NextResponse,
-  options: { sendLogs: boolean; extraAttributes: Record<string, any> } = {
-    sendLogs: false,
-    extraAttributes: {},
-  },
-) {
+  optionsBase: TraceOptions,
+): Promise<Response> {
+  const options: TraceOptionsStable = {
+    ...defaultTraceOptions,
+    ...optionsBase,
+  };
   const spanFn = async (span: Span) => {
     try {
       // Invoke function
@@ -72,6 +73,9 @@ export async function apiTraceEnabler(
     spanName = activeSpan.spanContext.name.length
       ? `middleware(custom span): ${activeSpan.spanContext.name}`
       : name;
+    if (options.forceRename) {
+      activeSpan.setAttribute('name', name);
+    }
     // Adding custom attributes to the Span
     activeSpan.setAttributes(spanOptions.attributes || {});
     const result = await fn();
@@ -85,9 +89,13 @@ export async function apiTraceEnabler(
     if (options.sendLogs) {
       console.log('OTEL>>> Sending API Span: ', spanName);
     }
-    return tracer.startActiveSpan(spanName, spanOptions, async (span) => {
-      return contextInjector(await spanFn(span), options.sendLogs);
-    });
+    return tracer.startActiveSpan(
+      options.forceRename ? name : spanName,
+      spanOptions,
+      async (span) => {
+        return contextInjector(await spanFn(span), options.sendLogs);
+      },
+    );
   }
 }
 
@@ -103,14 +111,31 @@ export async function apiTraceEnabler(
  *
  * @throws Will throw an error if the traced function throws an error.
  */
+interface TraceOptions {
+  sendLogs?: boolean;
+  extraAttributes?: Record<string, any>;
+  forceRename?: boolean;
+}
+interface TraceOptionsStable {
+  sendLogs: boolean;
+  extraAttributes: Record<string, any>;
+  forceRename: boolean;
+}
+const defaultTraceOptions: TraceOptionsStable = {
+  sendLogs: false,
+  forceRename: false,
+  extraAttributes: {},
+};
+
 export async function middlewareTraceEnabler<T>(
   name: string,
   fn: () => Promise<Response>,
-  options: { sendLogs: boolean; extraAttributes: Record<string, any> } = {
-    sendLogs: false,
-    extraAttributes: {},
-  },
+  optionsBase: TraceOptions,
 ): Promise<Response> {
+  const options: TraceOptionsStable = {
+    ...defaultTraceOptions,
+    ...optionsBase,
+  };
   const spanFn = async (span: Span) => {
     try {
       // Invoke function
@@ -149,6 +174,9 @@ export async function middlewareTraceEnabler<T>(
       : name;
     // Adding custom attributes to the Span
     activeSpan.setAttributes(spanOptions.attributes || {});
+    if (options.forceRename) {
+      activeSpan.setAttribute('name', name);
+    }
     const result = await fn();
     if (options.sendLogs) {
       console.log('OTEL>>> Reusing Active Span: ', spanName);
@@ -160,9 +188,13 @@ export async function middlewareTraceEnabler<T>(
     if (options.sendLogs) {
       console.log('OTEL>>> Sending Span: ', spanName);
     }
-    return tracer.startActiveSpan(spanName, spanOptions, async (span) => {
-      return contextInjector(await spanFn(span), options.sendLogs);
-    });
+    return tracer.startActiveSpan(
+      options.forceRename ? name : spanName,
+      spanOptions,
+      async (span) => {
+        return contextInjector(await spanFn(span), options.sendLogs);
+      },
+    );
   }
 }
 

@@ -186,7 +186,7 @@ export const config = {
  */
 export async function middleware(request: NextRequest): Promise<Response> {
   return middlewareTraceEnabler(
-    `Middleware: ${request.nextUrl.pathname}`,
+    `GET: ${request.nextUrl.pathname}`,
     async () => {
       return await originalMiddleware(request);
     },
@@ -195,6 +195,7 @@ export async function middleware(request: NextRequest): Promise<Response> {
       extraAttributes: {
         middleware: 'Hello World!!',
       },
+      forceRename: true,
     },
   );
 }
