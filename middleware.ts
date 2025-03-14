@@ -3,7 +3,7 @@ import type { NextRequest } from 'next/server';
 import { logs, SeverityNumber } from '@opentelemetry/api-logs';
 import { precompute } from '@vercel/flags/next';
 import { featureFlags } from './flags';
-import { traceEnabler } from './lib/otel-utils';
+import { middlewareTraceEnabler } from './lib/otel-utils';
 
 async function originalMiddleware(request: NextRequest): Promise<Response> {
   const url = request.nextUrl;
@@ -185,12 +185,16 @@ export const config = {
  * @returns
  */
 export async function middleware(request: NextRequest): Promise<Response> {
-  return traceEnabler(
+  return middlewareTraceEnabler(
     `Middleware: ${request.nextUrl.pathname}`,
     async () => {
       return await originalMiddleware(request);
     },
-    true,
-    { middleware: 'Hello World!!' },
+    {
+      sendLogs: true,
+      extraAttributes: {
+        middleware: 'Hello World!!',
+      },
+    },
   );
 }

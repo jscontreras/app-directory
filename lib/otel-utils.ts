@@ -17,25 +17,31 @@ interface Carrier {
 }
 
 /**
- * This function gets the active tracer (and span if any) and creates a new span with context
- * @param name Name of the Span (Unless there is an active Span name already)
- * @param fn Middleware Implementaton
- * @param sendLogs Print console log messages when sending spans
- * @param Object Optional Custom Attributes added to the Span.
- * @returns
+ * Enables tracing for an API function using OpenTelemetry.
+ *
+ * @param name - The name of the span.
+ * @param fn - The function to be traced, which returns a `NextResponse`.
+ * @param options - Optional configuration for the trace.
+ * @param options.sendLogs - Whether to send logs or not. Default is `false`.
+ * @param options.extraAttributes - Additional attributes to add to the span. Default is an empty object.
+ * @returns A promise that resolves to the result of the traced function, with context injected.
+ *
+ * @throws Will throw an error if the traced function throws an error.
  */
-export async function traceEnabler<T>(
+export async function apiTraceEnabler(
   name: string,
-  fn: () => Promise<Response>,
-  sendLogs: boolean = false,
-  extraAttributes?: Record<string, any>,
-): Promise<Response> {
+  fn: () => NextResponse,
+  options: { sendLogs: boolean; extraAttributes: Record<string, any> } = {
+    sendLogs: false,
+    extraAttributes: {},
+  },
+) {
   const spanFn = async (span: Span) => {
     try {
       // Invoke function
       const result = await fn();
       span.end();
-      return contextInjector(result, sendLogs);
+      return contextInjector(result, options.sendLogs);
     } catch (e) {
       if (e instanceof Error) {
         span.recordException(e);
@@ -52,10 +58,10 @@ export async function traceEnabler<T>(
     }
   };
 
-  const options: SpanOptions = {
+  const spanOptions: SpanOptions = {
     attributes: {
-      middleware: 'hello from Vercel Middleware!!',
-      ...extraAttributes,
+      api: 'hello from Vercel API!!',
+      ...options.extraAttributes,
     },
   };
   // Get activeSpan will capture the context (parent trace)
@@ -67,20 +73,95 @@ export async function traceEnabler<T>(
       ? `middleware(custom span): ${activeSpan.spanContext.name}`
       : name;
     // Adding custom attributes to the Span
-    activeSpan.setAttributes(options.attributes || {});
+    activeSpan.setAttributes(spanOptions.attributes || {});
     const result = await fn();
-    if (sendLogs) {
-      console.log('OTEL>>> Reusing Active Span: ', spanName);
+    if (options.sendLogs) {
+      console.log('OTEL>>> Reusing API Active Span: ', spanName);
     }
-    return contextInjector(result, sendLogs);
+    return contextInjector(result, options.sendLogs);
   } else {
     // Sending Trace (Will create a new span within the middleware)
     const tracer = traceApi.getTracer(process.env.NEW_RELIC_APP_NAME || '');
-    if (sendLogs) {
+    if (options.sendLogs) {
+      console.log('OTEL>>> Sending API Span: ', spanName);
+    }
+    return tracer.startActiveSpan(spanName, spanOptions, async (span) => {
+      return contextInjector(await spanFn(span), options.sendLogs);
+    });
+  }
+}
+
+/**
+ * Enables tracing for Middleware using OpenTelemetry.
+ *
+ * @param name - The name of the span.
+ * @param fn - The function to be traced, which returns a `NextResponse`.
+ * @param options - Optional configuration for the trace.
+ * @param options.sendLogs - Whether to send logs or not. Default is `false`.
+ * @param options.extraAttributes - Additional attributes to add to the span. Default is an empty object.
+ * @returns A promise that resolves to the result of the traced function, with context injected.
+ *
+ * @throws Will throw an error if the traced function throws an error.
+ */
+export async function middlewareTraceEnabler<T>(
+  name: string,
+  fn: () => Promise<Response>,
+  options: { sendLogs: boolean; extraAttributes: Record<string, any> } = {
+    sendLogs: false,
+    extraAttributes: {},
+  },
+): Promise<Response> {
+  const spanFn = async (span: Span) => {
+    try {
+      // Invoke function
+      const result = await fn();
+      span.end();
+      return contextInjector(result, options.sendLogs);
+    } catch (e) {
+      if (e instanceof Error) {
+        span.recordException(e);
+        span.setStatus({ code: SpanStatusCode.ERROR, message: e.message });
+        console.error(e);
+      } else {
+        span.setStatus({
+          code: SpanStatusCode.ERROR,
+          message: JSON.stringify(e),
+        });
+      }
+      span.end();
+      throw e;
+    }
+  };
+
+  const spanOptions: SpanOptions = {
+    attributes: {
+      middleware: 'hello from Vercel Middleware!!',
+      ...options.extraAttributes,
+    },
+  };
+  // Get activeSpan will capture the context (parent trace)
+  const activeSpan = traceApi.getActiveSpan() || null;
+  let spanName = name;
+  if (activeSpan) {
+    // Getting active span name so it groups in New Relic Dashboard
+    spanName = activeSpan.spanContext.name.length
+      ? `middleware(custom span): ${activeSpan.spanContext.name}`
+      : name;
+    // Adding custom attributes to the Span
+    activeSpan.setAttributes(spanOptions.attributes || {});
+    const result = await fn();
+    if (options.sendLogs) {
+      console.log('OTEL>>> Reusing Active Span: ', spanName);
+    }
+    return contextInjector(result, options.sendLogs);
+  } else {
+    // Sending Trace (Will create a new span within the middleware)
+    const tracer = traceApi.getTracer(process.env.NEW_RELIC_APP_NAME || '');
+    if (options.sendLogs) {
       console.log('OTEL>>> Sending Span: ', spanName);
     }
-    return tracer.startActiveSpan(spanName, options, async (span) => {
-      return contextInjector(await spanFn(span), sendLogs);
+    return tracer.startActiveSpan(spanName, spanOptions, async (span) => {
+      return contextInjector(await spanFn(span), options.sendLogs);
     });
   }
 }
