@@ -10,6 +10,12 @@ import {
 
 import { NextResponse } from 'next/server';
 
+// Define an interface for the output object that will hold the trace information.
+interface Carrier {
+  traceparent?: string;
+  tracestate?: string;
+}
+
 /**
  * This function gets the active tracer (and span if any) and creates a new span with context
  * @param name Name of the Span (Unless there is an active Span name already)
@@ -18,9 +24,9 @@ import { NextResponse } from 'next/server';
  * @param Object Optional Custom Attributes added to the Span.
  * @returns
  */
-export function traceEnabler<T>(
+export async function traceEnabler<T>(
   name: string,
-  fn: () => Promise<Response> | undefined,
+  fn: () => Promise<Response>,
   sendLogs: boolean = false,
   extraAttributes?: Record<string, any>,
 ): Promise<Response> {
@@ -34,6 +40,7 @@ export function traceEnabler<T>(
       if (e instanceof Error) {
         span.recordException(e);
         span.setStatus({ code: SpanStatusCode.ERROR, message: e.message });
+        console.error(e);
       } else {
         span.setStatus({
           code: SpanStatusCode.ERROR,
@@ -61,15 +68,21 @@ export function traceEnabler<T>(
       : name;
     // Adding custom attributes to the Span
     activeSpan.setAttributes(options.attributes || {});
+    const result = await fn();
+    if (sendLogs) {
+      console.log('OTEL>>> Reusing Active Span: ', spanName);
+    }
+    return contextInjector(result, sendLogs);
+  } else {
+    // Sending Trace (Will create a new span within the middleware)
+    const tracer = traceApi.getTracer(process.env.NEW_RELIC_APP_NAME || '');
+    if (sendLogs) {
+      console.log('OTEL>>> Sending Span: ', spanName);
+    }
+    return tracer.startActiveSpan(spanName, options, async (span) => {
+      return contextInjector(await spanFn(span), sendLogs);
+    });
   }
-  // Sending Trace (Will create a new span within the middleware)
-  const tracer = traceApi.getTracer(process.env.NEW_RELIC_APP_NAME || '');
-  if (sendLogs) {
-    console.log('OTEL>>> Sending Span: ', spanName);
-  }
-  return tracer.startActiveSpan(spanName, options, async (span) => {
-    return contextInjector(await spanFn(span), sendLogs);
-  });
 }
 
 /**
@@ -79,14 +92,14 @@ export function traceEnabler<T>(
  */
 function contextInjector(response: undefined | Response, sendLogs: boolean) {
   let responseObj = response ? response : NextResponse.next();
-  const { headers } = responseObj || {};
-  propagation.inject(context.active(), headers);
+  const headers: Record<string, string> = {
+    ...getTraceContextHeaders(sendLogs, { name: responseObj.url }),
+  };
   Object.keys(headers).forEach((key: string) => {
-    responseObj.headers.append(key, headers.get(key) + '');
+    if (headers[key]) {
+      responseObj.headers.append(key, headers[key]);
+    }
   });
-  if (sendLogs) {
-    console.log('OTEL>>> Context Headers: ', responseObj.headers);
-  }
   return responseObj;
 }
 
@@ -100,7 +113,7 @@ function contextInjector(response: undefined | Response, sendLogs: boolean) {
 export function addCustomSpan(
   spanName: string,
   options: SpanOptions,
-  fn: () => Promise<Response> | undefined,
+  fn: () => Promise<Response>,
   sendLogs: boolean = false,
 ) {
   //Sending Trace (Will create a new span within the middleware)
@@ -138,12 +151,19 @@ export function addCustomSpan(
  * @param {boolean} [sendLogs=false] - Optional flag to log the generated headers to the console.
  * @returns {Headers} The generated trace context headers.
  */
-export function getTraceContextHeaders(sendLogs: boolean = false) {
+export function getTraceContextHeaders(
+  sendLogs: boolean = false,
+  options?: { name: string },
+): Carrier {
   // Propagate headers
-  const headers = new Headers();
+  const headers: Carrier = {};
   propagation.inject(context.active(), headers);
   if (sendLogs) {
-    console.log('OTEL>>> Trace Headers: ', headers);
+    console.log(
+      'OTEL>>> Trace Headers: ',
+      headers,
+      options?.name ? `>${options?.name}` : '',
+    );
   }
   return headers;
 }
