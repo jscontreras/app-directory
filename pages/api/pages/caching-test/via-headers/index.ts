@@ -1,3 +1,4 @@
+import { getTraceContextHeaders } from '#/lib/otel-utils';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function handler(
@@ -8,6 +9,7 @@ export default async function handler(
   const res = await fetch(`https://api.tc-vercel.dev/api/time`, {
     headers: {
       'X-Custom-TC-Api-Key': process.env.CUSTOM_API_KEY || '',
+      ...getTraceContextHeaders(true),
     },
     cache: 'no-store',
   });

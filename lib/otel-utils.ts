@@ -29,7 +29,7 @@ export function traceEnabler<T>(
       // Invoke function
       const result = await fn();
       span.end();
-      return contextInjector(result);
+      return contextInjector(result, sendLogs);
     } catch (e) {
       if (e instanceof Error) {
         span.recordException(e);
@@ -68,7 +68,7 @@ export function traceEnabler<T>(
     console.log('OTEL>>> Sending Span: ', spanName);
   }
   return tracer.startActiveSpan(spanName, options, async (span) => {
-    return contextInjector(await spanFn(span));
+    return contextInjector(await spanFn(span), sendLogs);
   });
 }
 
@@ -77,13 +77,16 @@ export function traceEnabler<T>(
  * @param response
  * @returns
  */
-function contextInjector(response: undefined | Response) {
+function contextInjector(response: undefined | Response, sendLogs: boolean) {
   let responseObj = response ? response : NextResponse.next();
   const { headers } = responseObj || {};
   propagation.inject(context.active(), headers);
   Object.keys(headers).forEach((key: string) => {
     responseObj.headers.append(key, headers.get(key) + '');
   });
+  if (sendLogs) {
+    console.log('OTEL>>> Context Headers: ', responseObj.headers);
+  }
   return responseObj;
 }
 
@@ -106,7 +109,7 @@ export function addCustomSpan(
       // Invoke function
       const result = await fn();
       span.end();
-      return contextInjector(result);
+      return contextInjector(result, sendLogs);
     } catch (e) {
       if (e instanceof Error) {
         span.recordException(e);

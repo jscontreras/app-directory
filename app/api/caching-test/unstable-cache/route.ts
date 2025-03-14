@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { unstable_cache } from 'next/cache';
+import { getTraceContextHeaders } from '#/lib/otel-utils';
 
 export const runtime = 'edge';
 export const dynamic = 'force-dynamic'; // static by default, unless reading the request
@@ -9,6 +10,7 @@ const cached_res = unstable_cache(
     const res = await fetch(`https://api.tc-vercel.dev/api/time`, {
       headers: {
         'X-Custom-TC-Api-Key': process.env.CUSTOM_API_KEY || '',
+        ...getTraceContextHeaders(true),
       },
       cache: 'no-store',
     });

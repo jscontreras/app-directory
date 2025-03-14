@@ -2,6 +2,7 @@ import PreviewModeToggle from '#/ui/preview-toggle';
 import { notFound } from 'next/navigation';
 import { ExternalLink } from '#/ui/external-link';
 import { RevalidateTagButton } from '#/ui/revalidate-tag-button';
+import { getTraceContextHeaders } from '#/lib/otel-utils';
 
 export async function generateStaticParams() {
   // Generate two pages at build time and the rest (3-100) on-demand
@@ -16,6 +17,7 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
   const res = await fetch(`https://api.tc-vercel.dev/api/time`, {
     headers: {
       'X-Custom-TC-Api-Key': process.env.CUSTOM_API_KEY || '',
+      ...getTraceContextHeaders(true),
     },
     cache: 'force-cache',
     next: { tags: ['test-preview'] },

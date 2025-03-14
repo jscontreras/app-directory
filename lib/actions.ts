@@ -3,6 +3,7 @@
 import { revalidatePath, revalidateTag } from 'next/cache';
 import { draftMode } from 'next/headers';
 import { getDiskInfo } from 'node-disk-info';
+import { getTraceContextHeaders } from './otel-utils';
 
 export async function getCurrentHourInCityServerAction(
   timezone: string = 'America/New_York',
@@ -14,6 +15,7 @@ export async function getCurrentHourInCityServerAction(
     {
       headers: {
         'X-Custom-TC-Api-Key': process.env.CUSTOM_API_KEY || '',
+        ...getTraceContextHeaders(true),
       },
       cache: 'force-cache',
     },
@@ -38,6 +40,7 @@ export async function getISODateServerAction(
     {
       headers: {
         'X-Custom-TC-Api-Key': process.env.CUSTOM_API_KEY || '',
+        ...getTraceContextHeaders(true),
       },
       cache: 'force-cache',
     },

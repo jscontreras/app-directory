@@ -1,3 +1,4 @@
+import { getTraceContextHeaders } from '#/lib/otel-utils';
 import { NextResponse } from 'next/server';
 
 export const dynamic = 'force-dynamic'; // static by default, unless reading the request
@@ -6,6 +7,7 @@ export async function GET(): Promise<NextResponse> {
   const res = await fetch('https://api.tc-vercel.dev/api/time', {
     headers: {
       'X-Custom-TC-Api-Key': process.env.CUSTOM_API_KEY || '',
+      ...getTraceContextHeaders(true),
     },
     cache: 'force-cache',
     next: { tags: ['api-caching-test'] },

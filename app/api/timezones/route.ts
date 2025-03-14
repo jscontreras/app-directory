@@ -1,9 +1,11 @@
+import { getTraceContextHeaders } from '#/lib/otel-utils';
 import { NextResponse } from 'next/server';
 
 export async function GET() {
   const resTime = await fetch(`https://api.tc-vercel.dev/api/time`, {
     headers: {
       'X-Custom-TC-Api-Key': process.env.CUSTOM_API_KEY || '',
+      ...getTraceContextHeaders(true),
     },
     next: { revalidate: 300, tags: ['timezone'] },
   });

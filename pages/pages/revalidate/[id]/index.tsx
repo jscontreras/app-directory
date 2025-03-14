@@ -1,3 +1,4 @@
+import { getTraceContextHeaders } from '#/lib/otel-utils';
 import { ExternalLink } from '#/ui/external-link';
 import { Highlight } from '#/ui/highlight';
 import RevalidatePageLayout from '#/ui/pages-layout';
@@ -88,6 +89,7 @@ export async function getStaticProps({ params }: { params: any }) {
   const res = await fetch(`https://api.tc-vercel.dev/api/time`, {
     headers: {
       'X-Custom-TC-Api-Key': process.env.CUSTOM_API_KEY || '',
+      ...getTraceContextHeaders(true),
     },
   });
   const data = (await res.json()) as { datetime: string };
