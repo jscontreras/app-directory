@@ -1,5 +1,5 @@
 // instrumentation.ts
-import { registerOTel } from '@vercel/otel';
+import { FetchInstrumentationConfig, registerOTel } from '@vercel/otel';
 import { PeriodicExportingMetricReader } from '@opentelemetry/sdk-metrics';
 import { SimpleSpanProcessor } from '@opentelemetry/sdk-trace-base';
 import {
@@ -49,6 +49,7 @@ registerOTel({
   instrumentationConfig: {
     fetch: {
       ignoreUrls: [/^https:\/\/telemetry.nextjs.org/],
-    },
+      propagateContextUrls: [/^https:\/\/api.tc\-vercel.dev\/api\/.*/],
+    } as FetchInstrumentationConfig,
   },
 });
