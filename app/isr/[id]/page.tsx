@@ -33,7 +33,7 @@ export default async function Page({
     },
   );
 
-  const currentTime = await getISODateServerAction();
+  const currentTime = await getISODateServerAction('America/New_York', true);
 
   const data = (await res.json()) as { title: string; body: string };
 

@@ -30,6 +30,7 @@ export async function getCurrentHourInCityServerAction(
 
 export async function getISODateServerAction(
   timezone: string = 'America/New_York',
+  noCache: boolean = false,
 ) {
   console.log('timezone', timezone);
   const res = await fetch(
@@ -38,8 +39,9 @@ export async function getISODateServerAction(
     {
       headers: {
         'X-Custom-TC-Api-Key': process.env.CUSTOM_API_KEY || '',
+        // ...getTraceContextHeaders(true),
       },
-      cache: 'force-cache',
+      cache: noCache ? 'no-cache' : 'force-cache',
     },
   );
   const data = (await res.json()) as { datetime: string };
