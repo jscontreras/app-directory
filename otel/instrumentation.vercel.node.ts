@@ -1,5 +1,5 @@
 // instrumentation.ts
-import { registerOTel } from '@vercel/otel';
+import { FetchInstrumentationConfig, registerOTel } from '@vercel/otel';
 import {
   OTLPHttpJsonTraceExporter,
   OTLPHttpProtoTraceExporter,
@@ -64,6 +64,7 @@ registerOTel({
   instrumentationConfig: {
     fetch: {
       ignoreUrls: [/^https:\/\/telemetry.nextjs.org/],
-    },
+      propagateContextUrls: [/^https:\/\/api.tc\-vercel.dev\/api\/.*/],
+    } as FetchInstrumentationConfig,
   },
 });

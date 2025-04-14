@@ -1,4 +1,3 @@
-import { getTraceContextHeaders } from '#/lib/otel-utils';
 import { ExternalLink } from '#/ui/external-link';
 import { Highlight } from '#/ui/highlight';
 
@@ -12,7 +11,6 @@ export default async function Page() {
   const res = await fetch(`https://api.tc-vercel.dev/api/time`, {
     headers: {
       'X-Custom-TC-Api-Key': process.env.CUSTOM_API_KEY || '',
-      ...getTraceContextHeaders(true),
     },
     cache: 'force-cache',
     next: { tags: ['test-tag-date'] },

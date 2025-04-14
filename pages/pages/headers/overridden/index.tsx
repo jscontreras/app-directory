@@ -1,4 +1,3 @@
-import { getTraceContextHeaders } from '#/lib/otel-utils';
 import { serverLogger } from '#/otel/logger';
 import { ExternalLink } from '#/ui/external-link';
 import { BasicLayout } from '#/ui/pages-layout';
@@ -69,9 +68,7 @@ export async function getServerSideProps({ req }: { req: Request }) {
   const url = `${protocol}://${host}/proxy-via-middleware`;
 
   try {
-    const echoHeaders = await fetch(url, {
-      headers: new Headers({ ...headers, ...getTraceContextHeaders(true) }),
-    });
+    const echoHeaders = await fetch(url, { headers });
     const response: any = await echoHeaders.json();
     return {
       props: {

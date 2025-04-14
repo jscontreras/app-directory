@@ -1,4 +1,3 @@
-import { getTraceContextHeaders } from '#/lib/otel-utils';
 import { ReactNode, cache } from 'react';
 import SkeletonAlarmClock from './skeleton-alarm-clock';
 
@@ -15,7 +14,6 @@ const getCurrentHourInCity = cache(async function (timezone: string) {
     {
       headers: {
         'X-Custom-TC-Api-Key': process.env.CUSTOM_API_KEY || '',
-        ...getTraceContextHeaders(true),
       },
       cache: 'force-cache',
     },
