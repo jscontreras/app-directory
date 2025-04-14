@@ -95,6 +95,7 @@ async function originalMiddleware(request: NextRequest): Promise<Response> {
         'private, max-age=0, stale-while-revalidate',
       );
     }
+    response.headers.set('X-From-Middleware', 'Hello');
     return response;
   } else if (url.pathname === '/proxy-via-middleware') {
     // Clone the request headers
