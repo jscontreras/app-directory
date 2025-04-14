@@ -33,7 +33,21 @@ export default async function Page({
     },
   );
 
-  const currentTime = await getISODateServerAction('America/New_York', true);
+  const timeRes = await fetch(`https://api.tc-vercel.dev/api/time`, {
+    headers: {
+      'X-Custom-TC-Api-Key': process.env.CUSTOM_API_KEY || '',
+    },
+    cache: 'no-cache',
+    next: { tags: ['isr-tag-date'] },
+  });
+  const { datetime } = (await timeRes.json()) as { datetime: string };
+  const dateObj = new Date(datetime);
+  const currentTime = dateObj.toLocaleString('en-US', {
+    timeZone: 'America/New_York',
+    hour: 'numeric',
+    minute: 'numeric',
+    second: 'numeric',
+  });
 
   const data = (await res.json()) as { title: string; body: string };
 
