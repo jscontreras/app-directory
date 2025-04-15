@@ -20,7 +20,7 @@ export default async function Page({
     `https://jsonplaceholder.typicode.com/posts/${int_id}`,
     {
       next: { tags: ['collection'] },
-      cache: 'no-cache',
+      cache: 'force-cache',
     },
   );
 
