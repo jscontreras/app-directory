@@ -86,7 +86,10 @@ async function originalMiddleware(request: NextRequest): Promise<Response> {
     });
   }
   // How to override cache headers (This will break cache as it is private)
-  else if (url.pathname.startsWith('/isr/')) {
+  else if (
+    url.pathname.startsWith('/isr/') ||
+    url.pathname.startsWith('/dynamic/')
+  ) {
     const response = NextResponse.next();
     if (url.pathname === '/isr/11') {
       // Remove the 'private' directive and set appropriate caching headers for ISR
@@ -173,6 +176,7 @@ export const config = {
     '/h',
     '/h/:path*',
     '/isr/:path*',
+    '/dynamic/:path*',
     '/isr-preview/1',
     '/pocs/toolbar',
   ],
