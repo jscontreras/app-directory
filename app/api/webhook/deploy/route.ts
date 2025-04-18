@@ -50,18 +50,8 @@ export async function POST(request: Request) {
     }
 
     // Extract relevant information from the Vercel webhook payload
-    const { url, meta } = payload;
-    const { githubCommitSha, githubCommitMessage } = meta;
-
-    // Prepare the payload for New Relic
-    const newRelicPayload = {
-      deployment: {
-        revision: githubCommitSha,
-        changelog: githubCommitMessage,
-        description: `Deployed to ${url}`,
-        user: 'Vercel Deployment',
-      },
-    };
+    const { url } = payload;
+    console.log('Deployment:succeess HOOK DATA', payload);
 
     const options = {
       method: 'POST',
