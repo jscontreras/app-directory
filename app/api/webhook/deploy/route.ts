@@ -50,15 +50,14 @@ export async function POST(request: Request) {
         'X-GitHub-Api-Version': '2022-11-28',
       },
       body: `{"ref":"main","inputs":{"message":"Vercel Prod Deployment","url":"${url}"}}`,
-      cache: 'no-cache',
     };
 
-    fetch(
+    const response = await fetch(
       'https://api.github.com/repos/jscontreras/app-directory/actions/workflows/143785299/dispatches',
-    )
-      .then((response) => response.json())
-      .then((response) => console.log(response))
-      .catch((err) => console.error(err));
+      options,
+    );
+    const jsonResponse = await response.json();
+    console.log(jsonResponse);
 
     return NextResponse.json(
       { message: 'Deployment notified to New Relic' },
