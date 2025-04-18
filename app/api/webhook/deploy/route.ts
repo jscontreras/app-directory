@@ -3,7 +3,7 @@ import { createHmac } from 'crypto';
 import crypto from 'crypto';
 
 const GITHUB_TOKEN = process.env.GITHUB_SECRET;
-const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET;
+const WEBHOOK_SECRET: string = process.env.WEBHOOK_SECRET || '';
 
 function verifySignature(
   body: string,
