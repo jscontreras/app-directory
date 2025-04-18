@@ -20,10 +20,13 @@ export async function POST(request: Request) {
     }
 
     // Parse the body as JSON after verification
-    const payload = JSON.parse(rawBody);
+    const body = JSON.parse(rawBody);
+    // Extract relevant information from the Vercel webhook payload
+    const { payload, type } = body;
+
     console.log('Deployment:succeess HOOK DATA', payload);
     // Verify that this is a successful deployment
-    if (payload?.type !== 'deployment.succeeded') {
+    if (type !== 'deployment.succeeded') {
       return NextResponse.json(
         { message: 'Not a successful deployment' },
         { status: 200 },
@@ -37,9 +40,6 @@ export async function POST(request: Request) {
       );
     }
 
-    // Extract relevant information from the Vercel webhook payload
-    const { url } = payload;
-
     const options = {
       method: 'POST',
       headers: {
@@ -47,7 +47,7 @@ export async function POST(request: Request) {
         Authorization: `Bearer ${GITHUB_TOKEN}`,
         'X-GitHub-Api-Version': '2022-11-28',
       },
-      body: `{"ref":"main","inputs":{"message":"Vercel Prod Deployment","url":"${url}"}}`,
+      body: `{"ref":"main","inputs":{"message":"${payload.name}","url":"${payload.url}"}}`,
     };
 
     const response = await fetch(
