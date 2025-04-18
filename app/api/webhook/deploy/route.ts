@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { createHmac } from 'crypto';
+import crypto from 'crypto';
 
 const GITHUB_TOKEN = process.env.GITHUB_SECRET;
 const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET;
@@ -17,17 +18,16 @@ function verifySignature(
 
 export async function POST(request: Request) {
   try {
-    // Get the raw body as text for signature verification
-    const rawBody = await request.text();
-
     // Get the signature from headers
-    const signature = request.headers.get('x-vercel-signature');
+    const rawBody = await request.text();
+    const rawBodyBuffer = Buffer.from(rawBody, 'utf-8');
+    const bodySignature = sha1(rawBodyBuffer, WEBHOOK_SECRET);
+    const requestSignature = request.headers.get('x-vercel-signature');
 
     // Verify the signature (Bypassing for testing)
     if (
       !WEBHOOK_SECRET ||
-      (!verifySignature(rawBody, signature, WEBHOOK_SECRET) &&
-        WEBHOOK_SECRET != signature)
+      (bodySignature !== requestSignature && WEBHOOK_SECRET != requestSignature)
     ) {
       return NextResponse.json({ error: 'Invalid signature' }, { status: 401 });
     }
@@ -61,7 +61,7 @@ export async function POST(request: Request) {
         Authorization: `Bearer ${GITHUB_TOKEN}`,
         'X-GitHub-Api-Version': '2022-11-28',
       },
-      body: `{"ref":"main","inputs":{"name":"Vercel Prod Deployment","home":"${url}"}}`,
+      body: `{"ref":"main","inputs":{"message":"Vercel Prod Deployment","url":"${url}"}}`,
     };
 
     fetch(
@@ -83,4 +83,8 @@ export async function POST(request: Request) {
       { status: 500 },
     );
   }
+}
+
+function sha1(data: Buffer, secret: string): string {
+  return crypto.createHmac('sha1', secret).update(data).digest('hex');
 }
