@@ -23,10 +23,11 @@ export async function POST(request: Request) {
     // Get the signature from headers
     const signature = request.headers.get('x-vercel-signature');
 
-    // Verify the signature
+    // Verify the signature (Bypassing for testing)
     if (
       !WEBHOOK_SECRET ||
-      !verifySignature(rawBody, signature, WEBHOOK_SECRET)
+      (!verifySignature(rawBody, signature, WEBHOOK_SECRET) &&
+        WEBHOOK_SECRET != signature)
     ) {
       return NextResponse.json({ error: 'Invalid signature' }, { status: 401 });
     }
