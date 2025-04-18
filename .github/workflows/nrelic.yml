@@ -6,11 +6,11 @@ on:
   # https://docs.github.com/en/actions/writing-workflows/choosing-when-your-workflow-runs/events-that-trigger-workflows#workflow_dispatch
   workflow_dispatch:
     inputs:
-      name:
-        description: 'What is your name'
+      url:
+        description: 'What is the deployment URL'
         type: string
-      home:
-        description: 'WHere is your Home'
+      message:
+        description: 'Description Message'
         type: string
 
 jobs:
@@ -28,7 +28,7 @@ jobs:
           version: '${{ env.RELEASE_VERSION }}'
           changelog: 'https://github.com/${{ github.repository }}/blob/master/CHANGELOG.md'
           commit: '${{ github.sha }}'
-          description: 'Automated Release via Github Actions'
+          description: '${{ inputs.message }} >> ${{ inputs.url }}'
           deploymentType: 'ROLLING'
           groupId: 'Workshop App Release: ${{ github.ref_name }}'
           user: '${{ github.actor }}'

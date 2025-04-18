@@ -1,8 +1,7 @@
 import { NextResponse } from 'next/server';
 import { createHmac } from 'crypto';
 
-const NEW_RELIC_API_KEY = process.env.NEW_RELIC_LICENSE_KEY;
-const NEW_RELIC_APP_ID = process.env.NEW_RELIC_APP_NAME;
+const GITHUB_TOKEN = process.env.GITHUB_SECRET;
 const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET;
 
 function verifySignature(
@@ -64,22 +63,23 @@ export async function POST(request: Request) {
       },
     };
 
-    // Send deployment information to New Relic
-    const response = await fetch(
-      `https://api.newrelic.com/v2/applications/${NEW_RELIC_APP_ID}/deployments.json`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Api-Key': NEW_RELIC_API_KEY as string,
-        },
-        body: JSON.stringify(newRelicPayload),
+    const options = {
+      method: 'POST',
+      headers: {
+        Accept: 'application/vnd.github+json',
+        Authorization: `Bearer ${GITHUB_TOKEN}`,
+        'X-GitHub-Api-Version': '2022-11-28',
       },
-    );
+      body: `{"ref":"main","inputs":{"name":"Vercel Prod Deployment","home":"${url}"}}`,
+    };
 
-    if (!response.ok) {
-      throw new Error(`New Relic API responded with ${response.status}`);
-    }
+    fetch(
+      'https://api.github.com/repos/jscontreras/app-directory/actions/workflows/143785299/dispatches',
+      options,
+    )
+      .then((response) => response.json())
+      .then((response) => console.log(response))
+      .catch((err) => console.error(err));
 
     return NextResponse.json(
       { message: 'Deployment notified to New Relic' },
