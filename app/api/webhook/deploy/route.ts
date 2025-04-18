@@ -12,6 +12,7 @@ export async function POST(request: Request) {
     const bodySignature = sha1(rawBodyBuffer, WEBHOOK_SECRET);
     const requestSignature = request.headers.get('x-vercel-signature');
 
+    console.log('SIGNTURE VALIDATION', bodySignature == requestSignature);
     // Verify the signature (Bypassing for testing)
     if (
       !WEBHOOK_SECRET ||
