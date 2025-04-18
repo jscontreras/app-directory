@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import crypto from 'crypto';
 
-const GITHUB_TOKEN = process.env.GITHUB_SECRET;
+const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 const WEBHOOK_SECRET: string = process.env.WEBHOOK_SECRET || '';
 
 export async function POST(request: Request) {
@@ -56,8 +56,17 @@ export async function POST(request: Request) {
       'https://api.github.com/repos/jscontreras/app-directory/actions/workflows/143785299/dispatches',
       options,
     );
-    const jsonResponse = await response.json();
-    console.log(jsonResponse);
+    try {
+      const jsonResponse = await response.json();
+      console.log(jsonResponse);
+
+      // Check if the status starts with "2"
+      if (!jsonResponse.status.startsWith('2')) {
+        return NextResponse.json(jsonResponse, { status: jsonResponse.status });
+      }
+    } catch {
+      // console.log(response);
+    }
 
     return NextResponse.json(
       { message: 'Deployment notified to New Relic' },
