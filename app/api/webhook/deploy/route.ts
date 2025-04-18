@@ -1,20 +1,8 @@
 import { NextResponse } from 'next/server';
-import { createHmac } from 'crypto';
 import crypto from 'crypto';
 
 const GITHUB_TOKEN = process.env.GITHUB_SECRET;
 const WEBHOOK_SECRET: string = process.env.WEBHOOK_SECRET || '';
-
-function verifySignature(
-  body: string,
-  signature: string | null,
-  secret: string,
-) {
-  if (!signature) return false;
-  const hmac = createHmac('sha1', secret);
-  const computedSignature = hmac.update(body).digest('hex');
-  return signature === `sha1=${computedSignature}`;
-}
 
 export async function POST(request: Request) {
   try {
@@ -62,11 +50,11 @@ export async function POST(request: Request) {
         'X-GitHub-Api-Version': '2022-11-28',
       },
       body: `{"ref":"main","inputs":{"message":"Vercel Prod Deployment","url":"${url}"}}`,
+      cache: 'no-cache',
     };
 
     fetch(
       'https://api.github.com/repos/jscontreras/app-directory/actions/workflows/143785299/dispatches',
-      options,
     )
       .then((response) => response.json())
       .then((response) => console.log(response))
