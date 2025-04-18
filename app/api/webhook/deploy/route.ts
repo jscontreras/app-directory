@@ -11,8 +11,6 @@ export async function POST(request: Request) {
     const rawBodyBuffer = Buffer.from(rawBody, 'utf-8');
     const bodySignature = sha1(rawBodyBuffer, WEBHOOK_SECRET);
     const requestSignature = request.headers.get('x-vercel-signature');
-
-    console.log('SIGNTURE VALIDATION', bodySignature == requestSignature);
     // Verify the signature (Bypassing for testing)
     if (
       !WEBHOOK_SECRET ||
@@ -23,16 +21,16 @@ export async function POST(request: Request) {
 
     // Parse the body as JSON after verification
     const payload = JSON.parse(rawBody);
-
+    console.log('Deployment:succeess HOOK DATA', payload);
     // Verify that this is a successful deployment
-    if (payload.type !== 'deployment.succeeded') {
+    if (payload?.type !== 'deployment.succeeded') {
       return NextResponse.json(
         { message: 'Not a successful deployment' },
         { status: 200 },
       );
     }
     // Only trigger for production
-    if (payload.target !== 'production') {
+    if (payload?.target !== 'production') {
       return NextResponse.json(
         { message: 'Not a successful deployment' },
         { status: 200 },
@@ -41,7 +39,6 @@ export async function POST(request: Request) {
 
     // Extract relevant information from the Vercel webhook payload
     const { url } = payload;
-    console.log('Deployment:succeess HOOK DATA', payload);
 
     const options = {
       method: 'POST',
