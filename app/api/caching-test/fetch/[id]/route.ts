@@ -6,7 +6,7 @@ import { NextRequest, NextResponse } from 'next/server';
  * What happens when the Page is CDN revalidated? Is the fetch cache revalidated as well?
  *
  */
-export const dynamic = 'force-dynamic'; // static by default, unless reading the request
+export const dynamic = 'force-static'; // static by default so CDN is enforced on TOP
 
 export async function GET(
   _request: NextRequest,
@@ -40,6 +40,7 @@ export async function GET(
     status: 'ok',
     timeNYC: currentTime,
     runtime: 'nodejs',
+    caches: ['cdn-until-revalidate', 'fetch-data-cache-for-30-mins'],
     dataCache: 'fetch',
     tags,
     id,
