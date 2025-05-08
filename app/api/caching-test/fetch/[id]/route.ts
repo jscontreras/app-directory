@@ -17,13 +17,14 @@ export async function GET(
   },
 ) {
   const { id } = await params;
+  const tags = ['api-caching-test', `api-caching-test-${id}`];
   const res = await fetch('https://api.tc-vercel.dev/api/time', {
     headers: {
       'X-Custom-TC-Api-Key': process.env.CUSTOM_API_KEY || '',
     },
     cache: 'force-cache',
     next: {
-      tags: ['api-caching-test', `api-caching-test-${id}`],
+      tags,
       revalidate: 1800, // 30 mins
     },
   });
@@ -40,7 +41,7 @@ export async function GET(
     timeNYC: currentTime,
     runtime: 'nodejs',
     dataCache: 'fetch',
-    tags: ['api-caching-test'],
-    id: id,
+    tags,
+    id,
   });
 }
