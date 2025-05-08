@@ -6,6 +6,7 @@ export async function GET(request: NextRequest) {
   let log = '';
   const tag = request.nextUrl.searchParams.get('tag') || null;
   if (path) {
+    revalidatePath(path);
     log += `Path revalidated: ${path}\n`;
   }
   if (tag) {

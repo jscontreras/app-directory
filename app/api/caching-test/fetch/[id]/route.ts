@@ -5,10 +5,12 @@ import { NextRequest, NextResponse } from 'next/server';
  * It is a static route that is cached on the CDN and uses dynamic params.
  * The fetch cache is set to 10 mins.
  * What happens when the Page is CDN revalidated? Is the fetch (data-cache revalidated as well?
- * No, the fetch cache is not revalidated.
+ * No, the fetch cache is not revalidated. STALE data is served until the new data is fetched but it will look
+ * the same as the previous data is cached at the fetch level.
  * What happens when the fetch cache is revalidated? Is the Page revalidated as well?
- * Yes,the CDN is revalidated automatically.
- * What happens when the fetch cache expires? Is the Page revalidated as well?
+ * Yes,the CDN is revalidated automatically. STALE data is served until the new data is stored in the fetch cache.
+ * What happens when the fetch cache expires? Is the Page (CDN path) revalidated as well?
+ * Yes, the CDN path is revalidated automatically. STALE data is served until the new data is stored in the fetch cache.
  */
 export const dynamic = 'force-static'; // static by default so CDN is enforced on TOP
 const dataCacheMins = 10;
