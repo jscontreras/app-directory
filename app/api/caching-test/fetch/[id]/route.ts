@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
 /**
  * This route is used to test the caching of the API.
@@ -8,14 +8,22 @@ import { NextResponse } from 'next/server';
  */
 export const dynamic = 'force-dynamic'; // static by default, unless reading the request
 
-export async function GET(): Promise<NextResponse> {
+export async function GET(
+  _request: NextRequest,
+  {
+    params,
+  }: {
+    params: Promise<{ id: string }>;
+  },
+) {
+  const { id } = await params;
   const res = await fetch('https://api.tc-vercel.dev/api/time', {
     headers: {
       'X-Custom-TC-Api-Key': process.env.CUSTOM_API_KEY || '',
     },
     cache: 'force-cache',
     next: {
-      tags: ['api-caching-test'],
+      tags: ['api-caching-test', `api-caching-test-${id}`],
       revalidate: 1800, // 30 mins
     },
   });
@@ -33,5 +41,6 @@ export async function GET(): Promise<NextResponse> {
     runtime: 'nodejs',
     dataCache: 'fetch',
     tags: ['api-caching-test'],
+    id: id,
   });
 }
