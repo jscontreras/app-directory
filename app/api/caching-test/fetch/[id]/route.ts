@@ -11,7 +11,7 @@ import { NextRequest, NextResponse } from 'next/server';
  * What happens when the fetch cache expires? Is the Page revalidated as well?
  */
 export const dynamic = 'force-static'; // static by default so CDN is enforced on TOP
-
+const dataCacheMins = 10;
 export async function GET(
   _request: NextRequest,
   {
@@ -29,7 +29,7 @@ export async function GET(
     cache: 'force-cache',
     next: {
       tags,
-      revalidate: 600, // 10 mins
+      revalidate: 60 * dataCacheMins, // 10 mins
     },
   });
   const data = (await res.json()) as { datetime: string };
@@ -44,7 +44,10 @@ export async function GET(
     status: 'ok',
     timeNYC: currentTime,
     runtime: 'nodejs',
-    caches: ['cdn-until-revalidate', 'fetch-data-cache-for-30-mins'],
+    caches: [
+      'cdn-until-revalidate',
+      `fetch-data-cache-for-${dataCacheMins}-mins`,
+    ],
     dataCache: 'fetch',
     tags,
     id,
