@@ -2,9 +2,13 @@ import { NextRequest, NextResponse } from 'next/server';
 
 /**
  * This route is used to test the caching of the API.
- * It is a static route that is cached for 1 hour.
- * What happens when the Page is CDN revalidated? Is the fetch cache revalidated as well?
- *
+ * It is a static route that is cached on the CDN and uses dynamic params.
+ * The fetch cache is set to 10 mins.
+ * What happens when the Page is CDN revalidated? Is the fetch (data-cache revalidated as well?
+ * No, the fetch cache is not revalidated.
+ * What happens when the fetch cache is revalidated? Is the Page revalidated as well?
+ * Yes,the CDN is revalidated automatically.
+ * What happens when the fetch cache expires? Is the Page revalidated as well?
  */
 export const dynamic = 'force-static'; // static by default so CDN is enforced on TOP
 
@@ -25,7 +29,7 @@ export async function GET(
     cache: 'force-cache',
     next: {
       tags,
-      revalidate: 1800, // 30 mins
+      revalidate: 600, // 10 mins
     },
   });
   const data = (await res.json()) as { datetime: string };
