@@ -9,7 +9,7 @@ export async function GET(request: NextRequest) {
     log += `Path revalidated: ${path}\n`;
   }
   if (tag) {
-    revalidateTag(collection);
+    revalidateTag(tag);
     log += `Tag revalidated: ${tag}\n`;
   }
   // log the revalidated paths and tags
