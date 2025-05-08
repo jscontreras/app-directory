@@ -3,17 +3,23 @@ import { NextRequest, NextResponse } from 'next/server';
 /**
  * This route is used to test the caching of the API.
  * It is a static route that is cached on the CDN and uses dynamic params.
- * The fetch cache is set to expire every 10 mins.
- * What happens when the Page is CDN revalidated? Is the fetch (data-cache) revalidated as well?
- * No, the fetch cache is not revalidated. STALE data is served until the new data is fetched but timeNYC will look
- * the same as the previous data is cached at the fetch level. The now paramter will change.
+ * This page CDN revalidates every minute
+ * The fetch cache is set to expire every 5 mins.
+ * The CDN cache is set to only expire when the fetch cache expires.
+ * What happens when the Page is CDN (path) on-demand revalidated? Is the fetch (data-cache) revalidated as well?
+ * Yes, the fetch cache is revalidated and a new snapshot is generated for the fetch cache.
+ * STALE data is served until the new data is fetched but timeNYC will change.
  * What happens when the fetch cache is revalidated? Is the Page revalidated as well?
  * Yes,the CDN is revalidated automatically. STALE data is served until the new data is stored in the fetch cache.
  * What happens when the fetch cache expires? Is the Page (CDN path) revalidated as well?
  * Yes, the CDN path is revalidated automatically. STALE data is served until the new data is stored in the fetch cache.
+ * What happens when the CDN cache expires? Is the fetch cache revalidated as well?
+ * No, the CDN cache will generate a new snapshot of the page but the fetch cache could retreive an old snapshot.
  */
+
 export const dynamic = 'force-static'; // static by default so CDN is enforced on TOP
-const dataCacheMins = 10;
+const dataCacheMins = 5;
+export const revalidate = 60;
 export async function GET(
   _request: NextRequest,
   {
@@ -43,6 +49,7 @@ export async function GET(
     second: 'numeric',
   });
   return NextResponse.json({
+    CDN: 'revalidates every minute',
     status: 'ok',
     timeNYC: currentTime,
     runtime: 'nodejs',
