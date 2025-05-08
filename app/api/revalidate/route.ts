@@ -2,15 +2,23 @@ import { NextRequest, NextResponse } from 'next/server';
 import { revalidatePath, revalidateTag } from 'next/cache';
 
 export async function GET(request: NextRequest) {
-  const path = request.nextUrl.searchParams.get('path') || '/isr/[id]';
-  const collection =
-    request.nextUrl.searchParams.get('collection') || 'collection';
-  revalidatePath(path);
-  revalidateTag(collection);
-  console.log('revalidated', path, collection);
+  const path = request.nextUrl.searchParams.get('path') || null;
+  let log = '';
+  const tag = request.nextUrl.searchParams.get('tag') || null;
+  if (path) {
+    log += `Path revalidated: ${path}\n`;
+  }
+  if (tag) {
+    revalidateTag(collection);
+    log += `Tag revalidated: ${tag}\n`;
+  }
+  // log the revalidated paths and tags
+  console.log(log);
+
   return NextResponse.json({
     revalidated: true,
     now: Date.now(),
     cache: 'no-store',
+    log,
   });
 }
