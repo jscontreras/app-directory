@@ -1,7 +1,15 @@
 import { RenderingInfo } from '#/ui/rendering-info';
 import { notFound } from 'next/navigation';
+import { metrics } from '@opentelemetry/api';
 
 export const dynamic = 'force-dynamic';
+// Initialize your meter (assuming OpenTelemetry SDK is already set up elsewhere)
+const meter = metrics.getMeter(process.env.NEW_RELIC_APP_NAME || 'default');
+
+// Create a custom counter metric for tracking fetch attempts
+const fetchCounter = meter.createCounter('fetch_timestamp_total', {
+  description: 'Total number of fetch requests attempted',
+});
 
 export default async function Page({
   params,
@@ -23,6 +31,13 @@ export default async function Page({
       cache: 'force-cache',
     },
   );
+
+  // Increment the counter before the fetch
+  fetchCounter.add(1, {
+    url: `https://api.tc-vercel.dev/api/time`,
+    isr: true,
+    id: int_id,
+  });
 
   const timeRes = await fetch(`https://api.tc-vercel.dev/api/time`, {
     headers: {
