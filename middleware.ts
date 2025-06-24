@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { logs, SeverityNumber } from '@opentelemetry/api-logs';
-import { precompute } from '@vercel/flags/next';
+import { precompute } from 'flags/next';
 import { featureFlags } from './flags';
 import { middlewareTraceEnabler } from './lib/otel-utils';
 

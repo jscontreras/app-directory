@@ -1,4 +1,4 @@
-import { flag } from '@vercel/flags/next';
+import { flag } from 'flags/next';
 import { get } from '@vercel/edge-config';
 import { headers } from 'next/headers';
 

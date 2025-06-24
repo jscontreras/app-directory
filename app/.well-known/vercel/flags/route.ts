@@ -1,55 +1,44 @@
-import { type ApiData, verifyAccess } from '@vercel/flags';
-import { getProviderData } from '@vercel/flags/next';
-import { NextResponse, type NextRequest } from 'next/server';
+import { type ApiData, verifyAccess } from 'flags';
+import { getProviderData, createFlagsDiscoveryEndpoint } from 'flags/next';
 import * as flags from '../../../../flags';
 
 export const runtime = 'edge';
 export const dynamic = 'force-dynamic'; // defaults to auto
 
-export async function GET(request: NextRequest) {
+
+// This function handles the authorization check for you
+export const GET = createFlagsDiscoveryEndpoint(async (request) => {
+
   // Get the flags_site cookie
   const flagsSite = request.cookies.get('flags_site')?.value;
+
   // If the cookie exists and has a value, rewrite to that URL
-  if (flagsSite) {
-    try {
-      const authHeader = request.headers.get('authorization');
-      // Create a new headers object
-      const headers = new Headers();
+  // if (flagsSite) {
+  //   const authHeader = request.headers.get('authorization');
+  //   // Create a new headers object
+  //   const headers = new Headers();
 
-      // If the authorization header exists, add it to the new headers object
-      if (authHeader) {
-        headers.set('Authorization', authHeader);
-      }
-      const url = new URL(`${flagsSite}/.well-known/vercel/flags`);
-      const response = await fetch(url, {
-        headers: headers,
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const jsonFlagsEmbeddedSite = await response.json();
-      const jsonParentAppFlags = getProviderData(flags);
-      const mergedFlags = {
-        ...jsonParentAppFlags,
-        definitions: {
-          ...jsonParentAppFlags.definitions,
-          ...jsonFlagsEmbeddedSite.definitions,
-        },
-      };
-      return NextResponse.json(mergedFlags);
-    } catch (error) {
-      console.error('Invalid URL in flags_site cookie:', error.message);
-      const access = await verifyAccess(request.headers.get('Authorization'));
-      // If the URL is invalid, continue to the original '/example' path
-      if (!access) return NextResponse.json(null, { status: 401 });
-      return NextResponse.json<ApiData>(getProviderData(flags));
-    }
-  }
-
-  const access = await verifyAccess(request.headers.get('Authorization'));
-  if (!access) return NextResponse.json(null, { status: 401 });
-
-  return NextResponse.json<ApiData>(getProviderData(flags));
-}
+  //   // If the authorization header exists, add it to the new headers object
+  //   if (authHeader) {
+  //     headers.set('Authorization', authHeader);
+  //   }
+  //   const url = new URL(`${flagsSite}/.well-known/vercel/flags`);
+  //   const response = await fetch(url, {
+  //     headers: headers,
+  //   });
+  //   const jsonFlagsEmbeddedSite = await response.json();
+  //   const jsonParentAppFlags = await getProviderData(flags);
+  //   // const mergedFlags = {
+  //   //   ...jsonParentAppFlags,
+  //   //   definitions: {
+  //   //     ...jsonParentAppFlags.definitions,
+  //   //     ...jsonFlagsEmbeddedSite.definitions,
+  //   //   },
+  //   // };
+  //   return jsonParentAppFlags;
+  // }
+  // your previous logic in here to gather your feature flags
+  const apiData = await getProviderData(flags);
+  // return the ApiData directly, without a NextResponse.json object.
+  return apiData;
+});
