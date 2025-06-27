@@ -1,5 +1,3 @@
-const { withMicrofrontends } = require('@vercel/microfrontends/next/config');
-
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 });
@@ -7,7 +5,7 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 const withVercelToolbar = require('@vercel/toolbar/plugins/next')();
 
 // Adding Vercel Toolbar to Local dev
-module.exports = withMicrofrontends(withBundleAnalyzer(
+module.exports = withBundleAnalyzer(
   withVercelToolbar({
     async redirects() {
       return [
@@ -40,28 +38,28 @@ module.exports = withMicrofrontends(withBundleAnalyzer(
       const devRewrites =
         process.env.NODE_ENV == 'development'
           ? [
-              // Rewrite for locally debugging Analytics (dev mode)
-              {
-                source: '/_vercel/insights/script.debug.js',
-                destination:
-                  'https://cdn.vercel-insights.com/v1/script.debug.js',
-              },
-              // Rewrite for locally debugging Speed Insights (dev mode)
-              {
-                source: '/_vercel/speed-insights/script.debug.js',
-                destination:
-                  'https://cdn.vercel-insights.com/v1/speed-insights/script.debug.js',
-              },
-              {
-                source: '/isr-cache-headers/timestamp',
-                destination:
-                  'https://www.tc-vercel.dev/isr-cache-headers/timestamp',
-              },
-              {
-                source: '/pages/timestamp',
-                destination: 'https://www.tc-vercel.dev/pages/timestamp',
-              },
-            ]
+            // Rewrite for locally debugging Analytics (dev mode)
+            {
+              source: '/_vercel/insights/script.debug.js',
+              destination:
+                'https://cdn.vercel-insights.com/v1/script.debug.js',
+            },
+            // Rewrite for locally debugging Speed Insights (dev mode)
+            {
+              source: '/_vercel/speed-insights/script.debug.js',
+              destination:
+                'https://cdn.vercel-insights.com/v1/speed-insights/script.debug.js',
+            },
+            {
+              source: '/isr-cache-headers/timestamp',
+              destination:
+                'https://www.tc-vercel.dev/isr-cache-headers/timestamp',
+            },
+            {
+              source: '/pages/timestamp',
+              destination: 'https://www.tc-vercel.dev/pages/timestamp',
+            },
+          ]
           : [];
       return {
         beforeFiles: [
@@ -106,4 +104,4 @@ module.exports = withMicrofrontends(withBundleAnalyzer(
       ],
     },
   }),
-));
+);
