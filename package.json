@@ -17,8 +17,8 @@
     "*": "prettier --write --ignore-unknown"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "3.733.0",
-    "@aws-sdk/s3-request-presigner": "3.733.0",
+    "@aws-sdk/client-s3": "^3.839.0",
+    "@aws-sdk/s3-request-presigner": "^3.839.0",
     "@heroicons/react": "1.0.6",
     "@next/bundle-analyzer": "15.1.4",
     "@opentelemetry/api": "1.9.0",
@@ -45,14 +45,12 @@
     "@radix-ui/react-select": "2.1.6",
     "@radix-ui/react-slot": "1.1.2",
     "@radix-ui/react-switch": "1.1.3",
-    "@vercel/analytics": "1.4.1",
+    "@vercel/analytics": "^1.5.0",
     "@vercel/edge-config": "^1.4.0",
     "@vercel/otel": "^1.13.0",
     "@vercel/speed-insights": "^1.2.0",
     "@vercel/toolbar": "^0.1.38",
-    "add": "2.0.6",
     "ai": "5.0.0-beta.2",
-    "axios": "^1.7.9",
     "class-variance-authority": "0.7.0",
     "clsx": "1.2.1",
     "date-fns": "2.29.3",
@@ -61,7 +59,7 @@
     "import-in-the-middle": "1.11.3",
     "js-cookie": "3.0.5",
     "linkedom": "0.18.6",
-    "lucide-react": "0.309.0",
+    "lucide-react": "0.525.0",
     "ms": "3.0.0-canary.1",
     "newrelic": "12.0.0",
     "next": "15.4.0-canary.94",
@@ -79,7 +77,8 @@
     "use-count-up": "3.0.1",
     "winston": "3.14.1",
     "winston-newrelic-logs-transport": "1.3.1",
-    "winston-nr": "1.2.5"
+    "winston-nr": "1.2.5",
+    "zod": "^3.25.5"
   },
   "devDependencies": {
     "@tailwindcss/forms": "0.5.3",
@@ -89,7 +88,7 @@
     "@types/node": "18.11.17",
     "@types/react": "npm:types-react@19.0.0-rc.1",
     "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1",
-    "@typescript-eslint/parser": "8.20.0",
+    "@typescript-eslint/parser": "^8.35.0",
     "@vercel/git-hooks": "1.0.0",
     "autoprefixer": "10.4.13",
     "eslint": "9.18.0",
@@ -103,16 +102,11 @@
     "typescript": "4.9.4"
   },
   "pnpm": {
-    "overrides": {
-      "undici@<5.26.2": ">=5.26.2",
-      "undici@<5.28.4": ">=5.28.4",
-      "undici@<=5.28.2": ">=5.28.3",
-      "@types/react": "npm:types-react@19.0.0-rc.1",
-      "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1",
-      "path-to-regexp": ">=6.3.0"
-    },
     "onlyBuiltDependencies": [
       "@vercel/speed-insights"
     ]
+  },
+  "engines": {
+    "node": "22.x"
   }
 }

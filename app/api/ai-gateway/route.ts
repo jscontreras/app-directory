@@ -18,11 +18,16 @@ export async function POST(request: Request) {
       prompt,
     });
 
-    return Response.json(result);
+    return new Response(JSON.stringify(result), {
+      headers: { 'Content-Type': 'application/json' }
+    });
   } catch (error) {
-    return Response.json(
-      { error: 'Failed to process request' },
-      { status: 500 }
+    return new Response(
+      JSON.stringify({ error: 'Failed to process request' }),
+      {
+        status: 500,
+        headers: { 'Content-Type': 'application/json' }
+      }
     );
   }
 }
