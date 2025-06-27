@@ -1,3 +1,5 @@
+const { withMicrofrontends } = require('@vercel/microfrontends/next/config');
+
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 });
@@ -5,7 +7,7 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 const withVercelToolbar = require('@vercel/toolbar/plugins/next')();
 
 // Adding Vercel Toolbar to Local dev
-module.exports = withBundleAnalyzer(
+module.exports = withMicrofrontends(withBundleAnalyzer(
   withVercelToolbar({
     async redirects() {
       return [
@@ -104,4 +106,4 @@ module.exports = withBundleAnalyzer(
       ],
     },
   }),
-);
+));
