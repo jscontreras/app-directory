@@ -5,40 +5,53 @@ import * as flags from '../../../../flags';
 export const runtime = 'edge';
 export const dynamic = 'force-dynamic'; // defaults to auto
 
-
 // This function handles the authorization check for you
 export const GET = createFlagsDiscoveryEndpoint(async (request) => {
-
   // Get the flags_site cookie
   const flagsSite = request.cookies.get('flags_site')?.value;
 
-  // If the cookie exists and has a value, rewrite to that URL
-  // if (flagsSite) {
-  //   const authHeader = request.headers.get('authorization');
-  //   // Create a new headers object
-  //   const headers = new Headers();
+  // If the cookie exists and has a value, fetch flags from that URL and merge with local flags
+  if (flagsSite) {
+    const authHeader = request.headers.get('authorization');
 
-  //   // If the authorization header exists, add it to the new headers object
-  //   if (authHeader) {
-  //     headers.set('Authorization', authHeader);
-  //   }
-  //   const url = new URL(`${flagsSite}/.well-known/vercel/flags`);
-  //   const response = await fetch(url, {
-  //     headers: headers,
-  //   });
-  //   const jsonFlagsEmbeddedSite = await response.json();
-  //   const jsonParentAppFlags = await getProviderData(flags);
-  //   // const mergedFlags = {
-  //   //   ...jsonParentAppFlags,
-  //   //   definitions: {
-  //   //     ...jsonParentAppFlags.definitions,
-  //   //     ...jsonFlagsEmbeddedSite.definitions,
-  //   //   },
-  //   // };
-  //   return jsonParentAppFlags;
-  // }
-  // your previous logic in here to gather your feature flags
+    // Create headers for the external request
+    const headers = new Headers();
+    if (authHeader) {
+      headers.set('Authorization', authHeader);
+    }
+
+    try {
+      // Fetch flags from the external site
+      const url = new URL(`${flagsSite}/.well-known/vercel/flags`);
+      const response = await fetch(url, { headers });
+
+      if (!response.ok) {
+        console.warn(`Failed to fetch flags from ${flagsSite}: ${response.status}`);
+        // Fall back to local flags only
+        return await getProviderData(flags);
+      }
+
+      const externalFlagsData: ApiData = await response.json();
+      const localFlagsData: ApiData = await getProviderData(flags);
+
+      // Manually merge the flag data - external flags take precedence over local ones
+      const mergedData: ApiData = {
+        ...localFlagsData,
+        definitions: {
+          ...localFlagsData.definitions,
+          ...externalFlagsData.definitions,
+        },
+      };
+
+      return mergedData;
+    } catch (error) {
+      console.error(`Error fetching flags from ${flagsSite}:`, error);
+      // Fall back to local flags only
+      return await getProviderData(flags);
+    }
+  }
+
+  // Default behavior: return local flags only
   const apiData = await getProviderData(flags);
-  // return the ApiData directly, without a NextResponse.json object.
   return apiData;
 });
