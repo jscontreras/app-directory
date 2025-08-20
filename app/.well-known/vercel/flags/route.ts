@@ -1,6 +1,8 @@
-import { type ApiData, verifyAccess } from 'flags';
+
+// Start of Selection
 import { getProviderData, createFlagsDiscoveryEndpoint } from 'flags/next';
 import * as flags from '../../../../flags';
+// End of Selection
 
 export const runtime = 'edge';
 export const dynamic = 'force-dynamic'; // defaults to auto
@@ -31,11 +33,11 @@ export const GET = createFlagsDiscoveryEndpoint(async (request) => {
         return await getProviderData(flags);
       }
 
-      const externalFlagsData: ApiData = await response.json();
-      const localFlagsData: ApiData = await getProviderData(flags);
+      const externalFlagsData = await response.json();
+      const localFlagsData = await getProviderData(flags);
 
       // Manually merge the flag data - external flags take precedence over local ones
-      const mergedData: ApiData = {
+      const mergedData = {
         ...localFlagsData,
         definitions: {
           ...localFlagsData.definitions,
