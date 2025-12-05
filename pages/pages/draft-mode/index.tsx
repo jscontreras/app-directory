@@ -20,7 +20,7 @@ export async function getStaticProps(context: GetServerSidePropsContext) {
 export default function Page({ remoteTime, localTime, draftMode }: { remoteTime: string, localTime: string, draftMode: boolean }) {
   return (
     <BasicLayout>
-      <h1 className="text-2xl font-bold text-white">Draft Mode Test</h1>
+      <h1 className="text-2xl font-bold text-white">Pages RouterDraft Mode Test (ISR + Runtime Cache)</h1>
       <div className="my-8 text-gray-200 max-w-2xl">
         <h2 className="text-xl font-semibold mb-2">About this page</h2>
         <p className="mb-3">
