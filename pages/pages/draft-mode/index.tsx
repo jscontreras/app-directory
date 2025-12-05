@@ -30,7 +30,7 @@ export default function Page({ remoteTime, localTime, draftMode }: { remoteTime:
         </p>
         <ul className="list-disc pl-6 mb-3">
           <li className="mb-1">
-            <span className="font-semibold">Toggle Draft Mode:</span> Click the "Enable/Disable Draft Mode" button above.
+            <span className="font-semibold">Toggle Draft Mode:</span> Click the &quot;Enable/Disable Draft Mode&quot; button above.
             It calls the <a
               href="/api/pages/draft-mode?secret=MY_SECRET_TOKEN"
               className="text-sky-400 underline"
@@ -50,7 +50,7 @@ export default function Page({ remoteTime, localTime, draftMode }: { remoteTime:
             >/api/pages/invalidate-runtime-tag?tag=blog-time</a>
             (<code className="bg-gray-900 px-1 rounded">pages/api/pages/invalidate-runtime-tag/index.ts</code>).
 
-            This will cause the "Remote Server Time" to refetch from the server on the next request.
+            This will cause the &quot;Remote Server Time&quot; to refetch from the server on the next request.
           </li>
         </ul>
       <div className="bg-yellow-900/80 border-l-4 border-yellow-500 rounded-md px-4 py-3 my-4">
