@@ -2,6 +2,7 @@ import { BasicLayout } from '#/ui/pages-layout';
 import { PcCase } from 'lucide-react';
 import { GetServerSidePropsContext } from 'next';
 import { getCache } from '@vercel/functions';
+import { ExternalLink } from '#/ui/external-link';
 
 export async function getStaticProps(context: GetServerSidePropsContext) {
 
@@ -121,8 +122,22 @@ export default function Page({ remoteTime, localTime, draftMode }: { remoteTime:
           </div>
         </div>
       </div>
+      <div className="flex gap-2">
+        <ExternalLink href="https://nextjs.org/docs/15/pages/guides/incremental-static-regeneration">
+          ISR Docs
+        </ExternalLink>
+        <ExternalLink href="https://vercel.com/changelog/introducing-the-runtime-cache-api">
+          Runtime Cache API
+        </ExternalLink>
+        <ExternalLink href="https://nextjs.org/docs/15/pages/guides/draft-mode">
+          Draft Mode Docs
+        </ExternalLink>
+        <ExternalLink href="https://github.com/vercel/app-playground/tree/main/app/isr">
+          Code
+        </ExternalLink>
+      </div>
     </BasicLayout>
-  );
+    );
 }
 
 async function getTimeFromServer(withDataCache: boolean) {
