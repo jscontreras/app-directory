@@ -164,6 +164,7 @@ async function getTimeFromServer(withDataCache: boolean) {
   });
   await cache.set(cacheKey, currentTime.toString(), {
     tags: [cacheKey],
+    ttl: 7200, // 2 hours
   });
 
 
