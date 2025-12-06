@@ -162,11 +162,11 @@ async function getTimeFromServer(withDataCache: boolean) {
     minute: 'numeric',
     second: 'numeric',
   });
-  await cache.set(cacheKey, currentTime.toString(), {
-    tags: [cacheKey],
-    ttl: 7200, // 2 hours
-  });
-
-
+  // If data cache is enabled and the data is not cached, set the data in the cache
+  if (withDataCache && !cachedData) {
+    await cache.set(cacheKey, currentTime.toString(), {
+      tags: [cacheKey],
+    });
+  }
   return currentTime;
 }
